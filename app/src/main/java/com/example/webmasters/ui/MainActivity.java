@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentGame);
                 break;
 
+
             default:
                 Log.e("MainActivity", "Invalid navigation!");
         }
