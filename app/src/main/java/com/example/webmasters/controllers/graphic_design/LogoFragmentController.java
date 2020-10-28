@@ -1,35 +1,45 @@
 package com.example.webmasters.controllers.graphic_design;
 
-import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.webmasters.R;
+import com.example.webmasters.models.graphic_design.view_models.LogoViewModel;
 import com.example.webmasters.types.TextChangedListener;
-import com.example.webmasters.ui.graphic_design.logos.LogosFragment;
-import com.example.webmasters.ui.graphic_design.logos.LogosViewModel;
+import com.example.webmasters.ui.graphic_design.logos.LogoView;
 
 public class LogoFragmentController {
     private Fragment mFragment;
 
     public LogoFragmentController(Fragment fragment, View view) {
         mFragment = fragment;
-        LogosViewModel model = new ViewModelProvider(mFragment).get(LogosViewModel.class);
-        setupLogoTextUpdates(view.findViewById(R.id.editLogoText), model);
+        LogoViewModel model = new ViewModelProvider(mFragment).get(LogoViewModel.class);
+        bindLogoText(view.findViewById(R.id.editLogoText), model);
+        bindLogoView(view.findViewById(R.id.logoView), model);
     }
 
-    private void setupLogoTextUpdates(EditText editLogoText, LogosViewModel logosViewModel) {
+    /**
+     * bindLogoView binds logo view to view model.
+     * @param logoView (LogoView)
+     * @param logosViewModel (LogosViewModel)
+     */
+    private void bindLogoView(LogoView logoView, LogoViewModel logosViewModel) {
+        // Model -> View updates.
+        logosViewModel.getTextObservable().observe(mFragment, logoView::setText);
+        logosViewModel.getTextSizeObservable().observe(mFragment, logoView::setTextSize);
+    }
+
+    /**
+     * bindLogoText binds logo text edit view to view model and enables bidirectional updates.
+     * @param editLogoText (EditText)
+     * @param logosViewModel (LogosViewModel)
+     */
+    private void bindLogoText(EditText editLogoText, LogoViewModel logosViewModel) {
         // Model -> View update.
-        logosViewModel.getLogoText().observe(mFragment, logoText -> {
-            // Check for redundant update.
+        logosViewModel.getTextObservable().observe(mFragment, logoText -> {
             int position = editLogoText.getSelectionEnd();
             editLogoText.setText(logoText);
             editLogoText.setSelection(position);
@@ -38,7 +48,7 @@ public class LogoFragmentController {
         editLogoText.addTextChangedListener(new TextChangedListener() {
             @Override
             public void onTextChanged(String logoText) {
-                logosViewModel.setLogoText(logoText);
+                logosViewModel.setText(logoText);
             }
         });
     }
