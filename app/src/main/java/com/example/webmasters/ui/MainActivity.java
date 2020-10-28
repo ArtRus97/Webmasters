@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.webmasters.ui.game_activity.gameActivity;
 import com.example.webmasters.ui.graphic_design.GraphicDesignActivity;
 import com.example.webmasters.R;
 import com.example.webmasters.ui.web_store.WebStoreActivity;
@@ -22,10 +23,12 @@ public class MainActivity extends AppCompatActivity {
         // Fetch views from layout.
         Button buttonGraphicDesign = (Button) findViewById(R.id.buttonGraphicDesign);
         Button buttonWebStore = (Button) findViewById(R.id.buttonWebStore);
+        Button buttonGame = (Button) findViewById(R.id.buttonGame);
 
         // Setup view callbacks.
         buttonGraphicDesign.setOnClickListener(this::onNavigationClick);
         buttonWebStore.setOnClickListener((this::onNavigationClick));
+        buttonGame.setOnClickListener(this::onNavigationClick);
     }
 
     private void onNavigationClick(View view) {
@@ -39,7 +42,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentStore = new Intent(this, WebStoreActivity.class);
                 startActivity(intentStore);
                 break;
-
+            case R.id.buttonGame:
+                Intent intentGame = new Intent(this, gameActivity.class);
+                startActivity(intentGame);
+                break;
 
             default:
                 Log.e("MainActivity", "Invalid navigation!");
