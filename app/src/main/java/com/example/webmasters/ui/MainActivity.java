@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentStore);
                 break;
 
-
             default:
                 Log.e("MainActivity", "Invalid navigation!");
         }
