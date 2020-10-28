@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_logos"
+        android:icon="@drawable/ic_baseline_logos_24"
+        android:title="@string/logos" />
+
+    <item
+        android:id="@+id/navigation_animations"
+        android:icon="@drawable/ic_baseline_animations_24"
+        android:title="@string/animations" />
+
+    <item
+        android:id="@+id/navigation_themes"
+        android:icon="@drawable/ic_baseline_themes_24"
+        android:title="@string/themes" />
+
+</menu>

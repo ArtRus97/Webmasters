@@ -1,4 +1,4 @@
-package com.example.webmasters.ui.graphic_design;
+package com.example.webmasters.ui.graphic_design.logos;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,14 +14,14 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.webmasters.R;
 
-public class HomeFragment extends Fragment {
+public class LogosFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private LogosViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
+                ViewModelProviders.of(this).get(LogosViewModel.class);
         View root = inflater.inflate(R.layout.fragment_logos, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
