@@ -10,8 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.graphic_design.GraphicDesignActivity"
-            android:label="@string/title_activity_graphic_design"></activity>
+            android:name=".ui.graphic_design.GraphicDesignActivity">
+        </activity>
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
