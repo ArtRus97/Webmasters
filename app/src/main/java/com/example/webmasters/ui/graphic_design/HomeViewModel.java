@@ -1,4 +1,4 @@
-package com.example.webmasters.ui.home;
+package com.example.webmasters.ui.graphic_design;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
