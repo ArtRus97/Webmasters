@@ -1,5 +1,7 @@
 package com.example.webmasters.models.graphic_design.view_models;
 
+import android.graphics.Color;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -34,7 +36,10 @@ public class LogoViewModel extends ViewModel implements ILogo {
 
     @Override
     public float getTextSize() {
-        return mTextSize.getValue();
+        if (mTextSize.getValue() != null)
+            return mTextSize.getValue();
+        else
+            return 0f;
     }
 
     public LiveData<Float> getTextSizeObservable() {
@@ -48,7 +53,10 @@ public class LogoViewModel extends ViewModel implements ILogo {
 
     @Override
     public int getTextColor() {
-        return mTextColor.getValue();
+        if (mTextColor.getValue() != null)
+            return mTextColor.getValue();
+        else
+            return Color.WHITE;
     }
 
     public Logo getLogo() {

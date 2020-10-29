@@ -50,5 +50,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Added dependencies.
-
+    implementation 'com.github.QuadFlask:colorpicker:0.0.15'
 }
