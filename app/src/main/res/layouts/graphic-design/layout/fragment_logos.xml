@@ -11,103 +11,55 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/cardLogoControls"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/cardLogoControls"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/cardLogoControls"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardLogoControls"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoView"
+        app:layout_constraintVertical_weight="1">
 
         <ScrollView
             android:id="@+id/scrollControls"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:padding="0dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="16dp"
-                android:paddingTop="16dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="8dp">
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/labelLogoText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Logo Text"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutLogoText"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintEnd_toEndOf="@+id/labelLogoText"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/labelLogoText">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editLogoText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Text" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.example.webmasters.ui.graphic_design.logos.ColorButton
-                    android:id="@+id/buttonLogoColor"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/colorAccent"
-                    app:layout_constraintEnd_toEndOf="@+id/layoutLogoText"
-                    app:layout_constraintStart_toEndOf="@+id/labelLogoTextColor"
-                    app:layout_constraintTop_toBottomOf="@+id/layoutLogoText" />
-
-                <TextView
-                    android:id="@+id/labelLogoTextColor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Color:"
-                    app:layout_constraintBottom_toBottomOf="@+id/buttonLogoColor"
-                    app:layout_constraintStart_toStartOf="@+id/layoutLogoText"
-                    app:layout_constraintTop_toTopOf="@+id/buttonLogoColor" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutLogoTextSize"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                <include
+                    layout="@layout/controls_logo_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/buttonLogoColor"
-                    app:layout_constraintStart_toStartOf="@+id/labelLogoTextColor"
-                    app:layout_constraintTop_toBottomOf="@+id/buttonLogoColor">
+                    android:layout_height="wrap_content" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editLogoTextSize"
-                        android:layout_width="match_parent"
-                        android:inputType="numberDecimal"
-                        android:layout_height="wrap_content"
-                        android:hint="Text size" />
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                <include
+                    layout="@layout/controls_logo_shape"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
         </ScrollView>
 
     </androidx.cardview.widget.CardView>
