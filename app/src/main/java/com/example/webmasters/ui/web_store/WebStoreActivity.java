@@ -1,5 +1,6 @@
 package com.example.webmasters.ui.web_store;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,16 +22,13 @@ import java.util.List;
 
 public class WebStoreActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerViewProducts;
     private ArrayList<String> productNames = new ArrayList<>();
-    private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter recyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_store);
-        recyclerViewProducts = findViewById(R.id.recyclerViewProducts);
+        RecyclerView recyclerViewProducts = findViewById(R.id.recyclerViewProducts);
 
         //productNames.add("Title");
         //ArrayAdapter apapter = new fillProductList(this, productNames);
@@ -38,10 +36,10 @@ public class WebStoreActivity extends AppCompatActivity {
         productNames.add("Title1");
         productNames.add("Title2");
 
-        layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewProducts.setLayoutManager(layoutManager);
 
-        recyclerViewAdapter = new FillProductList(this, productNames);
+        RecyclerView.Adapter recyclerViewAdapter = new FillProductList(this, productNames);
         recyclerViewProducts.setAdapter(recyclerViewAdapter);
     }
 
@@ -52,7 +50,7 @@ public class WebStoreActivity extends AppCompatActivity {
 
 
 
-    public class FillProductList extends RecyclerView.Adapter<FillProductList.MyViewHolder> {
+    public static class FillProductList extends RecyclerView.Adapter<FillProductList.MyViewHolder> {
         private List<String> productNames, productDesc;
         private LayoutInflater mInflater;
 
@@ -72,8 +70,9 @@ public class WebStoreActivity extends AppCompatActivity {
             this.mInflater = LayoutInflater.from(context);
         }
 
+        @NonNull
         @Override
-        public FillProductList.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public FillProductList.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = mInflater.inflate(R.layout.activity_product, parent, false);
             return new MyViewHolder(view);
         }
