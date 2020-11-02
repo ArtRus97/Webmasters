@@ -9,7 +9,7 @@ public class WebStoreSingleton {
 
     // private constructor restricted to this class itself
     private WebStoreSingleton() {
-        desc = "Hello I am a string part of Singleton class";
+        desc = "Product description from singleton";
     }
 
     // static method to create instance of Singleton class
