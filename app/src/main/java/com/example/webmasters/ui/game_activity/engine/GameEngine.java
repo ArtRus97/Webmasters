@@ -1,5 +1,7 @@
 package com.example.webmasters.ui.game_activity.engine;
 
+import androidx.constraintlayout.solver.widgets.analyzer.Direct;
+
 import com.example.webmasters.ui.game_activity.classes.Coordinate;
 import com.example.webmasters.ui.game_activity.enums.Direction;
 import com.example.webmasters.ui.game_activity.enums.GameState;
@@ -41,8 +43,38 @@ public class GameEngine {
 
     //Updates the direction of snake's movement
     public void UpdateDirection(Direction newDirection){
-        if( Math.abs(newDirection.ordinal() - currentDirection.ordinal()) % 2 == 1);
-        currentDirection = newDirection;
+        if(currentDirection == Direction.East)
+        {
+            if(newDirection != Direction.West)
+            {
+                if( Math.abs(newDirection.ordinal() - currentDirection.ordinal()) % 2 == 1);
+                currentDirection = newDirection;
+            }
+        }
+        if(currentDirection == Direction.West)
+        {
+            if(newDirection != Direction.East)
+            {
+                if( Math.abs(newDirection.ordinal() - currentDirection.ordinal()) % 2 == 1);
+                currentDirection = newDirection;
+            }
+        }
+        if(currentDirection == Direction.North)
+        {
+            if(newDirection != Direction.South)
+            {
+                if( Math.abs(newDirection.ordinal() - currentDirection.ordinal()) % 2 == 1);
+                currentDirection = newDirection;
+            }
+        }
+        if(currentDirection == Direction.South)
+        {
+            if(newDirection != Direction.North)
+            {
+                if( Math.abs(newDirection.ordinal() - currentDirection.ordinal()) % 2 == 1);
+                currentDirection = newDirection;
+            }
+        }
     }
 
     //Updating the game overall
