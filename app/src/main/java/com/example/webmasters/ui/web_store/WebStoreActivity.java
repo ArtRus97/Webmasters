@@ -1,19 +1,15 @@
 package com.example.webmasters.ui.web_store;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -27,6 +23,8 @@ public class WebStoreActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewProducts;
     private ArrayList<String> productNames = new ArrayList<>();
+    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.Adapter recyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +32,17 @@ public class WebStoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web_store);
         recyclerViewProducts = findViewById(R.id.recyclerViewProducts);
 
-        productNames.add("Title");
-        ArrayAdapter apapter = new fillProductList(this, productNames);
+        //productNames.add("Title");
+        //ArrayAdapter apapter = new fillProductList(this, productNames);
 
-        recyclerViewProducts.setAdapter(apapter);
+        productNames.add("Title1");
+        productNames.add("Title2");
+
+        layoutManager = new LinearLayoutManager(this);
+        recyclerViewProducts.setLayoutManager(layoutManager);
+
+        recyclerViewAdapter = new FillProductList(this, productNames);
+        recyclerViewProducts.setAdapter(recyclerViewAdapter);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,35 +50,49 @@ public class WebStoreActivity extends AppCompatActivity {
         return true;
     }
 
-    public class fillProductList extends ArrayAdapter<String> {
-        private Context context;
 
-        public fillProductList(Context context, ArrayList<String> objects) {
-            super(context, 0, objects);
+
+    public class FillProductList extends RecyclerView.Adapter<FillProductList.MyViewHolder> {
+        private List<String> productNames, productDesc;
+        private LayoutInflater mInflater;
+
+        public class MyViewHolder extends RecyclerView.ViewHolder {
+            TextView textViewTitle;
+            TextView textViewDesc;
+
+            public MyViewHolder(View itemView) {
+                super(itemView);
+                textViewTitle = itemView.findViewById(R.id.textViewTitle);
+                textViewDesc = itemView.findViewById(R.id.textViewDesc);
+            }
+        }
+
+        public FillProductList(Context context, List<String> productNames) {
+            this.productNames = productNames;
+            this.mInflater = LayoutInflater.from(context);
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public FillProductList.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = mInflater.inflate(R.layout.activity_product, parent, false);
+            return new MyViewHolder(view);
+        }
 
+        @Override
+        public void onBindViewHolder(MyViewHolder holder, int position) {
+            String title = productNames.get(position);
 
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            String desc;
+            WebStoreSingleton singleton = WebStoreSingleton.Singleton();
+            desc = singleton.desc;
 
-            View recyclerView;
+            holder.textViewTitle.setText(title);
+            holder.textViewDesc.setText(desc);
+        }
 
-            if (convertView == null) {
-                recyclerView = inflater.inflate(R.layout.activity_product, null);
-
-                TextView desc = findViewById(R.id.textViewDesc);
-                WebStoreSingleton singleton = WebStoreSingleton.Singleton();
-                desc.setText(singleton.desc);
-
-                TextView title = findViewById(R.id.textViewTitle);
-                title.setText(productNames.get(position));
-            }
-            else
-                recyclerView = convertView;
-
-            return recyclerView;
+        @Override
+        public int getItemCount() {
+            return productNames.size();
         }
     }
 }
