@@ -37,7 +37,7 @@ public class WebStoreActivity extends AppCompatActivity {
         productNames.add("Title");
         ArrayAdapter apapter = new fillProductList(this, productNames);
 
-        recyclerViewProducts.setAdapter(apapter);
+        //recyclerViewProducts.setAdapter(apapter);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
