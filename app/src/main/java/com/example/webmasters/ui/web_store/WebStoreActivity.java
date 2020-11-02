@@ -30,9 +30,6 @@ public class WebStoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web_store);
         RecyclerView recyclerViewProducts = findViewById(R.id.recyclerViewProducts);
 
-        //productNames.add("Title");
-        //ArrayAdapter apapter = new fillProductList(this, productNames);
-
         productNames.add("Title1");
         productNames.add("Title2");
 
@@ -51,10 +48,10 @@ public class WebStoreActivity extends AppCompatActivity {
 
 
     public static class FillProductList extends RecyclerView.Adapter<FillProductList.MyViewHolder> {
-        private List<String> productNames, productDesc;
+        private List<String> productNames;
         private LayoutInflater mInflater;
 
-        public class MyViewHolder extends RecyclerView.ViewHolder {
+        public static class MyViewHolder extends RecyclerView.ViewHolder {
             TextView textViewTitle;
             TextView textViewDesc;
 
