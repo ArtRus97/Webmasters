@@ -10,69 +10,48 @@
         android:id="@+id/logoView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardLogoControls"
-        app:layout_constraintEnd_toEndOf="@+id/cardLogoControls"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/cardLogoControls"
+        app:layout_constraintBottom_toTopOf="@+id/scrollControls"
+        app:layout_constraintEnd_toEndOf="@+id/scrollControls"
+        app:layout_constraintStart_toStartOf="@+id/scrollControls"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="1" />
+        app:layout_constraintVertical_chainStyle="packed" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardLogoControls"
+
+    <ScrollView
+        android:id="@+id/scrollControls"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:padding="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoView"
-        app:layout_constraintVertical_weight="1">
+        app:layout_constraintTop_toBottomOf="@+id/logoView">
 
-        <com.example.webmasters.ui.shared.ExtendedCardView
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-        >
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="HELLO ALL!" />
-        </com.example.webmasters.ui.shared.ExtendedCardView>
-
-        <ScrollView
-            android:id="@+id/scrollControls"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="0dp">
-
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <include
+                layout="@layout/controls_logo_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_height="wrap_content" />
 
-                <include
-                    layout="@layout/controls_logo_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp" />
-
-                <include
-                    layout="@layout/controls_logo_shape"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="32dp" />
 
 
-        </ScrollView>
+            <include
+                layout="@layout/controls_logo_shape"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    </com.google.android.material.card.MaterialCardView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
