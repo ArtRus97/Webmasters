@@ -1,4 +1,4 @@
-package com.example.webmasters.ui.graphic_design.logos;
+package com.example.webmasters.ui.shared;
 
 import android.app.Activity;
 import android.content.Context;

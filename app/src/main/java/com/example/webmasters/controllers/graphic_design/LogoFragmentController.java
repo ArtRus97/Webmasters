@@ -2,7 +2,6 @@ package com.example.webmasters.controllers.graphic_design;
 
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,9 +9,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.webmasters.R;
 import com.example.webmasters.models.graphic_design.view_models.LogoViewModel;
 import com.example.webmasters.types.TextChangedListener;
-import com.example.webmasters.ui.graphic_design.logos.ColorButton;
+import com.example.webmasters.ui.shared.ColorButton;
 import com.example.webmasters.ui.graphic_design.logos.LogoView;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
 
