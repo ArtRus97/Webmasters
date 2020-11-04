@@ -36,7 +36,7 @@ public class WebStoreActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewProducts.setLayoutManager(layoutManager);
 
-        RecyclerView.Adapter recyclerViewAdapter = new FillProductList(this, productNames);
+        RecyclerView.Adapter recyclerViewAdapter = new FillProductList(this);
         recyclerViewProducts.setAdapter(recyclerViewAdapter);
     }
 
@@ -48,22 +48,24 @@ public class WebStoreActivity extends AppCompatActivity {
 
 
     public static class FillProductList extends RecyclerView.Adapter<FillProductList.MyViewHolder> {
-        private List<String> productNames;
         private LayoutInflater mInflater;
+
+        private WebStoreSingleton singleton = WebStoreSingleton.Singleton();
 
         public static class MyViewHolder extends RecyclerView.ViewHolder {
             TextView textViewTitle;
             TextView textViewDesc;
+            TextView textViewPrice;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
                 textViewTitle = itemView.findViewById(R.id.textViewTitle);
                 textViewDesc = itemView.findViewById(R.id.textViewDesc);
+                textViewPrice = itemView.findViewById(R.id.textViewPrice);
             }
         }
 
-        public FillProductList(Context context, List<String> productNames) {
-            this.productNames = productNames;
+        public FillProductList(Context context) {
             this.mInflater = LayoutInflater.from(context);
         }
 
@@ -76,19 +78,26 @@ public class WebStoreActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            String title = productNames.get(position);
-
+            String title;
             String desc;
-            WebStoreSingleton singleton = WebStoreSingleton.Singleton();
-            desc = singleton.desc;
+            String price;
+
+            //title = productNames.get(position);
+            //desc = singleton.desc;
+            //price = singleton.prices[position].toString();
+
+            title = singleton.products.get(position).getTitle();
+            desc = singleton.products.get(position).getDesc();
+            price = singleton.products.get(position).getPrice().toString();
 
             holder.textViewTitle.setText(title);
             holder.textViewDesc.setText(desc);
+            holder.textViewPrice.setText(price);
         }
 
         @Override
         public int getItemCount() {
-            return productNames.size();
+            return singleton.products.size();
         }
     }
 }

@@ -10,13 +10,14 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.example.webmasters.models.graphic_design.Text;
+
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 
 public class LogoView extends View {
     private DrawSettings mSettings = new DrawSettings(getContext());
-    private Paint paintLogo = new Paint();
 
     public LogoView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -27,27 +28,42 @@ public class LogoView extends View {
         super.draw(canvas);
         float centerX = getWidth() / 2f;
         float centerY = getHeight() / 2f;
-        canvas.drawText(mSettings.text, centerX, centerY, mSettings.textPaint);
+        drawFlower(canvas);
+        canvas.drawText(mSettings.getText(), centerX, centerY, mSettings.getTextPaint());
+    }
+
+    private void drawFlower(Canvas canvas) {
+        float NUM_OVALS = 7f;
+        for (int ovalIndex = 0; ovalIndex < NUM_OVALS; ovalIndex++) {
+            double fraction = 2 * Math.PI * (ovalIndex / NUM_OVALS);
+            float y = (float)(getHeight() / 2 + Math.sin(fraction) * 50);
+            float x = (float)(getWidth() / 2 + Math.cos(fraction) * 50);
+            canvas.drawCircle(x, y, 10, mSettings.shapePaint);
+        }
     }
 
     public void setText(String text) {
-        mSettings.text = text;
+        mSettings.setText(text);
         invalidate();
     }
 
     public void setTextSize(float textSize) {
-        //mSettings.setTextSize(textSize);
+        mSettings.setTextSize(textSize);
+        invalidate();
     }
 
+    public void setTextColor(int color) {
+        mSettings.setTextColor(color);
+        invalidate();
+    }
 
 }
 
 class DrawSettings {
     private Context mContext;
-    public final int DEFAULT_TEXT_SIZE = 17;
-
-    public String text = "";
-    public final Paint textPaint = new Paint();
+    private String mText = "";
+    private final Paint mTextPaint = new Paint();
+    public final Paint shapePaint = new Paint();
 
     public DrawSettings(Context context) {
         mContext = context;
@@ -58,13 +74,32 @@ class DrawSettings {
      * initPaints() initializes the paints used to draw logos.
      */
     private void initPaints() {
-        textPaint.setStyle(Paint.Style.FILL);
-        textPaint.setColor(Color.RED);
-        textPaint.setTextAlign(Paint.Align.CENTER);
+        mTextPaint.setStyle(Paint.Style.FILL);
+        mTextPaint.setColor(Color.RED);
+        mTextPaint.setTextAlign(Paint.Align.CENTER);
+
+        shapePaint.setStyle(Paint.Style.STROKE);
+        shapePaint.setStrokeWidth(100);
+        shapePaint.setColor(Color.GREEN);
     }
 
-    public void setTextSize(int textSize) {
-        float scaledSizeInPixels = textSize * mContext.getResources().getDisplayMetrics().scaledDensity;
-        textPaint.setTextSize(scaledSizeInPixels);
+    public void setText(String text) {
+        mText = text;
+    }
+
+    public String getText() {
+        return mText;
+    }
+
+    public void setTextSize(float textSize) {
+        mTextPaint.setTextSize(Text.spAsPixels(mContext, textSize));
+    }
+
+    public void setTextColor(int textColor) {
+        mTextPaint.setColor(textColor);
+    }
+
+    public Paint getTextPaint() {
+        return mTextPaint;
     }
 };

@@ -10,9 +10,9 @@ import com.example.webmasters.models.graphic_design.Logo;
 import com.example.webmasters.types.ILogo;
 
 public class LogoViewModel extends ViewModel implements ILogo {
-    private final MutableLiveData<String> mText = new MutableLiveData<>("");
-    private final MutableLiveData<Float> mTextSize = new MutableLiveData<>(0f);
-    private final MutableLiveData<Integer> mTextColor = new MutableLiveData<>(0);
+    private final MutableLiveData<String> mText = new MutableLiveData<>("Webmasters");
+    private final MutableLiveData<Integer> mTextSize = new MutableLiveData<>(12);
+    private final MutableLiveData<Integer> mTextColor = new MutableLiveData<>(Color.WHITE);
 
     @Override
     public void setText(String text) {
@@ -30,24 +30,26 @@ public class LogoViewModel extends ViewModel implements ILogo {
     }
 
     @Override
-    public void setTextSize(float size) {
-        mTextSize.setValue(size);
+    public void setTextSize(int size) {
+        if (getTextSize() == size) return;
+        mTextSize.setValue((int) size);
     }
 
     @Override
-    public float getTextSize() {
+    public int getTextSize() {
         if (mTextSize.getValue() != null)
             return mTextSize.getValue();
         else
-            return 0f;
+            return 0;
     }
 
-    public LiveData<Float> getTextSizeObservable() {
+    public LiveData<Integer> getTextSizeObservable() {
         return mTextSize;
     }
 
     @Override
     public void setTextColor(int color) {
+        if (getTextColor() == color) return;
         mTextColor.setValue(color);
     }
 
@@ -59,12 +61,25 @@ public class LogoViewModel extends ViewModel implements ILogo {
             return Color.WHITE;
     }
 
-    public Logo getLogo() {
-        Logo logo = new Logo();
-        logo.setTextColor(getTextColor());
-        logo.setText(getText());
-        logo.setTextSize(getTextSize());
-        return logo;
+    @Override
+    public void setColor(int color) {
+
     }
 
+    @Override
+    public int getColor() {
+        return 0;
+    }
+
+    @Override
+    public void setSize(int size) {
+
+    }
+
+    @Override
+    public int getSize() {
+        return 0;
+    }
+
+    public LiveData<Integer> getTextColorObservable() { return mTextColor; }
 }

@@ -9,7 +9,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.webmasters.R;
 import com.example.webmasters.models.graphic_design.view_models.LogoViewModel;
 import com.example.webmasters.types.TextChangedListener;
+import com.example.webmasters.ui.shared.ColorButton;
 import com.example.webmasters.ui.graphic_design.logos.LogoView;
+
+import java.util.Locale;
 
 public class LogoFragmentController {
     private Fragment mFragment;
@@ -25,6 +28,7 @@ public class LogoFragmentController {
 
         bindLogoText(view.findViewById(R.id.editLogoText), model);
         bindLogoTextSize(view.findViewById(R.id.editLogoTextSize), model);
+        bindLogoTextColor(view.findViewById(R.id.buttonLogoColor), model);
         bindLogoView(view.findViewById(R.id.logoView), model);
     }
 
@@ -37,6 +41,7 @@ public class LogoFragmentController {
         // Model -> View updates.
         logoViewModel.getTextObservable().observe(mFragment, logoView::setText);
         logoViewModel.getTextSizeObservable().observe(mFragment, logoView::setTextSize);
+        logoViewModel.getTextColorObservable().observe(mFragment, logoView::setTextColor);
     }
 
     /**
@@ -61,6 +66,19 @@ public class LogoFragmentController {
     }
 
     /**
+     * bindLogoTextColor binds logo text color button view to view model and enables bidirectional updates.
+     * @param buttonLogoTextColor (ColorButton)
+     * @param logoViewModel (LogoViewModel)
+     */
+    private void bindLogoTextColor(ColorButton buttonLogoTextColor, LogoViewModel logoViewModel) {
+        // Model -> View update
+        logoViewModel.getTextColorObservable().observe(mFragment, buttonLogoTextColor::setColor);
+        // View -> Model update.
+        buttonLogoTextColor.setOnColorChangeCallback(mFragment.getViewLifecycleOwner(), logoViewModel::setTextColor);
+    }
+
+
+    /**
      * bindLogoTextSize binds logo text size edit view to view model and enables bidirectional updates.
      * @param editLogoTextSize (EditText)
      * @param logoViewModel (LogoViewModel)
@@ -69,7 +87,8 @@ public class LogoFragmentController {
         // Model -> View update
         logoViewModel.getTextSizeObservable().observe(mFragment, logoTextSize -> {
             int position = editLogoTextSize.getSelectionEnd();
-            editLogoTextSize.setText(logoTextSize.toString());
+            editLogoTextSize.setText(String.format(Locale.ENGLISH, "%d", logoTextSize));
+            editLogoTextSize.setSelection(position);
         });
         // View -> Model update.
         editLogoTextSize.addTextChangedListener(new TextChangedListener() {
@@ -78,7 +97,9 @@ public class LogoFragmentController {
                 try {
                     int textSize = Integer.parseInt(text);
                     logoViewModel.setTextSize(textSize);
-                } catch (NumberFormatException ignored) { }
+                } catch (NumberFormatException ignored) {
+                    // Ignore empty input.
+                }
             }
         });
     }

@@ -16,12 +16,12 @@ public class Logo implements ILogo {
     }
 
     @Override
-    public void setTextSize(float textSize) {
+    public void setTextSize(int textSize) {
         mText.fontSize = textSize;
     }
 
     @Override
-    public float getTextSize() {
+    public int getTextSize() {
         return mText.fontSize;
     }
 
@@ -33,5 +33,25 @@ public class Logo implements ILogo {
     @Override
     public int getTextColor() {
         return mText.color;
+    }
+
+    @Override
+    public void setColor(int color) {
+
+    }
+
+    @Override
+    public int getColor() {
+        return 0;
+    }
+
+    @Override
+    public void setSize(int size) {
+
+    }
+
+    @Override
+    public int getSize() {
+        return 0;
     }
 }
