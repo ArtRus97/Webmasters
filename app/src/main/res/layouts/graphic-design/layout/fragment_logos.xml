@@ -18,6 +18,7 @@
 
 
     <ScrollView
+        android:requiresFadingEdge="vertical"
         android:id="@+id/scrollControls"
         android:layout_width="match_parent"
         android:layout_height="0dp"
