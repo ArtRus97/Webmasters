@@ -1,58 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.graphic_design.logos.LogosFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.example.webmasters.ui.graphic_design.logos.LogoView
-        android:id="@+id/logoView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/scrollControls"
-        app:layout_constraintEnd_toEndOf="@+id/scrollControls"
-        app:layout_constraintStart_toStartOf="@+id/scrollControls"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+    <data>
+        <import type="com.example.webmasters.converters.Converter"/>
+        <variable
+            name="logo"
+            type="com.example.webmasters.models.graphic_design.LogoViewModel" />
+    </data>
 
-
-    <ScrollView
-        android:requiresFadingEdge="vertical"
-        android:id="@+id/scrollControls"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoView">
+        android:layout_height="match_parent"
+        tools:context=".ui.graphic_design.logos.LogoFragment">
+
+        <com.example.webmasters.ui.graphic_design.logos.LogoView
+            android:id="@+id/logoView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/scrollControls"
+            app:layout_constraintEnd_toEndOf="@+id/scrollControls"
+            app:layout_constraintStart_toStartOf="@+id/scrollControls"
+            app:textColor="@{logo.textColor}"
+            app:text="@{logo.text}"
+            app:textSize="@{logo.textSize}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <ScrollView
+            android:id="@+id/scrollControls"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="0dp"
+            android:padding="0dp"
+            android:requiresFadingEdge="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logoView">
 
-            <include
-                layout="@layout/controls_logo_text"
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/layoutControls"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="32dp" />
+                <com.example.webmasters.ui.shared.ExtendedCardView
+                    android:id="@+id/cardLogoText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:titleText="Logo Text">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutLogoTextControls"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layoutLogoText"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editLogoText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@={logo.text}"
+                                android:hint="Text"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:textSize="12sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.example.webmasters.ui.shared.ColorButton
+                            android:id="@+id/buttonLogoColor"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            app:customColor="@={logo.textColor}"
+                            android:layout_marginTop="16dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/colorAccent"
+                            app:layout_constraintEnd_toEndOf="@+id/layoutLogoText"
+                            app:layout_constraintStart_toEndOf="@+id/labelLogoTextColor"
+                            app:layout_constraintTop_toBottomOf="@+id/layoutLogoText" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/labelLogoTextColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Color:"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/buttonLogoColor"
+                            app:layout_constraintStart_toStartOf="@+id/layoutLogoText"
+                            app:layout_constraintTop_toTopOf="@+id/buttonLogoColor" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layoutLogoTextSize"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintEnd_toEndOf="@+id/buttonLogoColor"
+                            app:layout_constraintStart_toStartOf="@+id/labelLogoTextColor"
+                            app:layout_constraintTop_toBottomOf="@+id/buttonLogoColor">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editLogoTextSize"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Text size"
+                                android:text="@={Converter.intToString(logo.textSize)}"
+                                android:inputType="number"
+                                android:maxLines="1"
+                                android:textSize="12sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:id="@+id/labelHorizontalPosition"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="X:"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/seekHorizontalPosition"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/layoutLogoTextSize" />
+
+                        <SeekBar
+                            android:id="@+id/seekHorizontalPosition"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="@+id/labelHorizontalPosition"
+                            app:layout_constraintEnd_toStartOf="@+id/labelVerticalPosition"
+                            app:layout_constraintStart_toEndOf="@+id/labelHorizontalPosition" />
+
+                        <TextView
+                            android:id="@+id/labelVerticalPosition"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Y:"
+                            app:layout_constraintBottom_toBottomOf="@+id/seekHorizontalPosition"
+                            app:layout_constraintEnd_toStartOf="@+id/seekVerticalPosition"
+                            app:layout_constraintStart_toEndOf="@+id/seekHorizontalPosition"
+                            app:layout_constraintTop_toTopOf="@+id/seekHorizontalPosition" />
+
+                        <SeekBar
+                            android:id="@+id/seekVerticalPosition"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="@+id/labelVerticalPosition"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/labelVerticalPosition"
+                            app:layout_constraintTop_toTopOf="@+id/labelVerticalPosition" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.example.webmasters.ui.shared.ExtendedCardView>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp" />
 
 
-            <include
-                layout="@layout/controls_logo_shape"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <com.example.webmasters.ui.shared.ExtendedCardView xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:titleText="Logo shape">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputLayout
 
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </ScrollView>
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/select_logo"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                android:id="@+id/filled_exposed_dropdown"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.example.webmasters.ui.shared.ExtendedCardView>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

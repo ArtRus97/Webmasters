@@ -22,6 +22,7 @@ import androidx.transition.TransitionManager;
 import androidx.transition.TransitionSet;
 
 import com.example.webmasters.R;
+import com.example.webmasters.databinding.ViewExtendedCardBinding;
 import com.google.android.material.card.MaterialCardView;
 
 /**
@@ -39,22 +40,14 @@ public class ExtendedCardView extends MaterialCardView {
     // Constants.
     final String DEFAULT_TITLE = "Card Title";
 
-    // Layouts.
-    private ViewGroup mLayout;
-    private ViewGroup mHeader;
-    private ViewGroup mContent;
-
-    // Components.
-    private TextView mTextTitle;
-    private TextView mTextIcon;
-
+    private ViewExtendedCardBinding mBinding;
 
     public ExtendedCardView(Context context) {
         this(context, null);
     }
 
     public boolean isContentVisible() {
-        return mContent.getVisibility() == VISIBLE;
+        return getContent().getVisibility() == VISIBLE;
     }
 
     public ExtendedCardView(Context context, AttributeSet attrs) {
@@ -65,17 +58,10 @@ public class ExtendedCardView extends MaterialCardView {
         super(context, attrs, defStyle);
 
         // Inflate and attach child XML.
-        View root = LayoutInflater.from(context).inflate(R.layout.view_extended_card, this);
-
-        // Get child view references.
-        mLayout = root.findViewById(R.id.layout_main);
-        mHeader = mLayout.findViewById(R.id.layout_header);
-        mContent = mLayout.findViewById(R.id.layout_content);
-        mTextTitle = mHeader.findViewById(R.id.text_header_title);
-        mTextIcon = mHeader.findViewById(R.id.text_header_icon);
+        mBinding = ViewExtendedCardBinding.inflate(LayoutInflater.from(context), this);
 
         // Set callback listeners.
-        mHeader.setOnClickListener(header -> this.toggleContent(!isContentVisible()));
+        getHeader().setOnClickListener(header -> this.toggleContent(!isContentVisible()));
 
         // Set custom attributes.
         TypedArray customAttributes = context.obtainStyledAttributes(attrs, R.styleable.ExtendedCardView);
@@ -84,9 +70,26 @@ public class ExtendedCardView extends MaterialCardView {
             titleText = DEFAULT_TITLE;
         }
 
-        mTextTitle.setText(titleText);
+        getTitle().setText(titleText);
         customAttributes.recycle();
     }
+
+    public ViewGroup getHeader() {
+        return mBinding.layoutHeader;
+    }
+
+    public TextView getTitle() {
+        return mBinding.textHeaderTitle;
+    }
+
+    public TextView getIcon() {
+        return mBinding.textHeaderIcon;
+    }
+
+    public ViewGroup getContent() {
+        return mBinding.layoutContent;
+    }
+
 
     /**
      * addView has to be overridden to allow XML file to pass the defined child views
@@ -98,33 +101,33 @@ public class ExtendedCardView extends MaterialCardView {
      */
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        if (mContent == null)
+        if (mBinding == null)
             super.addView(child, index, params);
         else
-            mContent.addView(child, index, params);
+            getContent().addView(child, index, params);
     }
 
 
     public void toggleContent(boolean isVisible) {
         if (!isVisible) {
-            mContent.animate()
+            getContent().animate()
                     .translationY(0)
                     .alpha(0.0f)
                     .setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             super.onAnimationEnd(animation);
-                            mContent.setVisibility(GONE);
+                            getContent().setVisibility(GONE);
                         }
                     });
         } else {
-            mContent.setVisibility(VISIBLE);
-            mContent.setAlpha(0.0f);
-            mContent.animate()
+            getContent().setVisibility(VISIBLE);
+            getContent().setAlpha(0.0f);
+            getContent().animate()
                     .alpha(1.0f)
                     .setListener(null);
 
         }
-        mTextIcon.setCompoundDrawablesWithIntrinsicBounds(0, 0, !isVisible ? R.drawable.ic_baseline_expand_less_24 : R.drawable.ic_baseline_expand_more_24, 0);
+        getIcon().setCompoundDrawablesWithIntrinsicBounds(0, 0, !isVisible ? R.drawable.ic_baseline_expand_less_24 : R.drawable.ic_baseline_expand_more_24, 0);
     }
 }

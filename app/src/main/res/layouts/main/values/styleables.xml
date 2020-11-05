@@ -5,4 +5,13 @@
         <attr name="titleText" />
     </declare-styleable>
 
+    <declare-styleable name="LogoView">
+        <attr name="text" />
+        <attr name="textColor" />
+        <attr name="textSize" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorButton">
+        <attr name="customColor" />
+    </declare-styleable>
 </resources>

@@ -10,6 +10,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.example.webmasters.models.graphic_design.LogoViewModel;
 import com.example.webmasters.models.graphic_design.Text;
 
 import java.util.function.Function;
@@ -19,9 +20,18 @@ import java.util.function.Supplier;
 public class LogoView extends View {
     private DrawSettings mSettings = new DrawSettings(getContext());
 
-    public LogoView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+    public LogoView(Context context) {
+        this(context, null);
     }
+
+    public LogoView(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public LogoView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
 
     @Override
     public void draw(Canvas canvas) {
@@ -36,8 +46,8 @@ public class LogoView extends View {
         float NUM_OVALS = 7f;
         for (int ovalIndex = 0; ovalIndex < NUM_OVALS; ovalIndex++) {
             double fraction = 2 * Math.PI * (ovalIndex / NUM_OVALS);
-            float y = (float)(getHeight() / 2 + Math.sin(fraction) * 50);
-            float x = (float)(getWidth() / 2 + Math.cos(fraction) * 50);
+            float y = (float) (getHeight() / 2 + Math.sin(fraction) * 50);
+            float x = (float) (getWidth() / 2 + Math.cos(fraction) * 50);
             canvas.drawCircle(x, y, 10, mSettings.shapePaint);
         }
     }

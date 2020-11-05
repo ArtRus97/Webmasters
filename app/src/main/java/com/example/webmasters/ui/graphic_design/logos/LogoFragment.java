@@ -7,25 +7,30 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.library.baseAdapters.BR;
 import androidx.fragment.app.Fragment;
 
-import com.example.webmasters.R;
-import com.example.webmasters.controllers.graphic_design.LogoFragmentController;
-import com.google.android.material.tabs.TabLayout;
+import com.example.webmasters.databinding.FragmentLogosBinding;
+import com.example.webmasters.models.graphic_design.LogoViewModel;
 
-public class LogosFragment extends Fragment {
-    private LogoFragmentController mController = null;
+public class LogoFragment extends Fragment {
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View root = inflater.inflate(R.layout.fragment_logos, container, false);
-        mController = new LogoFragmentController(this, root);
-        return root;
+
+        FragmentLogosBinding binding = FragmentLogosBinding.inflate(getLayoutInflater());
+        binding.setVariable(BR.logo, new LogoViewModel());
+
+        return binding.getRoot();
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
+
 }

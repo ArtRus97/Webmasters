@@ -12,6 +12,8 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.Observable;
+import androidx.databinding.ObservableInt;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -24,9 +26,12 @@ import com.google.android.material.button.MaterialButton;
 
 
 public class ColorButton extends MaterialButton {
+    final MutableLiveData<Integer> mColor = new MutableLiveData<>(Color.WHITE);
     private Handler mHandler;
 
-    private MutableLiveData<Integer> mColor = new MutableLiveData<>(Color.WHITE);
+    public void onColorChanged(LifecycleOwner owner, Observer<Integer> observer) {
+        mColor.observe(owner, observer);
+    }
 
     public ColorButton(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -45,20 +50,17 @@ public class ColorButton extends MaterialButton {
 
     public void setColor(int color) {
         // Make sure button is updated on UI thread.
-        Log.d("COLOR", Integer.toHexString(color));
         mHandler.post(() -> {
             setBackgroundColor(color);
             setText(Integer.toHexString(color));
         });
+        // Update the color itself.
         mColor.setValue(color);
     }
 
-    public void setOnColorChangeCallback(LifecycleOwner owner, Observer<Integer> callback) {
-        mColor.observe(owner, callback);
-    }
 
     public int getColor() {
-        return mColor.getValue().intValue();
+        return mColor.getValue();
     }
 
     private void onClick(View self) {
