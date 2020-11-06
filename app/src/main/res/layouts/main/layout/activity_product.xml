@@ -50,7 +50,17 @@
         android:id="@+id/buttonCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Add to Cart"
+        app:layout_constraintStart_toEndOf="@+id/editTextNumber"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPrice" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="50sp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:text="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewPrice" />
 </androidx.constraintlayout.widget.ConstraintLayout>
