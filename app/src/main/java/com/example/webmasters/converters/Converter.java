@@ -19,6 +19,15 @@ public class Converter {
         return String.format(Locale.ENGLISH, "Y: %d", y);
     }
 
+    @InverseMethod("percentToScale")
+    public  static int  scaleToPercent(float scale) {
+        return (int)(scale * 100);
+    }
+
+    public static float percentToScale(int percent) {
+        return percent / 100f;
+    }
+
     @InverseMethod("stringToInt")
     public static String intToString(int intValue) {
         return String.valueOf(intValue);

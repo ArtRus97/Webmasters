@@ -27,6 +27,7 @@
             app:layout_constraintHeight_max="200dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:shapeScale="@{logo.shapeScale}"
             app:textX="@{logo.textX}"
             app:textY="@{logo.textY}"
             app:text="@{logo.text}"
@@ -202,11 +203,11 @@
                         <com.google.android.material.textfield.TextInputLayout
 
 
+                            android:id="@+id/textInputLayout"
                             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:hint="@string/select_logo"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
@@ -218,6 +219,27 @@
                                 android:layout_height="wrap_content" />
 
                         </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:id="@+id/labelShapeScale"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@{String.valueOf(logo.shapeScale)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+                        <SeekBar
+                            android:id="@+id/seekShapeScale"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:max="300"
+                            android:progress="@={Converter.scaleToPercent(logo.shapeScale)}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/labelShapeScale"
+                            app:layout_constraintTop_toTopOf="@+id/labelShapeScale" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

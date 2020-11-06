@@ -87,6 +87,8 @@ public class LogoView extends View {
     }
 
     private void drawFlower(Canvas canvas) {
+        canvas.save();
+        canvas.scale(mSettings.shapeScale, mSettings.shapeScale, getWidth() / 2f, getHeight() / 2f);
         float NUM_OVALS = 7f;
         for (int ovalIndex = 0; ovalIndex < NUM_OVALS; ovalIndex++) {
             double fraction = 2 * Math.PI * (ovalIndex / NUM_OVALS);
@@ -94,9 +96,13 @@ public class LogoView extends View {
             float x = (float) (getWidth() / 2 + Math.cos(fraction) * 50);
             canvas.drawCircle(x, y, 10, mSettings.shapePaint);
         }
+        canvas.restore();
     }
 
-
+    public void setShapeScale(float scale) {
+        mSettings.shapeScale = scale;
+        invalidate();
+    }
 
     public void setTextX(int xPosition) {
         mSettings.setTextPosition(xPosition, mSettings.getTextY());
@@ -149,6 +155,7 @@ public class LogoView extends View {
 }
 
 class DrawSettings {
+    public float shapeScale = 1;
     private int[] mTextPosition;
     private String mText = "";
     private final Paint mTextPaint = new Paint();

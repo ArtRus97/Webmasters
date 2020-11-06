@@ -4,6 +4,7 @@ import com.example.webmasters.types.ILogo;
 
 class Logo implements ILogo {
     Text text = new Text();
+    Shape shape = new Shape();
 
     public void setText(String titleText) {
         text.value = titleText;
@@ -30,22 +31,25 @@ class Logo implements ILogo {
         return text.color;
     }
 
-
-    public void setColor(int color) {
-
+    @Override
+    public void setShapeColor(int color) {
+        shape.color = color;
     }
 
-    public int getColor() {
-        return 0;
+    @Override
+    public int getShapeColor() {
+        return shape.color;
+    }
+
+    @Override
+    public void setShapeScale(float scale) {
+        shape.scale = scale;
+    }
+
+    @Override
+    public float getShapeScale() {
+        return shape.scale;
     }
 
 
-
-    public void setSize(int size) {
-
-    }
-
-    public int getSize() {
-        return 0;
-    }
 }

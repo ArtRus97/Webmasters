@@ -10,9 +10,9 @@ public interface ILogo {
     void setTextColor(int color);
     int getTextColor();
 
-    void setColor(int color);
-    int getColor();
+    void setShapeColor(int color);
+    int getShapeColor();
 
-    void setSize(int size);
-    int getSize();
+    void setShapeScale(float scale);
+    float getShapeScale();
 }
