@@ -65,12 +65,12 @@ public class ExtendedCardView extends MaterialCardView {
 
         // Set custom attributes.
         TypedArray customAttributes = context.obtainStyledAttributes(attrs, R.styleable.ExtendedCardView);
-        String titleText = customAttributes.getString(R.styleable.ExtendedCardView_titleText);
+        String titleText = customAttributes.getString(R.styleable.ExtendedCardView_title);
         if (titleText == null) {
             titleText = DEFAULT_TITLE;
         }
 
-        getTitle().setText(titleText);
+        setTitle(titleText);
         customAttributes.recycle();
     }
 
@@ -90,6 +90,9 @@ public class ExtendedCardView extends MaterialCardView {
         return mBinding.layoutContent;
     }
 
+    public void setTitle(String title) {
+        getTitle().setText(title);
+    }
 
     /**
      * addView has to be overridden to allow XML file to pass the defined child views

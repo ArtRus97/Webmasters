@@ -19,17 +19,27 @@ import com.example.webmasters.models.shared.ObservableLiveData;
 import com.example.webmasters.types.ILogo;
 import com.example.webmasters.ui.graphic_design.logos.LogoView;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class LogoViewModel extends BaseObservable implements ILogo {
     private Logo mLogo = new Logo();
+    private final List<Integer> mPosition = new ArrayList<>();
+
+    public LogoViewModel() {
+        mPosition.add(0);
+        mPosition.add(0);
+    }
+
+
 
     public void setText(String text) {
         if (mLogo.text.value.equals(text)) return;
         mLogo.setText(text);
         notifyPropertyChanged(BR.text);
     }
-
 
     @Bindable
     public String getText() {
@@ -43,8 +53,6 @@ public class LogoViewModel extends BaseObservable implements ILogo {
         notifyPropertyChanged(BR.textSize);
     }
 
-
-
     @Bindable
     public int getTextSize() {
         return mLogo.getTextSize();
@@ -57,13 +65,36 @@ public class LogoViewModel extends BaseObservable implements ILogo {
         notifyPropertyChanged(BR.textColor);
     }
 
-
-
     @Bindable
     public int getTextColor() {
         return mLogo.getTextColor();
     }
 
+
+    public void setTextX(int x) {
+        if (getTextX() == x) return;
+        Log.d("ASD", Log.getStackTraceString(new Exception()));
+        Log.d("ASD", x+"");
+        mPosition.set(0, x);
+        notifyPropertyChanged(BR.textX);
+    }
+
+    @Bindable
+    public int getTextX() {
+        return mPosition.get(0);
+    }
+
+
+    public void setTextY(int y) {
+        if  (getTextY() == y) return;
+        mPosition.set(1, y);
+        notifyPropertyChanged(BR.textY);
+    }
+
+    @Bindable
+    public int getTextY() {
+        return mPosition.get(1);
+    }
 
     public void setColor(int color) {
 

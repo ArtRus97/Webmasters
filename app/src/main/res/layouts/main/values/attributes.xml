@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="titleText" format="string"></attr>
-    <attr name="text" format="string"></attr>
-    <attr name="textSize" format="integer"></attr>
-    <attr name="textColor" format="integer"></attr>
-    <attr name="customColor" format="integer"></attr>
+    <attr name="title" format="string"></attr>
 </resources>

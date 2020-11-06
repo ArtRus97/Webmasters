@@ -1,6 +1,7 @@
 package com.example.webmasters.ui.graphic_design.logos;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +17,32 @@ import com.example.webmasters.models.graphic_design.LogoViewModel;
 public class LogoFragment extends Fragment {
 
 
+    private FragmentLogosBinding mBinding;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        mBinding = FragmentLogosBinding.inflate(getLayoutInflater());
 
-        FragmentLogosBinding binding = FragmentLogosBinding.inflate(getLayoutInflater());
-        binding.setVariable(BR.logo, new LogoViewModel());
+        LogoView logoView = mBinding.logoView;
 
-        return binding.getRoot();
+        LogoViewModel logoViewModel = new LogoViewModel();
+        logoViewModel.setText("Webmasters");
+        mBinding.setVariable(BR.logo, logoViewModel);
 
-    }
+        mBinding.getRoot().post(() -> {
+            int xBoundary = logoView.getWidth();
+            int yBoundary = logoView.getHeight();
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+            mBinding.seekTextX.setMax(xBoundary);
+            mBinding.seekTextY.setMax(yBoundary);
+
+            logoViewModel.setTextX(xBoundary / 2);
+            logoViewModel.setTextY(yBoundary / 2);
+
+        });
+
+        return mBinding.getRoot();
     }
 
 

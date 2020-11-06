@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.content.Context" />
+        <import type="com.example.webmasters.models.graphic_design.Text" />
         <import type="com.example.webmasters.converters.Converter"/>
         <variable
             name="logo"
@@ -12,6 +14,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
+        android:id="@+id/layoutMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.graphic_design.logos.LogoFragment">
@@ -24,9 +27,11 @@
             app:layout_constraintHeight_max="200dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:textX="@{logo.textX}"
+            app:textY="@{logo.textY}"
             app:text="@{logo.text}"
             app:textColor="@{logo.textColor}"
-            app:textSize="@{logo.textSize}" />
+            app:textSize="@{Text.spAsPixels(context, logo.textSize)}" />
 
         <ScrollView
             android:id="@+id/scrollControls"
@@ -48,18 +53,18 @@
                 android:padding="16dp">
 
                 <com.example.webmasters.ui.shared.ExtendedCardView
-                    android:id="@+id/cardLogoText"
+                    android:id="@+id/cardText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:titleText="Logo Text">
+                    app:title="Logo Text">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/layoutLogoTextControls"
+                        android:id="@+id/layoutText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/layoutLogoText"
+                            android:id="@+id/layoutTextValue"
                             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -68,7 +73,7 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editLogoText"
+                                android:id="@+id/editTextValue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Text"
@@ -80,7 +85,7 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.example.webmasters.ui.shared.ColorButton
-                            android:id="@+id/buttonLogoColor"
+                            android:id="@+id/buttonTextColor"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="32dp"
@@ -88,32 +93,32 @@
                             android:layout_weight="1"
                             android:backgroundTint="@color/colorAccent"
                             app:customColor="@={logo.textColor}"
-                            app:layout_constraintEnd_toEndOf="@+id/layoutLogoText"
-                            app:layout_constraintStart_toEndOf="@+id/labelLogoTextColor"
-                            app:layout_constraintTop_toBottomOf="@+id/layoutLogoText" />
+                            app:layout_constraintEnd_toEndOf="@+id/layoutTextValue"
+                            app:layout_constraintStart_toEndOf="@+id/labelTextColor"
+                            app:layout_constraintTop_toBottomOf="@+id/layoutTextValue" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/labelLogoTextColor"
+                            android:id="@+id/labelTextColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Color:"
                             android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/buttonLogoColor"
-                            app:layout_constraintStart_toStartOf="@+id/layoutLogoText"
-                            app:layout_constraintTop_toTopOf="@+id/buttonLogoColor" />
+                            app:layout_constraintBottom_toBottomOf="@+id/buttonTextColor"
+                            app:layout_constraintStart_toStartOf="@+id/layoutTextValue"
+                            app:layout_constraintTop_toTopOf="@+id/buttonTextColor" />
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/layoutLogoTextSize"
+                            android:id="@+id/layoutTextSize"
                             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            app:layout_constraintEnd_toEndOf="@+id/buttonLogoColor"
-                            app:layout_constraintStart_toStartOf="@+id/labelLogoTextColor"
-                            app:layout_constraintTop_toBottomOf="@+id/buttonLogoColor">
+                            app:layout_constraintEnd_toEndOf="@+id/buttonTextColor"
+                            app:layout_constraintStart_toStartOf="@+id/labelTextColor"
+                            app:layout_constraintTop_toBottomOf="@+id/buttonTextColor">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editLogoTextSize"
+                                android:id="@+id/editTextSize"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Text size"
@@ -125,58 +130,62 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <TextView
-                            android:id="@+id/labelHorizontalPosition"
+                            android:id="@+id/labelTextX"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:text="X:"
+                            android:text="@{Converter.xToString(logo.textX)}"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/seekHorizontalPosition"
+                            app:layout_constraintEnd_toStartOf="@id/seekTextX"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/layoutLogoTextSize" />
+                            app:layout_constraintTop_toBottomOf="@+id/layoutTextSize" />
 
                         <SeekBar
-                            android:id="@+id/seekHorizontalPosition"
+                            android:id="@+id/seekTextX"
+                            android:progress="@={logo.textX}"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="@+id/labelHorizontalPosition"
-                            app:layout_constraintEnd_toStartOf="@+id/labelVerticalPosition"
-                            app:layout_constraintStart_toEndOf="@+id/labelHorizontalPosition" />
+                            app:layout_constraintBottom_toBottomOf="@+id/labelTextX"
+                            app:layout_constraintEnd_toStartOf="@+id/labelTextY"
+                            app:layout_constraintStart_toEndOf="@+id/labelTextX" />
 
                         <TextView
-                            android:id="@+id/labelVerticalPosition"
+                            android:id="@+id/labelTextY"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Y:"
-                            app:layout_constraintBottom_toBottomOf="@+id/seekHorizontalPosition"
-                            app:layout_constraintEnd_toStartOf="@+id/seekVerticalPosition"
-                            app:layout_constraintStart_toEndOf="@+id/seekHorizontalPosition"
-                            app:layout_constraintTop_toTopOf="@+id/seekHorizontalPosition" />
+                            android:text="@{Converter.yToString(logo.textY)}"
+                            app:layout_constraintBottom_toBottomOf="@+id/seekTextX"
+                            app:layout_constraintEnd_toStartOf="@+id/seekTextY"
+                            app:layout_constraintStart_toEndOf="@+id/seekTextX"
+                            app:layout_constraintTop_toTopOf="@+id/seekTextX" />
 
                         <SeekBar
-                            android:id="@+id/seekVerticalPosition"
+                            android:id="@+id/seekTextY"
+                            android:progress="@={logo.textY}"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="@+id/labelVerticalPosition"
+                            app:layout_constraintBottom_toBottomOf="@+id/labelTextY"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/labelVerticalPosition"
-                            app:layout_constraintTop_toTopOf="@+id/labelVerticalPosition" />
+                            app:layout_constraintStart_toEndOf="@+id/labelTextY"
+                            app:layout_constraintTop_toTopOf="@+id/labelTextY" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.example.webmasters.ui.shared.ExtendedCardView>
 
                 <Space
                     android:layout_width="wrap_content"
-                    android:layout_height="32dp" />
+                    android:layout_height="12dp" />
 
 
-                <com.example.webmasters.ui.shared.ExtendedCardView xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <com.example.webmasters.ui.shared.ExtendedCardView
+                    android:id="@+id/cardShape"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:titleText="Logo shape">
+                    app:title="Logo shape">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutShape"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 

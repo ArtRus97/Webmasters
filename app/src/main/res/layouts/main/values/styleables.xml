@@ -2,16 +2,7 @@
 <resources>
 
     <declare-styleable name="ExtendedCardView">
-        <attr name="titleText" />
+        <attr name="title" />
     </declare-styleable>
 
-    <declare-styleable name="LogoView">
-        <attr name="text" />
-        <attr name="textColor" />
-        <attr name="textSize" />
-    </declare-styleable>
-
-    <declare-styleable name="ColorButton">
-        <attr name="customColor" />
-    </declare-styleable>
 </resources>

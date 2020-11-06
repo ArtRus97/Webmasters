@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 
 
 public class LogoView extends View {
-    private DrawSettings mSettings = new DrawSettings(getContext());
+    private DrawSettings mSettings = new DrawSettings(this);
 
     public LogoView(Context context) {
         this(context, null);
@@ -36,10 +36,8 @@ public class LogoView extends View {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        float centerX = getWidth() / 2f;
-        float centerY = getHeight() / 2f;
         drawFlower(canvas);
-        canvas.drawText(mSettings.getText(), centerX, centerY, mSettings.getTextPaint());
+        canvas.drawText(mSettings.getText(), mSettings.getTextX(), mSettings.getTextY(), mSettings.getTextPaint());
     }
 
     private void drawFlower(Canvas canvas) {
@@ -53,6 +51,16 @@ public class LogoView extends View {
     }
 
 
+
+    public void setTextX(int xPosition) {
+        mSettings.setTextPosition(xPosition, mSettings.getTextY());
+        invalidate();
+    }
+
+    public void setTextY(int yPosition) {
+        mSettings.setTextPosition(mSettings.getTextX(), yPosition);
+        invalidate();
+    }
 
     public void setText(String text) {
         mSettings.setText(text);
@@ -72,13 +80,13 @@ public class LogoView extends View {
 }
 
 class DrawSettings {
-    private Context mContext;
+    private int[] mTextPosition;
     private String mText = "";
     private final Paint mTextPaint = new Paint();
     public final Paint shapePaint = new Paint();
 
-    public DrawSettings(Context context) {
-        mContext = context;
+    public DrawSettings(LogoView view) {
+        mTextPosition = new int[]{view.getWidth() / 2, view.getHeight() / 2};
         initPaints();
     }
 
@@ -104,11 +112,28 @@ class DrawSettings {
     }
 
     public void setTextSize(float textSize) {
-        mTextPaint.setTextSize(Text.spAsPixels(mContext, textSize));
+        mTextPaint.setTextSize(textSize);
     }
 
     public void setTextColor(int textColor) {
         mTextPaint.setColor(textColor);
+    }
+
+    public void setTextPosition(int x, int y) {
+        mTextPosition[0] = x;
+        mTextPosition[1] = y;
+    }
+
+    public int getTextX() {
+        return mTextPosition[0];
+    }
+
+    public int getTextY() {
+        return mTextPosition[1];
+    }
+
+    public int[] getTextPosition() {
+        return mTextPosition;
     }
 
     public Paint getTextPaint() {
