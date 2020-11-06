@@ -11,6 +11,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.graphic_design.logos.LogoFragment">
@@ -18,16 +19,14 @@
         <com.example.webmasters.ui.graphic_design.logos.LogoView
             android:id="@+id/logoView"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/scrollControls"
-            app:layout_constraintEnd_toEndOf="@+id/scrollControls"
-            app:layout_constraintStart_toStartOf="@+id/scrollControls"
-            app:textColor="@{logo.textColor}"
-            app:text="@{logo.text}"
-            app:textSize="@{logo.textSize}"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="200dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
-
+            app:text="@{logo.text}"
+            app:textColor="@{logo.textColor}"
+            app:textSize="@{logo.textSize}" />
 
         <ScrollView
             android:id="@+id/scrollControls"
@@ -72,10 +71,10 @@
                                 android:id="@+id/editLogoText"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@={logo.text}"
                                 android:hint="Text"
                                 android:inputType="text"
                                 android:maxLines="1"
+                                android:text="@={logo.text}"
                                 android:textSize="12sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -85,10 +84,10 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="32dp"
-                            app:customColor="@={logo.textColor}"
                             android:layout_marginTop="16dp"
                             android:layout_weight="1"
                             android:backgroundTint="@color/colorAccent"
+                            app:customColor="@={logo.textColor}"
                             app:layout_constraintEnd_toEndOf="@+id/layoutLogoText"
                             app:layout_constraintStart_toEndOf="@+id/labelLogoTextColor"
                             app:layout_constraintTop_toBottomOf="@+id/layoutLogoText" />
@@ -118,9 +117,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Text size"
-                                android:text="@={Converter.intToString(logo.textSize)}"
                                 android:inputType="number"
                                 android:maxLines="1"
+                                android:text="@={Converter.intToString(logo.textSize)}"
                                 android:textSize="12sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>

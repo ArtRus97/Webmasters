@@ -52,6 +52,8 @@ public class LogoView extends View {
         }
     }
 
+
+
     public void setText(String text) {
         mSettings.setText(text);
         invalidate();
