@@ -4,8 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -19,6 +23,9 @@ import java.util.function.Supplier;
 
 public class LogoView extends View {
     private DrawSettings mSettings = new DrawSettings(this);
+    public final Path mPath = new Path();
+    private GestureDetector mGestureDetector;
+    private ScaleGestureDetector mScaleGestureDetector;
 
     public LogoView(Context context) {
         this(context, null);
@@ -30,6 +37,44 @@ public class LogoView extends View {
 
     public LogoView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mGestureDetector = new GestureDetector(context, new GestureDetector.OnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent motionEvent) {
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent motionEvent) {
+
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent motionEvent) {
+                return false;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent motionEvent) {
+
+            }
+
+            @Override
+            public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+                return false;
+            }
+        });
+
+        mScaleGestureDetector = new ScaleGestureDetector(context, new ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            @Override
+            public boolean onScale(ScaleGestureDetector detector) {
+                return super.onScale(detector);
+            }
+        });
     }
 
 
@@ -37,6 +82,7 @@ public class LogoView extends View {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         drawFlower(canvas);
+        canvas.drawPath(mPath, mSettings.mDrawPaint);
         canvas.drawText(mSettings.getText(), mSettings.getTextX(), mSettings.getTextY(), mSettings.getTextPaint());
     }
 
@@ -77,6 +123,29 @@ public class LogoView extends View {
         invalidate();
     }
 
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        super.onTouchEvent(event);
+        mGestureDetector.onTouchEvent(event);
+        mScaleGestureDetector.onTouchEvent(event);
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mPath.moveTo(event.getX(), event.getY());
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                mPath.lineTo(event.getX(), event.getY());
+                invalidate();
+                break;
+
+            case MotionEvent.ACTION_UP:
+                break;
+        }
+
+        return true;
+    }
 }
 
 class DrawSettings {
@@ -84,6 +153,8 @@ class DrawSettings {
     private String mText = "";
     private final Paint mTextPaint = new Paint();
     public final Paint shapePaint = new Paint();
+
+    public final Paint mDrawPaint = new Paint();
 
     public DrawSettings(LogoView view) {
         mTextPosition = new int[]{view.getWidth() / 2, view.getHeight() / 2};
@@ -97,6 +168,13 @@ class DrawSettings {
         mTextPaint.setStyle(Paint.Style.FILL);
         mTextPaint.setColor(Color.RED);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
+        mTextPaint.setAntiAlias(true);
+
+        mDrawPaint.setColor(Color.RED);
+        mDrawPaint.setStyle(Paint.Style.STROKE);
+        mDrawPaint.setStrokeJoin(Paint.Join.ROUND);
+        mDrawPaint.setStrokeCap(Paint.Cap.ROUND);
+        mDrawPaint.setStrokeWidth(10);
 
         shapePaint.setStyle(Paint.Style.STROKE);
         shapePaint.setStrokeWidth(100);
@@ -139,4 +217,6 @@ class DrawSettings {
     public Paint getTextPaint() {
         return mTextPaint;
     }
+
+
 };
