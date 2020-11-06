@@ -73,8 +73,6 @@ public class LogoViewModel extends BaseObservable implements ILogo {
 
     public void setTextX(int x) {
         if (getTextX() == x) return;
-        Log.d("ASD", Log.getStackTraceString(new Exception()));
-        Log.d("ASD", x+"");
         mPosition.set(0, x);
         notifyPropertyChanged(BR.textX);
     }

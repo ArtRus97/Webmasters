@@ -11,6 +11,10 @@ public class Converter {
         return String.format(Locale.ENGLISH, "X: %d", x);
     }
 
+    public static String formatSize(int size) {
+        return String.format(Locale.ENGLISH, "Size: %d", size);
+    }
+
     public static String yToString(int y) {
         return String.format(Locale.ENGLISH, "Y: %d", y);
     }
