@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="titleText" format="string">
-    </attr>
+    <attr name="title" format="string"></attr>
 </resources>

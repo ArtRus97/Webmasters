@@ -2,55 +2,49 @@ package com.example.webmasters.models.graphic_design;
 
 import com.example.webmasters.types.ILogo;
 
-public class Logo implements ILogo {
-    Text mText = new Text();
+class Logo implements ILogo {
+    Text text = new Text();
 
-    @Override
-    public void setText(String text) {
-        mText.text = text;
+    public void setText(String titleText) {
+        text.value = titleText;
     }
 
-    @Override
     public String getText() {
-        return mText.text;
+        return text.value;
     }
 
-    @Override
     public void setTextSize(int textSize) {
-        mText.fontSize = textSize;
+        text.size = textSize;
     }
 
-    @Override
     public int getTextSize() {
-        return mText.fontSize;
+        return text.size;
     }
 
-    @Override
-    public void setTextColor(int color) {
-        mText.color = color;
+
+    public void setTextColor(int textColor) {
+        text.color = textColor;
     }
 
-    @Override
     public int getTextColor() {
-        return mText.color;
+        return text.color;
     }
 
-    @Override
+
     public void setColor(int color) {
 
     }
 
-    @Override
     public int getColor() {
         return 0;
     }
 
-    @Override
+
+
     public void setSize(int size) {
 
     }
 
-    @Override
     public int getSize() {
         return 0;
     }

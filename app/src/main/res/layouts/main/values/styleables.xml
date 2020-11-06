@@ -2,7 +2,7 @@
 <resources>
 
     <declare-styleable name="ExtendedCardView">
-        <attr name="titleText" />
+        <attr name="title" />
     </declare-styleable>
 
 </resources>

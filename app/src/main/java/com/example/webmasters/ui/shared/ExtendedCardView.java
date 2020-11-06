@@ -22,19 +22,32 @@ import androidx.transition.TransitionManager;
 import androidx.transition.TransitionSet;
 
 import com.example.webmasters.R;
+import com.example.webmasters.databinding.ViewExtendedCardBinding;
 import com.google.android.material.card.MaterialCardView;
 
+/**
+ * ExtendedCardView extends MaterialCardView with some additional features.
+ *
+ * @author JIkaheimo
+ * <p>
+ * Features:
+ * - Showing/hiding the child views by clicking the card title.
+ * <p>
+ * Custom attributes:
+ * - app:titleText sets the the card's title text.
+ */
 public class ExtendedCardView extends MaterialCardView {
-    private ViewGroup mLayout;
-    private ViewGroup mHeader;
-    private ViewGroup mContent;
+    // Constants.
+    final String DEFAULT_TITLE = "Card Title";
+
+    private ViewExtendedCardBinding mBinding;
 
     public ExtendedCardView(Context context) {
         this(context, null);
     }
 
     public boolean isContentVisible() {
-        return mContent.getVisibility() == VISIBLE;
+        return getContent().getVisibility() == VISIBLE;
     }
 
     public ExtendedCardView(Context context, AttributeSet attrs) {
@@ -45,54 +58,79 @@ public class ExtendedCardView extends MaterialCardView {
         super(context, attrs, defStyle);
 
         // Inflate and attach child XML.
-        View root = LayoutInflater.from(context).inflate(R.layout.view_extended_card, this);
-
-        // Get child view references.
-        mLayout = root.findViewById(R.id.layout_main);
-        mHeader = mLayout.findViewById(R.id.layout_header);
-        mContent = mLayout.findViewById(R.id.layout_content);
-        TextView textTitle = mHeader.findViewById(R.id.text_header);
+        mBinding = ViewExtendedCardBinding.inflate(LayoutInflater.from(context), this);
 
         // Set callback listeners.
-        mHeader.setOnClickListener(header -> this.toggleContent());
+        getHeader().setOnClickListener(header -> this.toggleContent(!isContentVisible()));
 
         // Set custom attributes.
-        TypedArray customAttributes = context.obtainStyledAttributes(attrs, R.styleable.ExtendedCardView, defStyle, 0);
-        String titleText = customAttributes.getString(R.styleable.ExtendedCardView_titleText);
-        textTitle.setText(titleText);
+        TypedArray customAttributes = context.obtainStyledAttributes(attrs, R.styleable.ExtendedCardView);
+        String titleText = customAttributes.getString(R.styleable.ExtendedCardView_title);
+        if (titleText == null) {
+            titleText = DEFAULT_TITLE;
+        }
+
+        setTitle(titleText);
         customAttributes.recycle();
     }
 
+    public ViewGroup getHeader() {
+        return mBinding.layoutHeader;
+    }
+
+    public TextView getTitle() {
+        return mBinding.textHeaderTitle;
+    }
+
+    public TextView getIcon() {
+        return mBinding.textHeaderIcon;
+    }
+
+    public ViewGroup getContent() {
+        return mBinding.layoutContent;
+    }
+
+    public void setTitle(String title) {
+        getTitle().setText(title);
+    }
+
+    /**
+     * addView has to be overridden to allow XML file to pass the defined child views
+     * to the custom view's layout.
+     *
+     * @param child  (View)
+     * @param index  (int)
+     * @param params (ViewGroup.LayoutParams)
+     */
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        if (mContent == null)
+        if (mBinding == null)
             super.addView(child, index, params);
         else
-            mContent.addView(child, index, params);
+            getContent().addView(child, index, params);
     }
 
 
-    public void toggleContent() {
-
-        if (isContentVisible()) {
-            mContent.animate()
+    public void toggleContent(boolean isVisible) {
+        if (!isVisible) {
+            getContent().animate()
                     .translationY(0)
                     .alpha(0.0f)
                     .setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             super.onAnimationEnd(animation);
-                            mContent.setVisibility(GONE);
+                            getContent().setVisibility(GONE);
                         }
                     });
         } else {
-            mContent.setVisibility(VISIBLE);
-            mContent.setAlpha(0.0f);
-            mContent.animate()
+            getContent().setVisibility(VISIBLE);
+            getContent().setAlpha(0.0f);
+            getContent().animate()
                     .alpha(1.0f)
                     .setListener(null);
 
         }
-
+        getIcon().setCompoundDrawablesWithIntrinsicBounds(0, 0, !isVisible ? R.drawable.ic_baseline_expand_less_24 : R.drawable.ic_baseline_expand_more_24, 0);
     }
 }
