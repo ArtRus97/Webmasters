@@ -3,6 +3,7 @@ package com.example.webmasters.ui.graphic_design;
 import android.os.Bundle;
 
 import com.example.webmasters.R;
+import com.example.webmasters.ui.shared.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class GraphicDesignActivity extends AppCompatActivity {
+public class GraphicDesignActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

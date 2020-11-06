@@ -13,7 +13,7 @@
         <activity android:name=".ui.web_store.WebStoreActivity" />
         <activity android:name=".ui.graphic_design.GraphicDesignActivity" />
         <activity android:name=".ui.game_activity.gameActivity" />
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

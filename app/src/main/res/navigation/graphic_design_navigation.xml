@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_logos"
-        android:name="com.example.webmasters.ui.graphic_design.logos.LogosFragment"
+        android:name="com.example.webmasters.ui.graphic_design.logos.LogoFragment"
         android:label="@string/logos"
         tools:layout="@layout/fragment_logos" />
 
