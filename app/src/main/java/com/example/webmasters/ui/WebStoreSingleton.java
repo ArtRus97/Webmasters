@@ -6,30 +6,16 @@ public class WebStoreSingleton {
     // static variable single_instance of type Singleton
     private static WebStoreSingleton single_instance = null;
 
-    public ArrayList<String> productNames = new ArrayList<>();
-    public String desc;
-    public Double[] prices;
-
     public ArrayList<Product> products = new ArrayList<>();
 
     // private constructor restricted to this class itself
     private WebStoreSingleton() {
 
-        productNames.add("Title1");
-        productNames.add("Title2");
-        productNames.add("Title3");
-
-        desc = "Product description from singleton";
-
-        prices[0] = 1.0;
-        prices[1] = 2.0;
-        prices[2] = 3.0;
-
-        for (int i=0; i<3; i++) {
+        for (int i=1; i<4; i++) {
             Product product = new Product();
             product.title = "Title" + i;
-            product.desc = desc;
-            product.price = i + 1.0;
+            product.desc = "Product description from singleton";
+            product.price = i + 0.0;
 
             products.add(product);
         }
@@ -45,10 +31,12 @@ public class WebStoreSingleton {
     }
 
     public static class Product {
+        Integer id;
         String title;
         String desc;
         Double price;
 
+        public Integer getId() { return id; }
         public String getTitle() { return title; }
         public String getDesc() { return desc; }
         public Double getPrice() { return price; }
