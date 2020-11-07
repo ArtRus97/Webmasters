@@ -6,7 +6,7 @@ import androidx.databinding.InverseMethod;
 
 import java.util.Locale;
 
-public class Converter {
+public class LogoConverter {
     public static String xToString(int x) {
         return String.format(Locale.ENGLISH, "X: %d", x);
     }

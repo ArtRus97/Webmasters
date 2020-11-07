@@ -80,14 +80,8 @@ public class WebStoreActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             Product product = mProducts.get(position);
-            String price = String.format(Locale.ENGLISH, "%.2f", product.getPrice());
-
-            int descLength = Math.min(product.getDescription().length(), 80);
-
-            holder.id = product.getId();
-            holder.binding.labelTitle.setText(product.getName());
-            holder.binding.labelDescription.setText(product.getDescription().substring(0, descLength)+"...");
-            holder.binding.labelPrice.setText(price);
+            holder.binding.setHolder(holder);
+            holder.binding.setProduct(product);
             Picasso.get().load(product.getImageUrl()).into(holder.image);
         }
 
@@ -96,22 +90,18 @@ public class WebStoreActivity extends AppCompatActivity {
             return mProducts.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        public class MyViewHolder extends RecyclerView.ViewHolder {
             ActivityProductViewBinding binding;
-            String id;
             ImageView image;
 
             public MyViewHolder(ActivityProductViewBinding binding) {
                 super(binding.getRoot());
                 this.binding = binding;
                 image = binding.imageProduct;
-                binding.getRoot().setOnClickListener(this);
             }
 
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "position : " + getLayoutPosition() + " text : ", Toast.LENGTH_SHORT).show();;
-                OpenProduct(id);
+            public void handleClick() {
+                OpenProduct(binding.getProduct().getId());
             }
         }
     }

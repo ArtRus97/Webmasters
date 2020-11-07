@@ -6,7 +6,7 @@
     <data>
         <import type="android.content.Context" />
         <import type="com.example.webmasters.models.graphic_design.Text" />
-        <import type="com.example.webmasters.converters.Converter"/>
+        <import type="com.example.webmasters.converters.LogoConverter"/>
         <variable
             name="logo"
             type="com.example.webmasters.models.graphic_design.LogoViewModel" />
@@ -96,7 +96,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="24dp"
-                            android:text="@{Converter.formatSize(logo.textSize)}"
+                            android:text="@{LogoConverter.formatSize(logo.textSize)}"
                             app:layout_constraintBottom_toBottomOf="@+id/layoutTextValue"
                             app:layout_constraintEnd_toStartOf="@+id/seekTextSize"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -147,7 +147,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="24dp"
-                            android:text="@{Converter.xToString(logo.textX)}"
+                            android:text="@{LogoConverter.xToString(logo.textX)}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/seekTextX"
                             app:layout_constraintStart_toStartOf="parent"
@@ -168,7 +168,7 @@
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{Converter.yToString(logo.textY)}"
+                            android:text="@{LogoConverter.yToString(logo.textY)}"
                             app:layout_constraintBottom_toBottomOf="@+id/seekTextX"
                             app:layout_constraintEnd_toStartOf="@+id/seekTextY"
                             app:layout_constraintStart_toEndOf="@+id/seekTextX"
@@ -239,7 +239,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:max="300"
-                            android:progress="@={Converter.scaleToPercent(logo.shapeScale)}"
+                            android:progress="@={LogoConverter.scaleToPercent(logo.shapeScale)}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/labelShapeScale"
