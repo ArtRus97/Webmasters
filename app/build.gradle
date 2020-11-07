@@ -56,4 +56,5 @@ dependencies {
 
     // Added dependencies.
     implementation 'com.github.QuadFlask:colorpicker:0.0.15'
+    implementation "com.android.volley:volley:1.1.0"
 }
