@@ -13,11 +13,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/labelTitle"
         tools:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
-        android:id="@+id/textViewTitle"
+        android:id="@+id/labelTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Product Title"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewDesc"
+        android:id="@+id/labelDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Product Description"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonCart" />
 
     <TextView
-        android:id="@+id/textViewPrice"
+        android:id="@+id/labelPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Price"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:text="Add to Cart"
         app:layout_constraintStart_toEndOf="@+id/editTextNumber"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPrice" />
+        app:layout_constraintTop_toBottomOf="@+id/labelPrice" />
 
     <EditText
         android:id="@+id/editTextNumber"
@@ -62,5 +62,5 @@
         android:inputType="number"
         android:text="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPrice" />
+        app:layout_constraintTop_toBottomOf="@+id/labelPrice" />
 </androidx.constraintlayout.widget.ConstraintLayout>

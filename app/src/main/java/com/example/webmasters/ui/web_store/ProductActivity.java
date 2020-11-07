@@ -23,9 +23,9 @@ public class ProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-        TextView textViewTitle = findViewById(R.id.textViewTitle);
-        TextView textViewDesc = findViewById(R.id.textViewDesc);
-        TextView textViewPrice = findViewById(R.id.textViewPrice);
+        TextView textViewTitle = findViewById(R.id.labelTitle);
+        TextView textViewDesc = findViewById(R.id.labelDescription);
+        TextView textViewPrice = findViewById(R.id.labelPrice);
 
         Intent intent = getIntent();
         String productName = Objects.requireNonNull(intent.getExtras()).getString("productId");
