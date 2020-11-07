@@ -22,17 +22,19 @@
         <com.example.webmasters.ui.graphic_design.logos.LogoView
             android:id="@+id/logoView"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/scrollControls"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_max="200dp"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeScale="@{logo.shapeScale}"
-            app:textX="@{logo.textX}"
-            app:textY="@{logo.textY}"
+            app:layout_constraintVertical_weight="0.3"
+            app:shapeScale="@={logo.shapeScale}"
             app:text="@{logo.text}"
             app:textColor="@{logo.textColor}"
-            app:textSize="@{Text.spAsPixels(context, logo.textSize)}" />
+            app:textSize="@{Text.spAsPixels(context, logo.textSize)}"
+            app:textX="@{logo.textX}"
+            app:textY="@{logo.textY}" />
 
         <ScrollView
             android:id="@+id/scrollControls"
@@ -42,8 +44,10 @@
             android:requiresFadingEdge="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logoView">
+            app:layout_constraintTop_toBottomOf="@+id/logoView"
+            app:layout_constraintVertical_weight="0.7">
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -103,10 +107,10 @@
                         <SeekBar
                             android:id="@+id/seekTextSize"
                             android:layout_width="0dp"
-                            android:min="12"
-                            android:max="54"
-                            android:progress="@={logo.textSize}"
                             android:layout_height="wrap_content"
+                            android:max="54"
+                            android:min="12"
+                            android:progress="@={logo.textSize}"
                             app:layout_constraintBottom_toBottomOf="@+id/labelTextSize"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"

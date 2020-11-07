@@ -24,6 +24,18 @@ public class LogoFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         mBinding = FragmentLogosBinding.inflate(getLayoutInflater());
 
+        mBinding.logoView.setSwipeListener(new LogoView.SwipeListener() {
+            @Override
+            public void onSwipeDown() {
+                mBinding.scrollControls.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSwipeUp() {
+                mBinding.scrollControls.setVisibility(View.VISIBLE);
+            }
+        });
+
         LogoView logoView = mBinding.logoView;
 
         LogoViewModel logoViewModel = new LogoViewModel();
