@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -17,8 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.webmasters.R;
+import com.example.webmasters.models.webstore.Product;
+import com.example.webmasters.services.ProductApi;
 import com.example.webmasters.ui.WebStoreSingleton;
 import com.example.webmasters.ui.game_activity.gameActivity;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
 
 public class WebStoreActivity extends AppCompatActivity {
 
@@ -31,10 +38,10 @@ public class WebStoreActivity extends AppCompatActivity {
         RecyclerView recyclerViewProducts = findViewById(R.id.recyclerViewProducts);
 
         recyclerViewProducts.setLayoutManager(new LinearLayoutManager(this));
-
-        recyclerViewAdapter = new FillProductList(this);
-        recyclerViewProducts.setAdapter(recyclerViewAdapter);
-
+        WebStoreSingleton.getInstance(this).getProducts(products -> {
+            recyclerViewAdapter = new FillProductList(this, products);
+            recyclerViewProducts.setAdapter(recyclerViewAdapter);
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -42,21 +49,20 @@ public class WebStoreActivity extends AppCompatActivity {
         return true;
     }
 
-    public void OpenProduct(String productName) {
+    public void OpenProduct(String productId) {
         Intent intent = new Intent(this, ProductActivity.class);
-        intent.putExtra("productName", productName);
+        intent.putExtra("productId", productId);
         startActivity(intent);
-
     }
 
 
     public class FillProductList extends RecyclerView.Adapter<FillProductList.MyViewHolder> {
         private LayoutInflater mInflater;
+        private List<Product> mProducts;
 
-        private WebStoreSingleton singleton = WebStoreSingleton.Singleton();
-
-        public FillProductList(Context context) {
-            this.mInflater = LayoutInflater.from(context);
+        public FillProductList(Context context, List<Product> products) {
+            mInflater = LayoutInflater.from(context);
+            mProducts = products;
         }
 
         @NonNull
@@ -68,10 +74,12 @@ public class WebStoreActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            String title = singleton.products.get(position).getTitle();
-            String desc = singleton.products.get(position).getDesc();
-            String price = singleton.products.get(position).getPrice().toString();
+            Product product = mProducts.get(position);
+            String title = product.getName();
+            String desc = product.getDescription();
+            String price = String.format(Locale.ENGLISH, "%.2f", product.getPrice());
 
+            holder.id = product.getId();
             holder.textViewTitle.setText(title);
             holder.textViewDesc.setText(desc);
             holder.textViewPrice.setText(price);
@@ -79,10 +87,11 @@ public class WebStoreActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return singleton.products.size();
+            return mProducts.size();
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+            String id;
             TextView textViewTitle;
             TextView textViewDesc;
             TextView textViewPrice;
@@ -92,16 +101,13 @@ public class WebStoreActivity extends AppCompatActivity {
                 textViewTitle = itemView.findViewById(R.id.textViewTitle);
                 textViewDesc = itemView.findViewById(R.id.textViewDesc);
                 textViewPrice = itemView.findViewById(R.id.textViewPrice);
-
                 itemView.setOnClickListener(this);
             }
 
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "position : " + getLayoutPosition() + " text : ", Toast.LENGTH_SHORT).show();
-
-                TextView textView = (TextView) view.findViewById(R.id.textViewTitle);
-                OpenProduct(textView.getText().toString());
+                Toast.makeText(view.getContext(), "position : " + getLayoutPosition() + " text : ", Toast.LENGTH_SHORT).show();;
+                OpenProduct(id);
             }
         }
     }
