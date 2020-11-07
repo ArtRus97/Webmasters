@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,14 +15,18 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.webmasters.R;
+import com.example.webmasters.databinding.ActivityProductViewBinding;
+import com.example.webmasters.databinding.FragmentLogosBinding;
 import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.services.ProductApi;
 import com.example.webmasters.ui.WebStoreSingleton;
 import com.example.webmasters.ui.game_activity.gameActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.Collection;
 import java.util.List;
@@ -68,21 +73,22 @@ public class WebStoreActivity extends AppCompatActivity {
         @NonNull
         @Override
         public FillProductList.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = mInflater.inflate(R.layout.activity_product_view, parent, false);
-            return new MyViewHolder(view);
+            ActivityProductViewBinding mBinding = ActivityProductViewBinding.inflate(getLayoutInflater(), parent, false);
+            return new MyViewHolder(mBinding);
         }
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             Product product = mProducts.get(position);
-            String title = product.getName();
-            String desc = product.getDescription();
             String price = String.format(Locale.ENGLISH, "%.2f", product.getPrice());
 
+            int descLength = Math.min(product.getDescription().length(), 80);
+
             holder.id = product.getId();
-            holder.textViewTitle.setText(title);
-            holder.textViewDesc.setText(desc);
-            holder.textViewPrice.setText(price);
+            holder.binding.labelTitle.setText(product.getName());
+            holder.binding.labelDescription.setText(product.getDescription().substring(0, descLength)+"...");
+            holder.binding.labelPrice.setText(price);
+            Picasso.get().load(product.getImageUrl()).into(holder.image);
         }
 
         @Override
@@ -91,17 +97,15 @@ public class WebStoreActivity extends AppCompatActivity {
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+            ActivityProductViewBinding binding;
             String id;
-            TextView textViewTitle;
-            TextView textViewDesc;
-            TextView textViewPrice;
+            ImageView image;
 
-            public MyViewHolder(View itemView) {
-                super(itemView);
-                textViewTitle = itemView.findViewById(R.id.textViewTitle);
-                textViewDesc = itemView.findViewById(R.id.textViewDesc);
-                textViewPrice = itemView.findViewById(R.id.textViewPrice);
-                itemView.setOnClickListener(this);
+            public MyViewHolder(ActivityProductViewBinding binding) {
+                super(binding.getRoot());
+                this.binding = binding;
+                image = binding.imageProduct;
+                binding.getRoot().setOnClickListener(this);
             }
 
             @Override

@@ -1,6 +1,5 @@
 const express = require('express');
-const { commerce } = require('faker');
-const faker = require('faker');
+const { commerce, image } = require('faker');
 const { v4: uuidv4 } = require('uuid');
 
 const app = express();
@@ -8,14 +7,16 @@ const app = express();
 // Generate some random product data.
 const products = Array(100)
   .fill({})
-  .map(() => ({
-    id: uuidv4(),
-    name: commerce.productName(),
-    description: commerce.productDescription(),
-    category: commerce.department(),
-    price: commerce.price(),
-    imageUrl: 'https://loremflickr.com/320/240/product',
-  }));
+  .map(() => {
+    return {
+      id: uuidv4(),
+      name: commerce.productName(),
+      description: commerce.productDescription(),
+      category: commerce.department(),
+      price: commerce.price(),
+      imageUrl: image.technics(200, 200),
+    };
+  });
 
 // Serve random product data.
 app.get('/products', (req, res) => {
