@@ -34,7 +34,6 @@ public class LogoViewModel extends BaseObservable implements ILogo {
     }
 
 
-
     public void setText(String text) {
         if (mLogo.text.value.equals(text)) return;
         mLogo.setText(text);
@@ -71,6 +70,30 @@ public class LogoViewModel extends BaseObservable implements ILogo {
     }
 
 
+    public void setShapeColor(int shapeColor) {
+        if (mLogo.shape.color == shapeColor) return;
+        mLogo.setShapeColor(shapeColor);
+        notifyPropertyChanged(BR.shapeColor);
+    }
+
+    @Bindable
+    public int getShapeColor() {
+        return mLogo.getShapeColor();
+    }
+
+
+    public void setShapeScale(float scale) {
+        if (mLogo.shape.scale == scale) return;
+        mLogo.setShapeScale(scale);
+        notifyPropertyChanged(BR.shapeScale);
+    }
+
+    @Bindable
+    public float getShapeScale() {
+        return mLogo.getShapeScale();
+    }
+
+
     public void setTextX(int x) {
         if (getTextX() == x) return;
         mPosition.set(0, x);
@@ -93,25 +116,5 @@ public class LogoViewModel extends BaseObservable implements ILogo {
     public int getTextY() {
         return mPosition.get(1);
     }
-
-    public void setColor(int color) {
-
-    }
-
-
-    public int getColor() {
-        return 0;
-    }
-
-
-    @Override
-    public void setSize(int size) {
-
-    }
-
-    public int getSize() {
-        return 0;
-    }
-
 
 }
