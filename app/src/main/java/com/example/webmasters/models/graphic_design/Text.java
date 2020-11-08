@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
+import androidx.databinding.InverseMethod;
 import androidx.databinding.ObservableField;
 
 import com.example.webmasters.types.IText;
@@ -76,7 +77,5 @@ public class Text implements IText {
     public boolean isItalic() {
         return mIsItalic;
     }
-
-
 
 }

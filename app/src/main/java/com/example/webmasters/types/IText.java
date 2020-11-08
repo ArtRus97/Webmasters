@@ -27,6 +27,7 @@ public interface IText {
      */
     static Typeface getTypeface(IText text) {
         int typeface;
+
         if (text.isItalic() && text.isBold())
             typeface = Typeface.BOLD_ITALIC;
         else if (text.isBold())
@@ -35,6 +36,7 @@ public interface IText {
             typeface = Typeface.ITALIC;
         else
             typeface = Typeface.NORMAL;
+
         return Typeface.create(Typeface.DEFAULT, typeface);
     }
 
@@ -46,12 +48,14 @@ public interface IText {
      */
     static Paint getPaint(Context context, IText text) {
         Paint paint = new Paint();
+
         paint.setStyle(Paint.Style.FILL);
         paint.setTextSize(spAsPixels(context, text.getSize()));
         paint.setColor(text.getColor());
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setAntiAlias(true);
         paint.setTypeface(IText.getTypeface(text));
+
         return paint;
     }
 
@@ -62,7 +66,7 @@ public interface IText {
      * @param text (IText)
      */
     static void drawOnCanvas(Canvas canvas, Context context, IText text) {
-        Paint paint = getPaint(context, text);;
+        Paint paint = getPaint(context, text);
         canvas.drawText(text.getValue(), text.getX(), text.getY(), paint);
     }
 
