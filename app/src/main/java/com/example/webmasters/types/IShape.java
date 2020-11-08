@@ -24,7 +24,7 @@ public interface IShape {
 
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(100);
-        paint.setColor(Color.GREEN);
+        paint.setColor(shape.getColor());
 
         return paint;
     }
@@ -40,7 +40,7 @@ public interface IShape {
 
         canvas.save();
         canvas.scale(shape.getScale(), shape.getScale(), shape.getX(), shape.getY());
-        Log.d("ASDaa", ""+shape.getX());
+
         float NUM_OVALS = 7f;
         for (int ovalIndex = 0; ovalIndex < NUM_OVALS; ovalIndex++) {
             double fraction = 2 * Math.PI * (ovalIndex / NUM_OVALS);

@@ -274,11 +274,13 @@
                             android:id="@+id/seekShapeScale"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:max="300"
+                            android:min="@{LogoConverter.scaleToPercent(logo.MIN_SCALE)}"
+                            android:max="@{LogoConverter.scaleToPercent(logo.MAX_SCALE)}"
                             android:progress="@={LogoConverter.scaleToPercent(logo.shapeScale)}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/labelShapeScale"
-                            app:layout_constraintTop_toTopOf="@+id/labelShapeScale" />
+                            app:layout_constraintTop_toTopOf="@+id/labelShapeScale"
+                            tools:targetApi="o" />
 
                         <TextView
                             android:id="@+id/labelShapeX"

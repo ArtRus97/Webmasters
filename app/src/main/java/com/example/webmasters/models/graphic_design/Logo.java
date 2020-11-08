@@ -7,6 +7,9 @@ import com.example.webmasters.types.IShape;
 import com.example.webmasters.types.IText;
 
 public class Logo extends AbstractLogo {
+    final public float MIN_SCALE = 0.5f;
+    final public float MAX_SCALE = 2.0f;
+
     final private Text mText = new Text();
     final private Shape mShape = new Shape();
 
@@ -49,8 +52,13 @@ public class Logo extends AbstractLogo {
     }
 
     public void setShapeScale(float scale) {
+        // Make sure scaling does not go over boundaries.
+        scale = Math.max(MIN_SCALE, Math.min(scale, MAX_SCALE));
+        // Check for redundant operation.
         if (getShapeScale() == scale) return;
+        // Update scale.
         mShape.setScale(scale);
+        // Notify properties.
         notifyPropertyChanged(BR.shapeScale);
         notifyPropertyChanged(BR.shape);
     }
