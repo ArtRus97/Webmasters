@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import androidx.annotation.NonNull;
+
 import com.example.webmasters.types.IShape;
 
 public class Shape implements IShape {
@@ -19,7 +21,7 @@ public class Shape implements IShape {
         mName = name;
     }
 
-        public String getName() {
+    public String getName() {
         return mName;
     }
 
@@ -28,7 +30,7 @@ public class Shape implements IShape {
     }
 
     public int getX() {
-       return mPosition[0];
+        return mPosition[0];
     }
 
     public void setY(int y) {
@@ -57,16 +59,24 @@ public class Shape implements IShape {
 
 
     public Paint getPaint(Context context) {
+        // Create new paint.
         Paint paint = new Paint();
-
+        // Configure paint based on the state of the shape.
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(100);
         paint.setColor(mColor);
-
+        // Return configured paint.
         return paint;
     }
 
 
+    /**
+     * drawOnCanvas handles the pipeline of drawing the shape on canvas.
+     *
+     * Notes: Use onDraw to customize how the shape is being drawn.
+     * @param canvas (Canvas) being drawn on.
+     * @param context (Context)
+     */
     final public void drawOnCanvas(Canvas canvas, Context context) {
         onPreDraw(canvas);
         Paint paint = getPaint(context);
@@ -74,6 +84,13 @@ public class Shape implements IShape {
         onPostDraw(canvas);
     }
 
+    /**
+     * onDraw handles the actual drawing of the shape on canvas.
+     *
+     * Notes: Override this method to create custom-rendered shapes.
+     * @param canvas (Canvas) being drawn on.
+     * @param paint (Paint) used to draw the shape.
+     */
     public void onDraw(Canvas canvas, Paint paint) {
         float NUM_OVALS = 7f;
         for (int ovalIndex = 0; ovalIndex < NUM_OVALS; ovalIndex++) {
@@ -84,16 +101,29 @@ public class Shape implements IShape {
         }
     }
 
+    /**
+     * onPreDraw gets executed just before the shape is drawn on canvas.
+     * @param canvas (Canvas) being drawn on.
+     *
+     * Notes: Add any draw setups or canvas transforms here.
+     */
     private void onPreDraw(Canvas canvas) {
         canvas.save();
+        // Scale the canvas based on the state of the shape.
         canvas.scale(mScale, mScale, getX(), getY());
     }
 
+    /**
+     * onPostDraw gets executed just after the shape has been drawn on canvas.
+     * @param canvas (Canvas) being drawn on.
+     *
+     * Notes: Add any draw cleanups here.
+     */
     private void onPostDraw(Canvas canvas) {
         canvas.restore();
     }
 
-
+    @NonNull
     final public String toString() {
         return mName;
     }

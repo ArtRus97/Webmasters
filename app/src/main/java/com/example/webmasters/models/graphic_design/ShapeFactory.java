@@ -1,16 +1,17 @@
 package com.example.webmasters.models.graphic_design;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
 public class ShapeFactory {
+    /**
+     * createShapes returns some pre-defines shapes with custom canvas rendering.
+     * @return custom shapes.
+     */
     public Shape[] createShapes() {
         Shape defaultShape = new Shape();
 
-
         Shape starShape = new Shape("Star") {
-
             @Override
             public void onDraw(Canvas canvas, Paint paint) {
                 float NUM_OVALS = 7f;
@@ -23,6 +24,20 @@ public class ShapeFactory {
             }
         };
 
-        return new Shape[] {defaultShape, starShape};
+        Shape flowerShape = new Shape("Flower") {
+            @Override
+            public void onDraw(Canvas canvas, Paint paint) {
+                super.onDraw(canvas, paint);
+            }
+        };
+
+        Shape spikyShape = new Shape("Spiky") {
+            @Override
+            public void onDraw(Canvas canvas, Paint paint) {
+                super.onDraw(canvas, paint);
+            }
+        };
+
+        return new Shape[] {defaultShape, starShape, flowerShape, spikyShape};
     }
 }
