@@ -53,6 +53,22 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
     }
 
 
+    abstract void setTextBold(boolean isBold);
+
+    @Bindable
+    public boolean getTextBold() {
+        return getText().isBold();
+    }
+
+
+    abstract void setTextItalic(boolean isItalic);
+
+    @Bindable
+    public boolean getTextItalic() {
+        return getText().isItalic();
+    }
+
+
     abstract void setShapeScale(float shapeScale);
 
     @Bindable
@@ -68,10 +84,16 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
         return getShape().getColor();
     }
 
+
+    abstract void setShapeX(int x);
+
     @Bindable
     public int getShapeX() {
         return getShape().getX();
     }
+
+
+    abstract void setShapeY(int y);
 
     @Bindable
     public int getShapeY() {

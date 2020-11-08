@@ -28,17 +28,4 @@ public class LogoConverter {
         return percent / 100f;
     }
 
-    @InverseMethod("stringToInt")
-    public static String intToString(int intValue) {
-        return String.valueOf(intValue);
-    }
-
-    public static int stringToInt(String str) {
-        try {
-            return Integer.parseInt(str);
-        } catch (Exception _) {
-            return 0;
-        }
-
-    }
 }

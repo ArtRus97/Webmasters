@@ -25,8 +25,6 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/scrollControls"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_max="200dp"
-            app:layout_constraintHeight_min="200dp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -45,7 +43,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logoView">
+            app:layout_constraintTop_toBottomOf="@+id/logoView"
+            app:layout_constraintVertical_weight="0.7">
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -100,7 +99,8 @@
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintHorizontal_weight="0.25"
                             app:layout_constraintStart_toEndOf="@+id/layoutTextValue"
-                            app:layout_constraintTop_toTopOf="@+id/layoutTextValue" />
+                            app:layout_constraintTop_toTopOf="@+id/layoutTextValue"
+                            tools:text="Size: 12" />
 
                         <SeekBar
                             android:id="@+id/seekTextSize"
@@ -121,35 +121,33 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
                             android:layout_weight="1"
                             android:backgroundTint="@color/colorAccent"
                             app:customColor="@={logo.textColor}"
+                            app:layout_constraintBottom_toBottomOf="@+id/labelTextColor"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/labelTextColor"
-                            app:layout_constraintTop_toBottomOf="@+id/layoutTextValue" />
+                            app:layout_constraintTop_toTopOf="@+id/labelTextColor" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/labelTextColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:layout_marginTop="32dp"
                             android:text="Color:"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/buttonTextColor"
                             app:layout_constraintStart_toStartOf="@+id/layoutTextValue"
-                            app:layout_constraintTop_toTopOf="@+id/buttonTextColor" />
+                            app:layout_constraintTop_toBottomOf="@+id/layoutTextValue" />
 
                         <TextView
                             android:id="@+id/labelTextX"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="24dp"
+                            android:layout_marginTop="32dp"
                             android:text="@{LogoConverter.formatX(logo.textX)}"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/seekTextX"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/buttonTextColor"
+                            app:layout_constraintStart_toStartOf="@+id/labelTextColor"
+                            app:layout_constraintTop_toBottomOf="@+id/labelTextColor"
                             tools:text="X: 0" />
 
                         <SeekBar
@@ -183,6 +181,47 @@
                             app:layout_constraintStart_toEndOf="@+id/labelTextY"
                             app:layout_constraintTop_toTopOf="@+id/labelTextY" />
 
+                        <TextView
+                            android:id="@+id/labelTypeface"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:text="Typeface:"
+                            app:layout_constraintStart_toStartOf="@+id/labelTextX"
+                            app:layout_constraintTop_toBottomOf="@+id/labelTextX" />
+
+                        <ToggleButton
+                            android:id="@+id/toggleTextBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:checked="@={logo.textBold}"
+                            android:drawableBottom="@drawable/ic_baseline_format_bold_24"
+                            android:gravity="center"
+                            android:textOff=""
+                            android:textOn=""
+                            android:textSize="0sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/labelTypeface"
+                            app:layout_constraintStart_toEndOf="@+id/labelTypeface"
+                            app:layout_constraintTop_toTopOf="@+id/labelTypeface" />
+
+                        <ToggleButton
+                            android:id="@+id/toggleTextItalic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:checked="@={logo.textItalic}"
+                            android:drawableBottom="@drawable/ic_baseline_format_italic_24"
+                            android:gravity="center"
+                            android:textOff=""
+                            android:textOn=""
+                            android:textSize="0sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/toggleTextBold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toEndOf="@+id/toggleTextBold"
+                            app:layout_constraintTop_toTopOf="@+id/toggleTextBold" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.example.webmasters.ui.shared.ExtendedCardView>
 
@@ -202,49 +241,116 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <com.google.android.material.textfield.TextInputLayout
+                        <TextView
+                            android:id="@+id/labelShapeType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Shape:"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-
-                            android:id="@+id/textInputLayout"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                        <Spinner
+                            android:id="@+id/spinnerShapeType"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:hint="@string/select_logo"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/labelShapeType"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            app:layout_constraintStart_toEndOf="@+id/labelShapeType"
+                            app:layout_constraintTop_toTopOf="@+id/labelShapeType">
 
-
-                            <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                                android:id="@+id/filled_exposed_dropdown"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
+                        </Spinner>
 
                         <TextView
                             android:id="@+id/labelShapeScale"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="32dp"
                             android:text="@{String.valueOf(logo.shapeScale)}"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+                            app:layout_constraintStart_toStartOf="@+id/labelShapeColor"
+                            app:layout_constraintTop_toBottomOf="@+id/buttonShapeColor"
+                            tools:text="Scale: 1" />
 
                         <SeekBar
                             android:id="@+id/seekShapeScale"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:max="300"
+                            android:max="@{LogoConverter.scaleToPercent(logo.MAX_SCALE)}"
+                            android:min="@{LogoConverter.scaleToPercent(logo.MIN_SCALE)}"
                             android:progress="@={LogoConverter.scaleToPercent(logo.shapeScale)}"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/labelShapeScale"
-                            app:layout_constraintTop_toTopOf="@+id/labelShapeScale" />
+                            app:layout_constraintStart_toStartOf="@+id/buttonShapeColor"
+                            app:layout_constraintTop_toTopOf="@+id/labelShapeScale"
+                            tools:targetApi="o" />
+
+                        <TextView
+                            android:id="@+id/labelShapeX"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:text="@{LogoConverter.formatX(logo.shapeX)}"
+                            app:layout_constraintStart_toStartOf="@+id/labelShapeScale"
+                            app:layout_constraintTop_toBottomOf="@id/labelShapeScale"
+                            tools:text="X: 0" />
+
+                        <SeekBar
+                            android:id="@+id/seekShapeX"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:progress="@={logo.shapeX}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/labelShapeY"
+                            app:layout_constraintStart_toStartOf="@+id/seekShapeScale"
+                            app:layout_constraintTop_toTopOf="@+id/labelShapeX" />
+
+                        <TextView
+                            android:id="@+id/labelShapeY"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:text="@{LogoConverter.formatY(logo.shapeY)}"
+                            app:layout_constraintBottom_toBottomOf="@+id/seekShapeX"
+                            app:layout_constraintEnd_toStartOf="@+id/seekShapeY"
+                            app:layout_constraintStart_toEndOf="@+id/seekShapeX"
+                            app:layout_constraintTop_toTopOf="@+id/seekShapeX"
+                            tools:text="Y: 0" />
+
+                        <SeekBar
+                            android:id="@+id/seekShapeY"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:progress="@={logo.shapeY}"
+                            app:layout_constraintBottom_toBottomOf="@+id/labelShapeY"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/labelShapeY"
+                            app:layout_constraintTop_toTopOf="@+id/labelShapeY" />
+
+                        <com.example.webmasters.ui.shared.ColorButton
+                            android:id="@+id/buttonShapeColor"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:backgroundTint="@color/colorAccent"
+                            app:customColor="@={logo.shapeColor}"
+                            app:layout_constraintBottom_toBottomOf="@+id/labelShapeColor"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/spinnerShapeType"
+                            app:layout_constraintTop_toTopOf="@+id/labelShapeColor" />
+
+                        <TextView
+                            android:id="@+id/labelShapeColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:text="Color:"
+                            app:layout_constraintStart_toStartOf="@+id/labelShapeType"
+                            app:layout_constraintTop_toBottomOf="@+id/spinnerShapeType" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </com.example.webmasters.ui.shared.ExtendedCardView>
 
 

@@ -7,12 +7,27 @@ import com.example.webmasters.types.IShape;
 import com.example.webmasters.types.IText;
 
 public class Logo extends AbstractLogo {
+    final public float MIN_SCALE = 0.5f;
+    final public float MAX_SCALE = 2.0f;
+
     final private Text mText = new Text();
-    final private Shape mShape = new Shape();
+    private Shape mShape = new Shape();
 
     @Bindable
     public IText getText() {
         return mText;
+    }
+
+    public void setShape(Shape shape) {
+        // Update the new shape with the previous one.
+        shape.setX(mShape.getX());
+        shape.setY(mShape.getY());
+        shape.setScale(mShape.getScale());
+        shape.setColor(mShape.getColor());
+        // Set shape.
+        mShape = shape;
+        // Notify observers.
+        notifyPropertyChanged(BR.shape);
     }
 
     @Bindable
@@ -49,8 +64,13 @@ public class Logo extends AbstractLogo {
     }
 
     public void setShapeScale(float scale) {
+        // Make sure scaling does not go over boundaries.
+        scale = Math.max(MIN_SCALE, Math.min(scale, MAX_SCALE));
+        // Check for redundant operation.
         if (getShapeScale() == scale) return;
+        // Update scale.
         mShape.setScale(scale);
+        // Notify observers.
         notifyPropertyChanged(BR.shapeScale);
         notifyPropertyChanged(BR.shape);
     }
@@ -69,5 +89,31 @@ public class Logo extends AbstractLogo {
         notifyPropertyChanged(BR.text);
     }
 
+    public void setTextBold(boolean isBold) {
+        if (getTextBold() == isBold) return;
+        mText.setBold(isBold);
+        notifyPropertyChanged(BR.textBold);
+        notifyPropertyChanged(BR.text);
+    }
 
+    public void setTextItalic(boolean isItalic) {
+        if (getTextItalic() == isItalic) return;
+        mText.setItalic(isItalic);
+        notifyPropertyChanged(BR.textItalic);
+        notifyPropertyChanged(BR.text);
+    }
+
+    public void setShapeX(int x) {
+        if (getShapeX() == x) return;
+        mShape.setX(x);
+        notifyPropertyChanged(BR.shapeX);
+        notifyPropertyChanged(BR.shape);
+    }
+
+    public void setShapeY(int y) {
+        if (getShapeY() == y) return;
+        mShape.setY(y);
+        notifyPropertyChanged(BR.shapeY);
+        notifyPropertyChanged(BR.shape);
+    }
 }
