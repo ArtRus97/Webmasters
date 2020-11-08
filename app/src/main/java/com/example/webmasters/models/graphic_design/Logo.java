@@ -69,5 +69,19 @@ public class Logo extends AbstractLogo {
         notifyPropertyChanged(BR.text);
     }
 
+    public void setTextBold(boolean isBold) {
+        if (getTextBold() == isBold) return;
+        mText.setBold(isBold);
+        notifyPropertyChanged(BR.textBold);
+        notifyPropertyChanged(BR.text);
+    }
+
+    public void setTextItalic(boolean isItalic) {
+        if (getTextItalic() == isItalic) return;
+        mText.setItalic(isItalic);
+        notifyPropertyChanged(BR.textItalic);
+        notifyPropertyChanged(BR.text);
+    }
+
 
 }

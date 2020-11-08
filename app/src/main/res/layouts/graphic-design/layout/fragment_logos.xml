@@ -121,35 +121,33 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
                             android:layout_weight="1"
                             android:backgroundTint="@color/colorAccent"
                             app:customColor="@={logo.textColor}"
+                            app:layout_constraintBottom_toBottomOf="@+id/labelTextColor"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/labelTextColor"
-                            app:layout_constraintTop_toBottomOf="@+id/layoutTextValue" />
+                            app:layout_constraintTop_toTopOf="@+id/labelTextColor" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/labelTextColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:layout_marginTop="32dp"
                             android:text="Color:"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/buttonTextColor"
                             app:layout_constraintStart_toStartOf="@+id/layoutTextValue"
-                            app:layout_constraintTop_toTopOf="@+id/buttonTextColor" />
+                            app:layout_constraintTop_toBottomOf="@+id/layoutTextValue" />
 
                         <TextView
                             android:id="@+id/labelTextX"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="24dp"
+                            android:layout_marginTop="32dp"
                             android:text="@{LogoConverter.formatX(logo.textX)}"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/seekTextX"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/buttonTextColor"
+                            app:layout_constraintStart_toStartOf="@+id/labelTextColor"
+                            app:layout_constraintTop_toBottomOf="@+id/labelTextColor"
                             tools:text="X: 0" />
 
                         <SeekBar
@@ -182,6 +180,47 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/labelTextY"
                             app:layout_constraintTop_toTopOf="@+id/labelTextY" />
+
+                        <TextView
+                            android:id="@+id/labelTypeface"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:text="Typeface:"
+                            app:layout_constraintStart_toStartOf="@+id/labelTextX"
+                            app:layout_constraintTop_toBottomOf="@+id/labelTextX" />
+
+                        <ToggleButton
+                            android:id="@+id/toggleTextBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:checked="@={logo.textBold}"
+                            android:drawableBottom="@drawable/ic_baseline_format_bold_24"
+                            android:gravity="center"
+                            android:textOff=""
+                            android:textOn=""
+                            android:textSize="0sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/labelTypeface"
+                            app:layout_constraintStart_toEndOf="@+id/labelTypeface"
+                            app:layout_constraintTop_toTopOf="@+id/labelTypeface" />
+
+                        <ToggleButton
+                            android:id="@+id/toggleTextItalic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:checked="@={logo.textItalic}"
+                            android:drawableBottom="@drawable/ic_baseline_format_italic_24"
+                            android:gravity="center"
+                            android:textOff=""
+                            android:textOn=""
+                            android:textSize="0sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/toggleTextBold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toEndOf="@+id/toggleTextBold"
+                            app:layout_constraintTop_toTopOf="@+id/toggleTextBold" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.example.webmasters.ui.shared.ExtendedCardView>
@@ -245,6 +284,7 @@
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </com.example.webmasters.ui.shared.ExtendedCardView>
 
 
