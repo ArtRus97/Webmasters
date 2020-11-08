@@ -9,7 +9,7 @@
         <import type="com.example.webmasters.converters.LogoConverter"/>
         <variable
             name="logo"
-            type="com.example.webmasters.models.graphic_design.LogoViewModel" />
+            type="com.example.webmasters.models.graphic_design.Logo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,10 +25,13 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/scrollControls"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="200dp"
+            app:layout_constraintHeight_min="200dp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_weight="0.3"
+            app:onScale="@{logo::setShapeScale}"
             app:shape="@{logo.shape}"
             app:text="@{logo.text}" />
 
@@ -42,8 +45,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logoView"
-            app:layout_constraintVertical_weight="0.7">
+            app:layout_constraintTop_toBottomOf="@+id/logoView">
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -143,7 +145,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="24dp"
-                            android:text="@{LogoConverter.xToString(logo.textX)}"
+                            android:text="@{LogoConverter.formatX(logo.textX)}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/seekTextX"
                             app:layout_constraintStart_toStartOf="parent"
@@ -164,7 +166,7 @@
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{LogoConverter.yToString(logo.textY)}"
+                            android:text="@{LogoConverter.formatY(logo.textY)}"
                             app:layout_constraintBottom_toBottomOf="@+id/seekTextX"
                             app:layout_constraintEnd_toStartOf="@+id/seekTextY"
                             app:layout_constraintStart_toEndOf="@+id/seekTextX"

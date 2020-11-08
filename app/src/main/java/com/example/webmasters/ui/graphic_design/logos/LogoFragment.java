@@ -1,18 +1,16 @@
 package com.example.webmasters.ui.graphic_design.logos;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.fragment.app.Fragment;
 
 import com.example.webmasters.databinding.FragmentLogosBinding;
-import com.example.webmasters.models.graphic_design.LogoViewModel;
+import com.example.webmasters.models.graphic_design.Logo;
 
 public class LogoFragment extends Fragment {
 
@@ -38,9 +36,10 @@ public class LogoFragment extends Fragment {
 
         LogoView logoView = mBinding.logoView;
 
-        LogoViewModel logoViewModel = new LogoViewModel();
-        logoViewModel.setTextValue("Webmasters");
-        mBinding.setVariable(BR.logo, logoViewModel);
+        Logo logo = new Logo();
+        logo.setTextValue("Webmasters");
+        mBinding.setVariable(BR.logo, logo);
+
 
         mBinding.getRoot().post(() -> {
             int xBoundary = logoView.getWidth();
@@ -49,8 +48,8 @@ public class LogoFragment extends Fragment {
             mBinding.seekTextX.setMax(xBoundary);
             mBinding.seekTextY.setMax(yBoundary);
 
-            logoViewModel.setTextX(xBoundary / 2);
-            logoViewModel.setTextY(yBoundary / 2);
+            logo.setTextX(xBoundary / 2);
+            logo.setTextY(yBoundary / 2);
 
         });
 

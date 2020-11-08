@@ -28,13 +28,5 @@ public class LogoBindingAdapters {
         return view.getColor();
     }
 
-    @BindingAdapter(value = {"app:shapeScale", "app:shapeScaleAttrChanged"}, requireAll = false)
-    public static void setShapeScale(LogoView view, float scale, final InverseBindingListener listener) {
-        view.setShapeScale(scale);
-        view.onShapeScaleChanged(shapeScale -> { listener.onChange(); });
-    }
-
-    @InverseBindingAdapter(attribute = "app:shapeScale", event="app:shapeScaleAttrChanged")
-    public static float getShapeScale(LogoView view) { return view.getShapeScale(); }
 
 }
