@@ -25,8 +25,6 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/scrollControls"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_max="200dp"
-            app:layout_constraintHeight_min="200dp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -45,7 +43,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logoView">
+            app:layout_constraintTop_toBottomOf="@+id/logoView"
+            app:layout_constraintVertical_weight="0.7">
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -265,11 +264,11 @@
                             android:id="@+id/labelShapeScale"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="32dp"
                             android:text="@{String.valueOf(logo.shapeScale)}"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+                            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+                            tools:text="Scale: 1" />
 
                         <SeekBar
                             android:id="@+id/seekShapeScale"
@@ -277,10 +276,53 @@
                             android:layout_height="wrap_content"
                             android:max="300"
                             android:progress="@={LogoConverter.scaleToPercent(logo.shapeScale)}"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/labelShapeScale"
                             app:layout_constraintTop_toTopOf="@+id/labelShapeScale" />
+
+                        <TextView
+                            android:id="@+id/labelShapeX"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:text="@{LogoConverter.formatX(logo.shapeX)}"
+                            app:layout_constraintEnd_toStartOf="@id/seekShapeX"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/labelShapeScale"
+                            tools:text="X: 0" />
+
+                        <SeekBar
+                            android:id="@+id/seekShapeX"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:progress="@={logo.shapeX}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/labelShapeY"
+                            app:layout_constraintStart_toEndOf="@+id/labelShapeX"
+                            app:layout_constraintTop_toTopOf="@+id/labelShapeX" />
+
+                        <TextView
+                            android:id="@+id/labelShapeY"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{LogoConverter.formatY(logo.shapeY)}"
+                            app:layout_constraintBottom_toBottomOf="@+id/seekShapeX"
+                            app:layout_constraintEnd_toStartOf="@+id/seekShapeY"
+                            app:layout_constraintStart_toEndOf="@+id/seekShapeX"
+                            app:layout_constraintTop_toTopOf="@+id/seekShapeX"
+                            tools:text="Y: 0" />
+
+                        <SeekBar
+                            android:id="@+id/seekShapeY"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:progress="@={logo.shapeY}"
+                            app:layout_constraintBottom_toBottomOf="@+id/labelShapeY"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/labelShapeY"
+                            app:layout_constraintTop_toTopOf="@+id/labelShapeY" />
+
+
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

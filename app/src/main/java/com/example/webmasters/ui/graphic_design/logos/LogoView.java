@@ -126,9 +126,12 @@ public class LogoView extends View {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        canvas.save();
+        canvas.translate(0, mSettings.yPosition);
         canvas.drawPath(mPath, mSettings.mDrawPaint);
         IShape.drawOnCanvas(canvas, getContext(), mSettings.shape);
         IText.drawOnCanvas(canvas, getContext(), mSettings.text);
+        canvas.restore();
     }
 
 
@@ -189,14 +192,20 @@ public class LogoView extends View {
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
+    protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
+        super.onSizeChanged(width, height, oldWidth, oldHeight);
+        if (oldHeight != 0 && height > oldHeight) {
+            mSettings.yPosition = (height - oldHeight) / 2;
+        } else {
+            mSettings.yPosition = 0;
+        }
     }
 }
 
 class DrawSettings {
     public IText text;
     public IShape shape;
+    public int yPosition = 0;
 
     public final Paint mDrawPaint = new Paint();
 

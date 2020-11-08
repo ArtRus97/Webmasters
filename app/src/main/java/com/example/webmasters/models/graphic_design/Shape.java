@@ -5,15 +5,24 @@ import android.graphics.Color;
 import com.example.webmasters.types.IShape;
 
 public class Shape implements IShape {
+    private int[] mPosition = {0, 0};
     public int mColor = Color.GREEN;
     public float mScale = 1.0f;
 
+    public void setX(int x) {
+        mPosition[0] = x;
+    }
+
     public int getX() {
-        return 0;
+       return mPosition[0];
+    }
+
+    public void setY(int y) {
+        mPosition[1] = y;
     }
 
     public int getY() {
-        return 0;
+        return mPosition[1];
     }
 
     void setColor(int color) {

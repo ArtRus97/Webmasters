@@ -83,5 +83,17 @@ public class Logo extends AbstractLogo {
         notifyPropertyChanged(BR.text);
     }
 
+    public void setShapeX(int x) {
+        if (getShapeX() == x) return;
+        mShape.setX(x);
+        notifyPropertyChanged(BR.shapeX);
+        notifyPropertyChanged(BR.shape);
+    }
 
+    public void setShapeY(int y) {
+        if (getShapeY() == y) return;
+        mShape.setY(y);
+        notifyPropertyChanged(BR.shapeY);
+        notifyPropertyChanged(BR.shape);
+    }
 }

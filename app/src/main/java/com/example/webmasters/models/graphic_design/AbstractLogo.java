@@ -84,10 +84,16 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
         return getShape().getColor();
     }
 
+
+    abstract void setShapeX(int x);
+
     @Bindable
     public int getShapeX() {
         return getShape().getX();
     }
+
+
+    abstract void setShapeY(int y);
 
     @Bindable
     public int getShapeY() {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 public interface IShape {
     int getX();
@@ -38,12 +39,13 @@ public interface IShape {
         Paint paint = getPaint(context, shape);
 
         canvas.save();
-        canvas.scale(shape.getScale(), shape.getScale(), canvas.getWidth() / 2f, canvas.getHeight() / 2f);
+        canvas.scale(shape.getScale(), shape.getScale(), shape.getX(), shape.getY());
+        Log.d("ASDaa", ""+shape.getX());
         float NUM_OVALS = 7f;
         for (int ovalIndex = 0; ovalIndex < NUM_OVALS; ovalIndex++) {
             double fraction = 2 * Math.PI * (ovalIndex / NUM_OVALS);
-            float y = (float) (canvas.getHeight() / 2 + Math.sin(fraction) * 50);
-            float x = (float) (canvas.getWidth() / 2 + Math.cos(fraction) * 50);
+            float y = (float) (shape.getY() + Math.sin(fraction) * 50);
+            float x = (float) (shape.getX() + Math.cos(fraction) * 50);
             canvas.drawCircle(x, y, 10, paint);
         }
         canvas.restore();

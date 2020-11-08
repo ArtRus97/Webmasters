@@ -12,6 +12,7 @@ import com.example.webmasters.types.IText;
 
 /**
  * A very basic implementation of IText interface.
+ *
  * @author JIkaheimo (Jaakko Ikäheimo)
  */
 public class Text implements IText {
@@ -42,6 +43,10 @@ public class Text implements IText {
         mValue = value;
     }
 
+    public String getValue() {
+        return mValue;
+    }
+
     public void setX(int x) {
         mPosition[0] = x;
     }
@@ -56,10 +61,6 @@ public class Text implements IText {
 
     public int getY() {
         return mPosition[1];
-    }
-
-    public String getValue() {
-        return mValue;
     }
 
     public void setBold(boolean bold) {

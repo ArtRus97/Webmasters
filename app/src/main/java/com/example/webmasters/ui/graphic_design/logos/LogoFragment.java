@@ -47,10 +47,13 @@ public class LogoFragment extends Fragment {
 
             mBinding.seekTextX.setMax(xBoundary);
             mBinding.seekTextY.setMax(yBoundary);
+            mBinding.seekShapeX.setMax(xBoundary);
+            mBinding.seekShapeY.setMax(yBoundary);
 
             logo.setTextX(xBoundary / 2);
             logo.setTextY(yBoundary / 2);
-
+            logo.setShapeX(xBoundary / 2);
+            logo.setShapeY(yBoundary / 2);
         });
 
         return mBinding.getRoot();
