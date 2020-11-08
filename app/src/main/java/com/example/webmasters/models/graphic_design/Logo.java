@@ -11,11 +11,23 @@ public class Logo extends AbstractLogo {
     final public float MAX_SCALE = 2.0f;
 
     final private Text mText = new Text();
-    final private Shape mShape = new Shape();
+    private Shape mShape = new Shape();
 
     @Bindable
     public IText getText() {
         return mText;
+    }
+
+    public void setShape(Shape shape) {
+        // Update the new shape with the previous one.
+        shape.setX(mShape.getX());
+        shape.setY(mShape.getY());
+        shape.setScale(mShape.getScale());
+        shape.setColor(mShape.getColor());
+        // Set shape.
+        mShape = shape;
+        // Notify observers.
+        notifyPropertyChanged(BR.shape);
     }
 
     @Bindable
@@ -58,7 +70,7 @@ public class Logo extends AbstractLogo {
         if (getShapeScale() == scale) return;
         // Update scale.
         mShape.setScale(scale);
-        // Notify properties.
+        // Notify observers.
         notifyPropertyChanged(BR.shapeScale);
         notifyPropertyChanged(BR.shape);
     }

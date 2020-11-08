@@ -4,13 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.fragment.app.Fragment;
 
+import com.example.webmasters.R;
 import com.example.webmasters.databinding.FragmentLogosBinding;
 import com.example.webmasters.models.graphic_design.Logo;
+import com.example.webmasters.models.graphic_design.Shape;
+import com.example.webmasters.models.graphic_design.ShapeFactory;
 
 public class LogoFragment extends Fragment {
 
@@ -35,11 +40,29 @@ public class LogoFragment extends Fragment {
         });
 
         LogoView logoView = mBinding.logoView;
-
+        Shape[] shapes = new ShapeFactory().createShapes();
         Logo logo = new Logo();
         logo.setTextValue("Webmasters");
         mBinding.setVariable(BR.logo, logo);
 
+        mBinding.spinnerShapeType.setAdapter(new ArrayAdapter<Shape>(
+                requireContext(),
+                R.layout.support_simple_spinner_dropdown_item,
+                shapes
+        ));
+
+        mBinding.spinnerShapeType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                mBinding.getLogo().setShape(shapes[i]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // This should never happen...
+            }
+        });
 
         mBinding.getRoot().post(() -> {
             int xBoundary = logoView.getWidth();

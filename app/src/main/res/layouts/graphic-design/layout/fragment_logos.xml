@@ -241,25 +241,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <com.google.android.material.textfield.TextInputLayout
+                        <TextView
+                            android:id="@+id/labelShapeType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Shape:"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-
-                            android:id="@+id/textInputLayout"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                        <Spinner
+                            android:id="@+id/spinnerShapeType"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:hint="@string/select_logo"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/labelShapeType"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            app:layout_constraintStart_toEndOf="@+id/labelShapeType"
+                            app:layout_constraintTop_toTopOf="@+id/labelShapeType">
 
-
-                            <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                                android:id="@+id/filled_exposed_dropdown"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
+                        </Spinner>
 
                         <TextView
                             android:id="@+id/labelShapeScale"
@@ -267,7 +269,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="32dp"
                             android:text="@{String.valueOf(logo.shapeScale)}"
-                            app:layout_constraintStart_toStartOf="@+id/textView2"
+                            app:layout_constraintStart_toStartOf="@+id/labelShapeColor"
                             app:layout_constraintTop_toBottomOf="@+id/buttonShapeColor"
                             tools:text="Scale: 1" />
 
@@ -275,11 +277,11 @@
                             android:id="@+id/seekShapeScale"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:min="@{LogoConverter.scaleToPercent(logo.MIN_SCALE)}"
                             android:max="@{LogoConverter.scaleToPercent(logo.MAX_SCALE)}"
+                            android:min="@{LogoConverter.scaleToPercent(logo.MIN_SCALE)}"
                             android:progress="@={LogoConverter.scaleToPercent(logo.shapeScale)}"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/labelShapeScale"
+                            app:layout_constraintStart_toStartOf="@+id/buttonShapeColor"
                             app:layout_constraintTop_toTopOf="@+id/labelShapeScale"
                             tools:targetApi="o" />
 
@@ -289,7 +291,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="32dp"
                             android:text="@{LogoConverter.formatX(logo.shapeX)}"
-                            app:layout_constraintEnd_toStartOf="@id/seekShapeX"
                             app:layout_constraintStart_toStartOf="@+id/labelShapeScale"
                             app:layout_constraintTop_toBottomOf="@id/labelShapeScale"
                             tools:text="X: 0" />
@@ -301,13 +302,14 @@
                             android:progress="@={logo.shapeX}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/labelShapeY"
-                            app:layout_constraintStart_toEndOf="@+id/labelShapeX"
+                            app:layout_constraintStart_toStartOf="@+id/seekShapeScale"
                             app:layout_constraintTop_toTopOf="@+id/labelShapeX" />
 
                         <TextView
                             android:id="@+id/labelShapeY"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
                             android:text="@{LogoConverter.formatY(logo.shapeY)}"
                             app:layout_constraintBottom_toBottomOf="@+id/seekShapeX"
                             app:layout_constraintEnd_toStartOf="@+id/seekShapeY"
@@ -319,6 +321,7 @@
                             android:id="@+id/seekShapeY"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
                             android:progress="@={logo.shapeY}"
                             app:layout_constraintBottom_toBottomOf="@+id/labelShapeY"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -329,23 +332,21 @@
                             android:id="@+id/buttonShapeColor"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             app:backgroundTint="@color/colorAccent"
-                            app:layout_constraintBottom_toBottomOf="@+id/textView2"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/textView2"
                             app:customColor="@={logo.shapeColor}"
-                            app:layout_constraintTop_toTopOf="@+id/textView2" />
+                            app:layout_constraintBottom_toBottomOf="@+id/labelShapeColor"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/spinnerShapeType"
+                            app:layout_constraintTop_toTopOf="@+id/labelShapeColor" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/labelShapeColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
                             android:layout_marginTop="32dp"
                             android:text="Color:"
-                            app:layout_constraintStart_toStartOf="@+id/textInputLayout"
-                            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+                            app:layout_constraintStart_toStartOf="@+id/labelShapeType"
+                            app:layout_constraintTop_toBottomOf="@+id/spinnerShapeType" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

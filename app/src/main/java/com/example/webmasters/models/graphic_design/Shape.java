@@ -8,10 +8,20 @@ import android.graphics.Paint;
 import com.example.webmasters.types.IShape;
 
 public class Shape implements IShape {
-    private String mName = "Default";
+    private String mName = "Unnamed";
     private int[] mPosition = {0, 0};
-    public int mColor = Color.GREEN;
-    public float mScale = 1.0f;
+    private int mColor = Color.GREEN;
+    private float mScale = 1.0f;
+
+    public Shape() {}
+
+    public Shape(String name) {
+        mName = name;
+    }
+
+        public String getName() {
+        return mName;
+    }
 
     public void setX(int x) {
         mPosition[0] = x;
@@ -57,12 +67,14 @@ public class Shape implements IShape {
     }
 
 
-    public void drawOnCanvas(Canvas canvas, Context context) {
+    final public void drawOnCanvas(Canvas canvas, Context context) {
+        onPreDraw(canvas);
         Paint paint = getPaint(context);
+        onDraw(canvas, paint);
+        onPostDraw(canvas);
+    }
 
-        canvas.save();
-        canvas.scale(mScale, mScale, getX(), getY());
-
+    public void onDraw(Canvas canvas, Paint paint) {
         float NUM_OVALS = 7f;
         for (int ovalIndex = 0; ovalIndex < NUM_OVALS; ovalIndex++) {
             double fraction = 2 * Math.PI * (ovalIndex / NUM_OVALS);
@@ -70,6 +82,19 @@ public class Shape implements IShape {
             float x = (float) (getX() + Math.cos(fraction) * 50);
             canvas.drawCircle(x, y, 10, paint);
         }
+    }
+
+    private void onPreDraw(Canvas canvas) {
+        canvas.save();
+        canvas.scale(mScale, mScale, getX(), getY());
+    }
+
+    private void onPostDraw(Canvas canvas) {
         canvas.restore();
+    }
+
+
+    final public String toString() {
+        return mName;
     }
 }
