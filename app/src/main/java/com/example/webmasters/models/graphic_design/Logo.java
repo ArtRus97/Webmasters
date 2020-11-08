@@ -1,54 +1,46 @@
 package com.example.webmasters.models.graphic_design;
 
-import com.example.webmasters.types.ILogo;
+import com.example.webmasters.types.IShape;
+import com.example.webmasters.types.IText;
 
-class Logo implements ILogo {
-    Text text = new Text();
-    Shape shape = new Shape();
+class Logo extends AbstractLogo {
+    final private Text mText = new Text();
+    final private Shape mShape = new Shape();
 
-    public void setText(String titleText) {
-        text.value = titleText;
+    public IText getText() {
+        return mText;
     }
 
-    public String getText() {
-        return text.value;
+    public IShape getShape() {
+        return mShape;
+    }
+
+    public void setTextValue(String textValue) {
+        mText.setValue(textValue);
     }
 
     public void setTextSize(int textSize) {
-        text.size = textSize;
+        mText.setSize(textSize);
     }
-
-    public int getTextSize() {
-        return text.size;
-    }
-
 
     public void setTextColor(int textColor) {
-        text.color = textColor;
+        mText.setColor(textColor);
     }
 
-    public int getTextColor() {
-        return text.color;
-    }
-
-    @Override
     public void setShapeColor(int color) {
-        shape.color = color;
+        mShape.setColor(color);
     }
 
-    @Override
-    public int getShapeColor() {
-        return shape.color;
-    }
-
-    @Override
     public void setShapeScale(float scale) {
-        shape.scale = scale;
+        mShape.setScale(scale);
     }
 
-    @Override
-    public float getShapeScale() {
-        return shape.scale;
+    protected void setTextX(int x) {
+        mText.setX(x);
+    };
+
+    protected void setTextY(int y) {
+        mText.setY(y);
     }
 
 

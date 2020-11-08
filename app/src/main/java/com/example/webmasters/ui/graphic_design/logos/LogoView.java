@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.fonts.FontVariationAxis;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -16,7 +17,10 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.example.webmasters.models.graphic_design.LogoViewModel;
+import com.example.webmasters.models.graphic_design.Shape;
 import com.example.webmasters.models.graphic_design.Text;
+import com.example.webmasters.types.IShape;
+import com.example.webmasters.types.IText;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -114,7 +118,6 @@ public class LogoView extends View {
                 if (mShapeScaleListener != null)
                     mShapeScaleListener.accept(getShapeScale());
 
-
                 return super.onScale(detector);
             }
         });
@@ -126,7 +129,7 @@ public class LogoView extends View {
         super.draw(canvas);
         drawFlower(canvas);
         canvas.drawPath(mPath, mSettings.mDrawPaint);
-        canvas.drawText(mSettings.getText(), mSettings.getTextX(), mSettings.getTextY(), mSettings.getTextPaint());
+        IText.drawOnCanvas(canvas, getContext(), mSettings.text);
     }
 
     private void drawFlower(Canvas canvas) {
@@ -151,30 +154,17 @@ public class LogoView extends View {
         return mSettings.shapeScale;
     }
 
-    public void setTextX(int xPosition) {
-        mSettings.setTextPosition(xPosition, mSettings.getTextY());
+
+    public void setShape(IShape shape) {
+        mSettings.shape = shape;
         invalidate();
     }
 
-    public void setTextY(int yPosition) {
-        mSettings.setTextPosition(mSettings.getTextX(), yPosition);
+    public void setText(IText text) {
+        mSettings.text = text;
         invalidate();
     }
 
-    public void setText(String text) {
-        mSettings.setText(text);
-        invalidate();
-    }
-
-    public void setTextSize(float textSize) {
-        mSettings.setTextSize(textSize);
-        invalidate();
-    }
-
-    public void setTextColor(int color) {
-        mSettings.setTextColor(color);
-        invalidate();
-    }
 
 
     @Override
@@ -218,16 +208,14 @@ public class LogoView extends View {
 }
 
 class DrawSettings {
+    public IText text;
+    public IShape shape;
     public float shapeScale = 1;
-    private int[] mTextPosition;
-    private String mText = "";
-    private final Paint mTextPaint = new Paint();
     public final Paint shapePaint = new Paint();
 
     public final Paint mDrawPaint = new Paint();
 
     public DrawSettings(LogoView view) {
-        mTextPosition = new int[]{view.getWidth() / 2, view.getHeight() / 2};
         initPaints();
     }
 
@@ -235,10 +223,7 @@ class DrawSettings {
      * initPaints() initializes the paints used to draw logos.
      */
     private void initPaints() {
-        mTextPaint.setStyle(Paint.Style.FILL);
-        mTextPaint.setColor(Color.RED);
-        mTextPaint.setTextAlign(Paint.Align.CENTER);
-        mTextPaint.setAntiAlias(true);
+
 
         mDrawPaint.setColor(Color.RED);
         mDrawPaint.setStyle(Paint.Style.STROKE);
@@ -251,42 +236,6 @@ class DrawSettings {
         shapePaint.setColor(Color.GREEN);
     }
 
-    public void setText(String text) {
-        mText = text;
-    }
-
-    public String getText() {
-        return mText;
-    }
-
-    public void setTextSize(float textSize) {
-        mTextPaint.setTextSize(textSize);
-    }
-
-    public void setTextColor(int textColor) {
-        mTextPaint.setColor(textColor);
-    }
-
-    public void setTextPosition(int x, int y) {
-        mTextPosition[0] = x;
-        mTextPosition[1] = y;
-    }
-
-    public int getTextX() {
-        return mTextPosition[0];
-    }
-
-    public int getTextY() {
-        return mTextPosition[1];
-    }
-
-    public int[] getTextPosition() {
-        return mTextPosition;
-    }
-
-    public Paint getTextPaint() {
-        return mTextPaint;
-    }
 
 
 };

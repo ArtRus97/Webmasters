@@ -1,8 +1,11 @@
 package com.example.webmasters.types;
 
 public interface ILogo {
-    void setText(String text);
-    String getText();
+    IText getText();
+    IShape getShape();
+
+    void setTextValue(String text);
+    String getTextValue();
 
     void setTextSize(int size);
     int getTextSize();
@@ -10,9 +13,15 @@ public interface ILogo {
     void setTextColor(int color);
     int getTextColor();
 
+    int getTextX();
+    int getTextY();
+
     void setShapeColor(int color);
     int getShapeColor();
 
     void setShapeScale(float scale);
     float getShapeScale();
+
+    int getShapeX();
+    int getShapeY();
 }

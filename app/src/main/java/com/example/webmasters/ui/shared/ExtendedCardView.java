@@ -61,7 +61,7 @@ public class ExtendedCardView extends MaterialCardView {
         mBinding = ViewExtendedCardBinding.inflate(LayoutInflater.from(context), this);
 
         // Set callback listeners.
-        getHeader().setOnClickListener(header -> this.toggleContent(!isContentVisible()));
+        getHeader().setOnClickListener(header -> this.setContentVisible(!isContentVisible()));
 
         // Set custom attributes.
         TypedArray customAttributes = context.obtainStyledAttributes(attrs, R.styleable.ExtendedCardView);
@@ -111,7 +111,7 @@ public class ExtendedCardView extends MaterialCardView {
     }
 
 
-    public void toggleContent(boolean isVisible) {
+    public void setContentVisible(boolean isVisible) {
         if (!isVisible) {
             getContent().animate()
                     .translationY(0)
@@ -131,6 +131,6 @@ public class ExtendedCardView extends MaterialCardView {
                     .setListener(null);
 
         }
-        getIcon().setCompoundDrawablesWithIntrinsicBounds(0, 0, !isVisible ? R.drawable.ic_baseline_expand_less_24 : R.drawable.ic_baseline_expand_more_24, 0);
+        getIcon().setCompoundDrawablesWithIntrinsicBounds(0, 0, isVisible ? R.drawable.ic_baseline_expand_less_24 : R.drawable.ic_baseline_expand_more_24, 0);
     }
 }

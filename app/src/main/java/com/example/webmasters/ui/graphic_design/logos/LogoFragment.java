@@ -39,7 +39,7 @@ public class LogoFragment extends Fragment {
         LogoView logoView = mBinding.logoView;
 
         LogoViewModel logoViewModel = new LogoViewModel();
-        logoViewModel.setText("Webmasters");
+        logoViewModel.setTextValue("Webmasters");
         mBinding.setVariable(BR.logo, logoViewModel);
 
         mBinding.getRoot().post(() -> {
