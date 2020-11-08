@@ -129,8 +129,8 @@ public class LogoView extends View {
         canvas.save();
         canvas.translate(0, mSettings.yPosition);
         canvas.drawPath(mPath, mSettings.mDrawPaint);
-        IShape.drawOnCanvas(canvas, getContext(), mSettings.shape);
-        IText.drawOnCanvas(canvas, getContext(), mSettings.text);
+        mSettings.shape.drawOnCanvas(canvas, getContext());
+        mSettings.text.drawOnCanvas(canvas, getContext());
         canvas.restore();
     }
 

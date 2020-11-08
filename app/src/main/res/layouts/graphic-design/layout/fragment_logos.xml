@@ -99,7 +99,8 @@
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintHorizontal_weight="0.25"
                             app:layout_constraintStart_toEndOf="@+id/layoutTextValue"
-                            app:layout_constraintTop_toTopOf="@+id/layoutTextValue" />
+                            app:layout_constraintTop_toTopOf="@+id/layoutTextValue"
+                            tools:text="Size: 12" />
 
                         <SeekBar
                             android:id="@+id/seekTextSize"
@@ -266,8 +267,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="32dp"
                             android:text="@{String.valueOf(logo.shapeScale)}"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+                            app:layout_constraintStart_toStartOf="@+id/textView2"
+                            app:layout_constraintTop_toBottomOf="@+id/buttonShapeColor"
                             tools:text="Scale: 1" />
 
                         <SeekBar
@@ -289,7 +290,7 @@
                             android:layout_marginTop="32dp"
                             android:text="@{LogoConverter.formatX(logo.shapeX)}"
                             app:layout_constraintEnd_toStartOf="@id/seekShapeX"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/labelShapeScale"
                             app:layout_constraintTop_toBottomOf="@id/labelShapeScale"
                             tools:text="X: 0" />
 
@@ -324,7 +325,27 @@
                             app:layout_constraintStart_toEndOf="@+id/labelShapeY"
                             app:layout_constraintTop_toTopOf="@+id/labelShapeY" />
 
+                        <com.example.webmasters.ui.shared.ColorButton
+                            android:id="@+id/buttonShapeColor"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            app:backgroundTint="@color/colorAccent"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView2"
+                            app:customColor="@={logo.shapeColor}"
+                            app:layout_constraintTop_toTopOf="@+id/textView2" />
 
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="32dp"
+                            android:text="Color:"
+                            app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+                            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
