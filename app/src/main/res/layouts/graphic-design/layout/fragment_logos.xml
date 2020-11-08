@@ -29,12 +29,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_weight="0.3"
-            app:shapeScale="@={logo.shapeScale}"
-            app:text="@{logo.text}"
-            app:textColor="@{logo.textColor}"
-            app:textSize="@{Text.spAsPixels(context, logo.textSize)}"
-            app:textX="@{logo.textX}"
-            app:textY="@{logo.textY}" />
+            app:shape="@{logo.shape}"
+            app:text="@{logo.text}" />
 
         <ScrollView
             android:id="@+id/scrollControls"
@@ -86,7 +82,7 @@
                                 android:hint="Text"
                                 android:inputType="text"
                                 android:maxLines="1"
-                                android:text="@={logo.text}"
+                                android:text="@={logo.textValue}"
                                 android:textSize="12sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>

@@ -1,120 +1,70 @@
 package com.example.webmasters.models.graphic_design;
 
-import android.graphics.Color;
-import android.util.Log;
-
-import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import androidx.databinding.BindingAdapter;
-import androidx.databinding.InverseBindingAdapter;
 import androidx.databinding.library.baseAdapters.BR;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 
-import com.example.webmasters.models.graphic_design.Logo;
-import com.example.webmasters.models.shared.ObservableLiveData;
-import com.example.webmasters.types.ILogo;
-import com.example.webmasters.ui.graphic_design.logos.LogoView;
+import com.example.webmasters.types.IShape;
+import com.example.webmasters.types.IText;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-
-public class LogoViewModel extends BaseObservable implements ILogo {
+public class LogoViewModel extends AbstractLogo {
     private Logo mLogo = new Logo();
-    private final List<Integer> mPosition = new ArrayList<>();
-
-    public LogoViewModel() {
-        mPosition.add(0);
-        mPosition.add(0);
-    }
-
-
-    public void setText(String text) {
-        if (mLogo.text.value.equals(text)) return;
-        mLogo.setText(text);
-        notifyPropertyChanged(BR.text);
-    }
 
     @Bindable
-    public String getText() {
+    public IText getText() {
         return mLogo.getText();
     }
 
+    @Bindable
+    public IShape getShape() {
+        return mLogo.getShape();
+    }
+
+    public void setTextValue(String text) {
+        if (mLogo.getTextValue().equals(text)) return;
+        mLogo.setTextValue(text);
+        notifyPropertyChanged(BR.textValue);
+        notifyPropertyChanged(BR.text);
+    }
 
     public void setTextSize(int textSize) {
-        if (mLogo.text.size == textSize) return;
+        if (mLogo.getTextSize() == textSize) return;
         mLogo.setTextSize(textSize);
         notifyPropertyChanged(BR.textSize);
+        notifyPropertyChanged(BR.text);
     }
-
-    @Bindable
-    public int getTextSize() {
-        return mLogo.getTextSize();
-    }
-
 
     public void setTextColor(int textColor) {
-        if (mLogo.text.color == textColor) return;
+        if (mLogo.getTextColor() == textColor) return;
         mLogo.setTextColor(textColor);
         notifyPropertyChanged(BR.textColor);
+        notifyPropertyChanged(BR.text);
     }
-
-    @Bindable
-    public int getTextColor() {
-        return mLogo.getTextColor();
-    }
-
 
     public void setShapeColor(int shapeColor) {
-        if (mLogo.shape.color == shapeColor) return;
+        if (mLogo.getShapeColor() == shapeColor) return;
         mLogo.setShapeColor(shapeColor);
         notifyPropertyChanged(BR.shapeColor);
+        notifyPropertyChanged(BR.shape);
     }
-
-    @Bindable
-    public int getShapeColor() {
-        return mLogo.getShapeColor();
-    }
-
 
     public void setShapeScale(float scale) {
-        if (mLogo.shape.scale == scale) return;
+        if (mLogo.getShapeScale() == scale) return;
         mLogo.setShapeScale(scale);
         notifyPropertyChanged(BR.shapeScale);
+        notifyPropertyChanged(BR.shape);
     }
-
-    @Bindable
-    public float getShapeScale() {
-        return mLogo.getShapeScale();
-    }
-
 
     public void setTextX(int x) {
         if (getTextX() == x) return;
-        mPosition.set(0, x);
+        mLogo.setTextX(x);
         notifyPropertyChanged(BR.textX);
+        notifyPropertyChanged(BR.text);
     }
-
-    @Bindable
-    public int getTextX() {
-        return mPosition.get(0);
-    }
-
 
     public void setTextY(int y) {
-        if  (getTextY() == y) return;
-        mPosition.set(1, y);
+        if (getTextY() == y) return;
+        mLogo.setTextY(y);
         notifyPropertyChanged(BR.textY);
+        notifyPropertyChanged(BR.text);
     }
-
-    @Bindable
-    public int getTextY() {
-        return mPosition.get(1);
-    }
-
 }
