@@ -1,18 +1,21 @@
 package com.example.webmasters.types;
 
+import androidx.databinding.InverseMethod;
+
 public interface ILogo {
-    void setText(String text);
-    String getText();
+    IText getText();
+    IShape getShape();
 
-    void setTextSize(int size);
+    String getTextValue();
     int getTextSize();
-
-    void setTextColor(int color);
     int getTextColor();
+    int getTextX();
+    int getTextY();
+    boolean getTextBold();
+    boolean getTextItalic();
 
-    void setColor(int color);
-    int getColor();
-
-    void setSize(int size);
-    int getSize();
+    int getShapeColor();
+    float getShapeScale();
+    int getShapeX();
+    int getShapeY();
 }

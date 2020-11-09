@@ -11,20 +11,6 @@ import com.example.webmasters.ui.shared.ColorButton;
 
 public class LogoBindingAdapters {
 
-    @BindingAdapter("app:textSize")
-    public static void setTextSize(LogoView view, int textSize) {
-        view.setTextSize(textSize);
-    }
-
-    @BindingAdapter("app:text")
-    public static void setText(LogoView view, String text) {
-        view.setText(text);
-    }
-
-    @BindingAdapter({"app:textColor"})
-    public static void setTextColor(LogoView view, int textColor) {
-        view.setTextColor(textColor);
-    }
 
     @BindingAdapter(value = {"app:customColor", "app:customColorAttrChanged"}, requireAll = false)
     public static void setCustomColor(ColorButton view, int color, final InverseBindingListener listener) {

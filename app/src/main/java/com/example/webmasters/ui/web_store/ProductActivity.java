@@ -9,37 +9,31 @@ import android.view.Menu;
 import android.widget.TextView;
 
 import com.example.webmasters.R;
+import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.ui.WebStoreSingleton;
 
 import java.util.Objects;
 
 public class ProductActivity extends AppCompatActivity {
 
-    private WebStoreSingleton singleton = WebStoreSingleton.Singleton();
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
-        WebStoreSingleton.Product product = new WebStoreSingleton.Product();
 
-        TextView textViewTitle = findViewById(R.id.textViewTitle);
-        TextView textViewDesc = findViewById(R.id.textViewDesc);
-        TextView textViewPrice = findViewById(R.id.textViewPrice);
+        TextView textViewTitle = findViewById(R.id.labelTitle);
+        TextView textViewDesc = findViewById(R.id.labelDescription);
+        TextView textViewPrice = findViewById(R.id.labelPrice);
 
         Intent intent = getIntent();
-        String productName = Objects.requireNonNull(intent.getExtras()).getString("productName");
+        String productName = Objects.requireNonNull(intent.getExtras()).getString("productId");
 
-        for (int i=0; i < singleton.products.size(); i++) {
-            assert productName != null;
-            if (productName.equals(singleton.products.get(i).getTitle())) {
-                product = singleton.products.get(i);
-            }
-        }
+        Product product = WebStoreSingleton.getInstance(this).getProduct(productName);
 
-        textViewTitle.setText(product.getTitle());
-        textViewDesc.setText(product.getDesc());
+        textViewTitle.setText(product.getName());
+        textViewDesc.setText(product.getDescription());
         textViewPrice.setText(product.getPrice().toString());
     }
 

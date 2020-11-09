@@ -1,44 +1,50 @@
 package com.example.webmasters.ui;
 
+import android.content.Context;
+import android.widget.Toast;
+
+import com.example.webmasters.models.webstore.Product;
+import com.example.webmasters.services.ProductApi;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class WebStoreSingleton {
     // static variable single_instance of type Singleton
-    private static WebStoreSingleton single_instance = null;
-
-    public ArrayList<Product> products = new ArrayList<>();
+    private static WebStoreSingleton mInstance = null;
+    private Context mContext;
+    public final HashMap<String, Product> mProducts = new HashMap<>();
 
     // private constructor restricted to this class itself
-    private WebStoreSingleton() {
+    private WebStoreSingleton(Context context) {
+        mContext = context;
+    }
 
-        for (int i=1; i<4; i++) {
-            Product product = new Product();
-            product.title = "Title" + i;
-            product.desc = "Product description from singleton";
-            product.price = i + 0.0;
+    public void getProducts(Consumer<List<Product>> handler) {
+        if (mProducts.isEmpty())
+            ProductApi.fetchProducts(mContext, products -> {
+                // Fetch product data from API.
+                for (Product product : products)
+                    mProducts.put(product.getId(), product);
+                handler.accept(new ArrayList<>(mProducts.values()));
+            });
+        // Otherwise just return the fetched products.
+        else
+            handler.accept(new ArrayList<>(mProducts.values()));
+    }
 
-            products.add(product);
-        }
+    public Product getProduct(String id) {
+        return mProducts.get(id);
     }
 
     // static method to create instance of Singleton class
-    public static WebStoreSingleton Singleton() {
+    public static synchronized WebStoreSingleton getInstance(Context context) {
         // To ensure only one instance is created
-        if (single_instance == null) {
-            single_instance = new WebStoreSingleton();
-        }
-        return single_instance;
-    }
-
-    public static class Product {
-        Integer id;
-        String title;
-        String desc;
-        Double price;
-
-        public Integer getId() { return id; }
-        public String getTitle() { return title; }
-        public String getDesc() { return desc; }
-        public Double getPrice() { return price; }
+        if (mInstance == null)
+            mInstance = new WebStoreSingleton(context);
+        return mInstance;
     }
 }

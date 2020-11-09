@@ -7,18 +7,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.webmasters.R;
+import com.example.webmasters.databinding.ActivityProductViewBinding;
+import com.example.webmasters.databinding.FragmentLogosBinding;
+import com.example.webmasters.models.webstore.Product;
+import com.example.webmasters.services.ProductApi;
 import com.example.webmasters.ui.WebStoreSingleton;
 import com.example.webmasters.ui.game_activity.gameActivity;
+import com.squareup.picasso.Picasso;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
 
 public class WebStoreActivity extends AppCompatActivity {
 
@@ -31,10 +43,10 @@ public class WebStoreActivity extends AppCompatActivity {
         RecyclerView recyclerViewProducts = findViewById(R.id.recyclerViewProducts);
 
         recyclerViewProducts.setLayoutManager(new LinearLayoutManager(this));
-
-        recyclerViewAdapter = new FillProductList(this);
-        recyclerViewProducts.setAdapter(recyclerViewAdapter);
-
+        WebStoreSingleton.getInstance(this).getProducts(products -> {
+            recyclerViewAdapter = new FillProductList(this, products);
+            recyclerViewProducts.setAdapter(recyclerViewAdapter);
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -42,66 +54,54 @@ public class WebStoreActivity extends AppCompatActivity {
         return true;
     }
 
-    public void OpenProduct(String productName) {
+    public void OpenProduct(String productId) {
         Intent intent = new Intent(this, ProductActivity.class);
-        intent.putExtra("productName", productName);
+        intent.putExtra("productId", productId);
         startActivity(intent);
-
     }
 
 
     public class FillProductList extends RecyclerView.Adapter<FillProductList.MyViewHolder> {
         private LayoutInflater mInflater;
+        private List<Product> mProducts;
 
-        private WebStoreSingleton singleton = WebStoreSingleton.Singleton();
-
-        public FillProductList(Context context) {
-            this.mInflater = LayoutInflater.from(context);
+        public FillProductList(Context context, List<Product> products) {
+            mInflater = LayoutInflater.from(context);
+            mProducts = products;
         }
 
         @NonNull
         @Override
         public FillProductList.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = mInflater.inflate(R.layout.activity_product_view, parent, false);
-            return new MyViewHolder(view);
+            ActivityProductViewBinding mBinding = ActivityProductViewBinding.inflate(getLayoutInflater(), parent, false);
+            return new MyViewHolder(mBinding);
         }
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            String title = singleton.products.get(position).getTitle();
-            String desc = singleton.products.get(position).getDesc();
-            String price = singleton.products.get(position).getPrice().toString();
-
-            holder.textViewTitle.setText(title);
-            holder.textViewDesc.setText(desc);
-            holder.textViewPrice.setText(price);
+            Product product = mProducts.get(position);
+            holder.binding.setHolder(holder);
+            holder.binding.setProduct(product);
+            Picasso.get().load(product.getImageUrl()).into(holder.image);
         }
 
         @Override
         public int getItemCount() {
-            return singleton.products.size();
+            return mProducts.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-            TextView textViewTitle;
-            TextView textViewDesc;
-            TextView textViewPrice;
+        public class MyViewHolder extends RecyclerView.ViewHolder {
+            ActivityProductViewBinding binding;
+            ImageView image;
 
-            public MyViewHolder(View itemView) {
-                super(itemView);
-                textViewTitle = itemView.findViewById(R.id.textViewTitle);
-                textViewDesc = itemView.findViewById(R.id.textViewDesc);
-                textViewPrice = itemView.findViewById(R.id.textViewPrice);
-
-                itemView.setOnClickListener(this);
+            public MyViewHolder(ActivityProductViewBinding binding) {
+                super(binding.getRoot());
+                this.binding = binding;
+                image = binding.imageProduct;
             }
 
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "position : " + getLayoutPosition() + " text : ", Toast.LENGTH_SHORT).show();
-
-                TextView textView = (TextView) view.findViewById(R.id.textViewTitle);
-                OpenProduct(textView.getText().toString());
+            public void handleClick() {
+                OpenProduct(binding.getProduct().getId());
             }
         }
     }
