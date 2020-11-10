@@ -1,4 +1,4 @@
-package com.example.webmasters.ui.graphic_design.logos;
+package com.example.webmasters.ui.graphic_design;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -13,6 +13,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.example.webmasters.models.graphic_design.Shape;
 import com.example.webmasters.types.IShape;
 import com.example.webmasters.types.IText;
 
@@ -129,11 +130,19 @@ public class LogoView extends View {
         canvas.save();
         canvas.translate(0, mSettings.yPosition);
         canvas.drawPath(mPath, mSettings.mDrawPaint);
-        mSettings.shape.drawOnCanvas(canvas, getContext());
-        mSettings.text.drawOnCanvas(canvas, getContext());
+        drawShape(canvas, mSettings.shape);
+        drawText(canvas, mSettings.text);
         canvas.restore();
     }
 
+
+    protected void drawShape(Canvas canvas, IShape shape) {
+        shape.drawOnCanvas(canvas, getContext());
+    }
+
+    protected void drawText(Canvas canvas, IText text) {
+        text.drawOnCanvas(canvas, getContext());
+    }
 
 
     public void setShape(IShape shape) {

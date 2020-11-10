@@ -1,16 +1,16 @@
-package com.example.webmasters.ui.graphic_design.animations;
+package com.example.webmasters.ui.graphic_design;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class AnimationsViewModel extends ViewModel {
+public class ThemesViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public AnimationsViewModel() {
+    public ThemesViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("This is notifications fragment");
     }
 
     public LiveData<String> getText() {

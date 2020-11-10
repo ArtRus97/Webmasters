@@ -2,7 +2,6 @@ package com.example.webmasters.models.graphic_design;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import androidx.databinding.InverseMethod;
 
 import com.example.webmasters.types.ILogo;
 

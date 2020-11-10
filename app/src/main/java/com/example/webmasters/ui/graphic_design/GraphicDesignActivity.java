@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 
 public class GraphicDesignActivity extends BaseActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,5 +30,7 @@ public class GraphicDesignActivity extends BaseActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
+
+    
 
 }

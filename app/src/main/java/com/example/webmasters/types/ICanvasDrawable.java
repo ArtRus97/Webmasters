@@ -14,12 +14,12 @@ public interface ICanvasDrawable {
      * @param context (Context)
      * @return configured paint for the canvas drawable.
      */
-    public Paint getPaint(Context context);
+    Paint getPaint(Context context);
 
     /**
      * drawOnCanvas draws the given canvas drawable on canvas.
      * @param canvas (Canvas)
      * @param context (Context)
      */
-    public void drawOnCanvas(Canvas canvas, Context context);
+    void drawOnCanvas(Canvas canvas, Context context);
 }
