@@ -78,8 +78,19 @@ public class Shape implements IShape {
      * @param context (Context)
      */
     final public void drawOnCanvas(Canvas canvas, Context context) {
-        onPreDraw(canvas);
         Paint paint = getPaint(context);
+        drawOnCanvas(canvas, paint);
+    }
+
+    /**
+     * drawOnCanvas handles the pipeline of drawing the shape on canvas
+     * with custom paint provided.
+     *
+     * @param canvas (Canvas) being drawn on.
+     * @param paint (Paint) custom paint.
+     */
+    final public void drawOnCanvas(Canvas canvas, Paint paint) {
+        onPreDraw(canvas);
         onDraw(canvas, paint);
         onPostDraw(canvas);
     }
@@ -91,7 +102,7 @@ public class Shape implements IShape {
      * @param canvas (Canvas) being drawn on.
      * @param paint (Paint) used to draw the shape.
      */
-    public void onDraw(Canvas canvas, Paint paint) {
+    protected void onDraw(Canvas canvas, Paint paint) {
         float NUM_OVALS = 7f;
         for (int ovalIndex = 0; ovalIndex < NUM_OVALS; ovalIndex++) {
             double fraction = 2 * Math.PI * (ovalIndex / NUM_OVALS);
