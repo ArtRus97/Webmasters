@@ -17,9 +17,20 @@ public interface ICanvasDrawable {
     Paint getPaint(Context context);
 
     /**
-     * drawOnCanvas draws the given canvas drawable on canvas.
+     * drawOnCanvas draws the canvas drawable on the canvas.
      * @param canvas (Canvas)
      * @param context (Context)
      */
     void drawOnCanvas(Canvas canvas, Context context);
+
+    /**
+     * drawOnCanvas draws the canvas drawable on the canvas
+     * by using the custom paint.
+     * @param canvas (Canvas)
+     * @param paint (Patnt)
+     */
+    void drawOnCanvas(Canvas canvas, Paint paint);
+
+    int getX();
+    int getY();
 }

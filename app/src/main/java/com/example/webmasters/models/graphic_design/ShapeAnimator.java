@@ -1,26 +1,31 @@
 package com.example.webmasters.models.graphic_design;
 
-import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 
 import com.example.webmasters.types.IShape;
 
+import java.util.ArrayList;
+
 /**
  * ShapeAnimator handles animation of shapes.
  * @author Jikaheimo (Jaakko Ikäheimo)
  */
 public class ShapeAnimator {
+    // The handler used to run the animation method.
+    private final Handler mAnimationHandler;
+    // The view animator is used on.
+    private final View mView;
     // Animation update interval in milliseconds.
     private long mInterval = 10;
-    // Rotation in degrees per second (eg. 1 = full rotation per second)
-    private float mRotationInSecond = 90;
-    // Current rotation of the shape in degrees.
-    private float mCurrentRotation = 0;
+
+    private ArrayList<Animation> mAnimations;
 
     /**
      * setInterval updates the animation interval
@@ -28,7 +33,7 @@ public class ShapeAnimator {
      *
      * @param milliseconds between animation updates as an integer.
      */
-    public void setInterval(int milliseconds) {
+    public void setInterval(final int milliseconds) {
         mInterval = milliseconds;
     }
 
@@ -37,34 +42,35 @@ public class ShapeAnimator {
      * to be updated every given second.
      * @param seconds (float)
      */
-    public void setInterval(float seconds) {
+    public void setInterval(final float seconds) {
         setInterval((int)(seconds * 1000));
     }
 
-    /**
-     * getRotationPerInterval return the current
-     * rotation per interval of the animator as degrees.
-     * @return interval rotation as degrees.
-     */
-    public float getRotationPerInterval() {
-        return mInterval / 1000f * mRotationInSecond;
-    }
-
-    private final View mView;
-    private final Handler mAnimationHandler = new Handler(Looper.getMainLooper());
-    private final Runnable mAnimationRunnable = new Runnable(){
-        public void run(){
-            mCurrentRotation += getRotationPerInterval();
-            if (mCurrentRotation >= 360)
-                mCurrentRotation = 0;
-            mView.invalidate();
-            mAnimationHandler.postDelayed(this, mInterval);
-        }
-    };
-
     public ShapeAnimator(View view) {
         mView = view;
-        mAnimationRunnable.run();
+        mAnimations = new ArrayList<>();
+
+        // Configure new blink animation.
+        mAnimations.add(Animation.blink(new AnimationSettings() {
+            protected void config() {
+                maximum = 255;
+                interval = mInterval;
+                changePerSecond = 100;
+                reverse = true;
+            }
+        }));
+
+        // Configure new rotation animation.
+        mAnimations.add(Animation.rotation(new AnimationSettings() {
+            protected void config() {
+                maximum = 360;
+                interval = mInterval;
+                changePerSecond = 90;
+            }
+        }));
+
+        mAnimationHandler = new Handler(Looper.getMainLooper());
+        mAnimationHandler.post(this::animate);
     }
 
 
@@ -74,11 +80,26 @@ public class ShapeAnimator {
      * @param canvas (Canvas) canvas being drawn on.
      * @param shape (IShape) shape being drawn.
      */
-    public void drawShape(@NonNull Canvas canvas, @NonNull IShape shape) {
-        Context context = mView.getContext();
-        canvas.save();
-        canvas.rotate(mCurrentRotation, shape.getX(), shape.getY());
-        shape.drawOnCanvas(canvas, context);
-        canvas.restore();
+    public void drawShape(@NonNull final Canvas canvas, @NonNull final IShape shape) {
+        Paint paint = shape.getPaint(mView.getContext());
+        int numRestores = 0;
+        for (Animation animation : mAnimations) {
+            animation.apply(paint);
+            numRestores += animation.apply(canvas) ? 1 : 0;
+            numRestores += animation.apply(canvas, shape) ? 1 : 0;
+        }
+        shape.drawOnCanvas(canvas, paint);
+
+        for (int i = 0; i < numRestores; i++) {
+            canvas.restore();
+        }
     }
+
+    private void animate() {
+        mView.invalidate();
+        mAnimationHandler.postDelayed(this::animate, mInterval);
+    }
+
 }
+
+

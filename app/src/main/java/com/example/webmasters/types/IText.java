@@ -10,9 +10,6 @@ import android.graphics.Typeface;
  * @author JIkaheimo (Jaakko Ikäheimo)
  */
 public interface IText extends ICanvasDrawable {
-    int getX();
-    int getY();
-
     String getValue();
     int getColor();
     int getSize();

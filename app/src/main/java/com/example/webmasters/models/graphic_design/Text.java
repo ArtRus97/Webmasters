@@ -116,6 +116,10 @@ public class Text implements IText {
 
     public void drawOnCanvas(Canvas canvas, Context context) {
         Paint paint = getPaint(context);
+        drawOnCanvas(canvas, paint);
+    }
+
+    public void drawOnCanvas(Canvas canvas, Paint paint) {
         canvas.drawText(mValue, getX(), getY(), paint);
     }
 
