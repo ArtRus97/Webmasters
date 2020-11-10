@@ -1,4 +1,4 @@
-package com.example.webmasters.ui.graphic_design.animations;
+package com.example.webmasters.ui.graphic_design;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,14 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.webmasters.R;
 
-public class AnimationsFragment extends Fragment {
+public class ThemesFragment extends Fragment {
+
+    private ThemesViewModel notificationsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        AnimationsViewModel animationsViewModel = ViewModelProviders.of(this).get(AnimationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_animations, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        animationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        notificationsViewModel =
+                ViewModelProviders.of(this).get(ThemesViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_themes, container, false);
+        final TextView textView = root.findViewById(R.id.text_notifications);
+        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

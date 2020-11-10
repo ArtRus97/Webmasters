@@ -17,15 +17,15 @@
         android:id="@+id/layoutMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.graphic_design.logos.LogoFragment">
+        tools:context=".ui.graphic_design.LogoFragment">
 
-        <com.example.webmasters.ui.graphic_design.logos.LogoView
+        <com.example.webmasters.ui.graphic_design.LogoView
             android:id="@+id/logoView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/scrollControls"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_weight="0.3"

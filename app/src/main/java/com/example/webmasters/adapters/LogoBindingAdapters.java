@@ -6,7 +6,6 @@ import androidx.databinding.InverseBindingListener;
 import androidx.databinding.Observable;
 
 
-import com.example.webmasters.ui.graphic_design.logos.LogoView;
 import com.example.webmasters.ui.shared.ColorButton;
 
 public class LogoBindingAdapters {
