@@ -8,7 +8,7 @@
     tools:context=".ui.web_store.ProductActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewPic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
         android:textColor="@color/price_font_color"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewPic" />
 
     <Button
         android:id="@+id/buttonCart"
