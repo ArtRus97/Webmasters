@@ -3,6 +3,7 @@ package com.example.webmasters.models.graphic_design;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import androidx.annotation.NonNull;
 import com.example.webmasters.types.ICanvasDrawable;
 
 
@@ -115,6 +116,10 @@ public abstract class Animation {
         };
     }
 
+    @NonNull
+    final public String toString() {
+        return mName;
+    }
 }
 
 

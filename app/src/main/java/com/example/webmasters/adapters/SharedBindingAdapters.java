@@ -2,35 +2,48 @@ package com.example.webmasters.adapters;
 
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.databinding.*;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.InverseBindingAdapter;
+import androidx.databinding.InverseBindingListener;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SharedBindingAdapters {
 
+    @BindingAdapter("adapter")
+    public static void setAdapter(RecyclerView recyclerView, RecyclerView.Adapter<?> adapter) {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setAdapter(adapter);
+    }
+
+
     @BindingAdapter(value = {"selectedValue", "selectedValueAttrChanged"}, requireAll = false)
-    public static void bindSpinnerData(AppCompatSpinner pAppCompatSpinner, Object newSelectedValue, final InverseBindingListener newTextAttrChanged) {
-        pAppCompatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    public static void setSelectedValue(AppCompatSpinner spinner, Object newSelectedValue, final InverseBindingListener changeListener) {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                newTextAttrChanged.onChange();
+                // Trigger the view -> model update when user selects an item.
+                if (changeListener != null)
+                    changeListener.onChange();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        SpinnerAdapter adapter = pAppCompatSpinner.getAdapter();
+
+        SpinnerAdapter adapter = spinner.getAdapter();
         if (adapter == null) return;
         for (int itemIndex = 0; itemIndex < adapter.getCount(); itemIndex++) {
             if (!adapter.getItem(itemIndex).equals(newSelectedValue)) continue;
-            pAppCompatSpinner.setSelection(itemIndex, true);
+            spinner.setSelection(itemIndex, true);
         }
     }
 
     @InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
-    public static Object captureSelectedValue(AppCompatSpinner pAppCompatSpinner) {
-        return pAppCompatSpinner.getSelectedItem();
+    public static Object getSelectedValue(AppCompatSpinner spinner) {
+        return spinner.getSelectedItem();
     }
 }

@@ -241,7 +241,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="12dp" />
 
-
                 <com.example.webmasters.ui.shared.ExtendedCardView
                     android:id="@+id/cardShape"
                     android:layout_width="match_parent"
@@ -275,7 +274,7 @@
                             app:layout_constraintStart_toEndOf="@+id/labelShapeType"
                             app:layout_constraintTop_toTopOf="@+id/labelShapeType" />
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/labelShapeScale"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -285,7 +284,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/buttonShapeColor"
                             tools:text="Scale: 1" />
 
-                        <SeekBar
+                        <androidx.appcompat.widget.AppCompatSeekBar
                             android:id="@+id/seekShapeScale"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -297,7 +296,7 @@
                             app:layout_constraintTop_toTopOf="@+id/labelShapeScale"
                             tools:targetApi="o" />
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/labelShapeX"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -307,7 +306,7 @@
                             app:layout_constraintTop_toBottomOf="@id/labelShapeScale"
                             tools:text="X: 0" />
 
-                        <SeekBar
+                        <androidx.appcompat.widget.AppCompatSeekBar
                             android:id="@+id/seekShapeX"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -318,7 +317,7 @@
                             app:layout_constraintStart_toStartOf="@+id/seekShapeScale"
                             app:layout_constraintTop_toTopOf="@+id/labelShapeX" />
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/labelShapeY"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -330,7 +329,7 @@
                             app:layout_constraintTop_toTopOf="@+id/seekShapeX"
                             tools:text="Y: 0" />
 
-                        <SeekBar
+                        <androidx.appcompat.widget.AppCompatSeekBar
                             android:id="@+id/seekShapeY"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"

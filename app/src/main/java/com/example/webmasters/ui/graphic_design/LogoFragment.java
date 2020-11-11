@@ -25,9 +25,8 @@ public class LogoFragment extends Fragment {
     private GraphicDesignViewModel mModel;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
 
         mModel = new ViewModelProvider(requireActivity()).get(GraphicDesignViewModel.class);
@@ -37,25 +36,30 @@ public class LogoFragment extends Fragment {
 
         mBinding.getRoot().post(() -> {
             mBinding.setCanvasView(mBinding.logoView);
+            mBinding.executePendingBindings();
 
-            mBinding.getRoot().post(() -> {
-                // Update controls based on the size of the logo boundaries.
-                Logo logo = mModel.getLogo();
+            // Update controls based on the size of the logo boundaries.
+            Logo logo = mModel.getLogo();
 
-                if (!isInitialized) {
-                    int xBoundary = mBinding.logoView.getWidth();
-                    int yBoundary = mBinding.logoView.getHeight();
-                    logo.setTextX(xBoundary / 2);
-                    logo.setTextY(yBoundary / 2);
-                    logo.setShapeX(xBoundary / 2);
-                    logo.setShapeY(yBoundary / 2);
-                }
+            int xBoundary = mBinding.logoView.getWidth();
+            int yBoundary = mBinding.logoView.getHeight();
 
-                mBinding.setModel(mModel);
-            });
+            if (!isInitialized) {
+                logo.setTextX(xBoundary / 2);
+                logo.setTextY(yBoundary / 2);
+                logo.setShapeX(xBoundary / 2);
+                logo.setShapeY(yBoundary / 2);
+            }
+
+            mBinding.setModel(mModel);
+            mBinding.executePendingBindings();
 
         });
+    }
 
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         return mBinding.getRoot();
     }
 

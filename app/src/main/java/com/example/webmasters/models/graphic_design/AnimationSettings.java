@@ -19,5 +19,4 @@ public abstract class AnimationSettings {
     public float maximum = 0f;
     // Is the animation reversing.
     public boolean reverse = false;
-
 }
