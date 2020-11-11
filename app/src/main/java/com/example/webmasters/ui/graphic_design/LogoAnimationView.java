@@ -6,15 +6,23 @@ import android.util.AttributeSet;
 
 import androidx.annotation.Nullable;
 
+import com.example.webmasters.models.graphic_design.Animation;
 import com.example.webmasters.models.graphic_design.Shape;
 import com.example.webmasters.models.graphic_design.ShapeAnimator;
 import com.example.webmasters.types.IShape;
+
+import java.util.Collection;
 
 public class LogoAnimationView extends LogoView {
     ShapeAnimator mShapeAnimator = new ShapeAnimator(this);
 
     public LogoAnimationView(Context context) {
         super(context);
+    }
+
+
+    public void setAnimations(Collection<Animation> animations) {
+        mShapeAnimator.setAnimations(animations);
     }
 
     @Override
