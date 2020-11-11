@@ -31,6 +31,6 @@ public class AnimationsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         GraphicDesignViewModel model = new ViewModelProvider(requireActivity()).get(GraphicDesignViewModel.class);
-        mBinding.setLogo(model.getLogo().getValue());
+        mBinding.setModel(model);
     }
 }

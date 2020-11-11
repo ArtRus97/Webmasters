@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.webmasters.models.graphic_design.Shape;
@@ -130,8 +131,10 @@ public class LogoView extends View {
         canvas.save();
         canvas.translate(0, mSettings.yPosition);
         canvas.drawPath(mPath, mSettings.mDrawPaint);
-        drawShape(canvas, mSettings.shape);
-        drawText(canvas, mSettings.text);
+        if (mSettings.shape != null)
+            drawShape(canvas, mSettings.shape);
+        if (mSettings.text != null)
+            drawText(canvas, mSettings.text);
         canvas.restore();
     }
 

@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="logo"
-            type="com.example.webmasters.models.graphic_design.Logo" />
+            name="model"
+            type="com.example.webmasters.ui.graphic_design.GraphicDesignViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +17,9 @@
         <com.example.webmasters.ui.graphic_design.LogoAnimationView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:shape="@{logo.shape}"
-            app:text="@{logo.text}" />
+            app:animations="@{model.animations}"
+            app:shape="@{model.logo.shape}"
+            app:text="@{model.logo.text}" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

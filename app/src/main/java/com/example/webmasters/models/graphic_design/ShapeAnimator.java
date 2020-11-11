@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import com.example.webmasters.types.IShape;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * ShapeAnimator handles animation of shapes.
@@ -25,7 +26,7 @@ public class ShapeAnimator {
     // Animation update interval in milliseconds.
     private long mInterval = 10;
 
-    private ArrayList<Animation> mAnimations;
+    private Collection<Animation> mAnimations;
 
     /**
      * setInterval updates the animation interval
@@ -35,6 +36,8 @@ public class ShapeAnimator {
      */
     public void setInterval(final int milliseconds) {
         mInterval = milliseconds;
+        // Update animations with the new interval as well.
+        mAnimations.forEach(animation -> animation.setInterval(milliseconds));
     }
 
     /**
@@ -49,28 +52,12 @@ public class ShapeAnimator {
     public ShapeAnimator(View view) {
         mView = view;
         mAnimations = new ArrayList<>();
-
-        // Configure new blink animation.
-        mAnimations.add(Animation.blink(new AnimationSettings() {
-            protected void config() {
-                maximum = 255;
-                interval = mInterval;
-                changePerSecond = 100;
-                reverse = true;
-            }
-        }));
-
-        // Configure new rotation animation.
-        mAnimations.add(Animation.rotation(new AnimationSettings() {
-            protected void config() {
-                maximum = 360;
-                interval = mInterval;
-                changePerSecond = 90;
-            }
-        }));
-
         mAnimationHandler = new Handler(Looper.getMainLooper());
         mAnimationHandler.post(this::animate);
+    }
+
+    public void setAnimations(Collection<Animation> animations) {
+        mAnimations = animations;
     }
 
 
@@ -82,12 +69,14 @@ public class ShapeAnimator {
      */
     public void drawShape(@NonNull final Canvas canvas, @NonNull final IShape shape) {
         Paint paint = shape.getPaint(mView.getContext());
-        int numRestores = 0;
-        for (Animation animation : mAnimations) {
+
+        int numRestores = mAnimations.stream().reduce(0, (acc, animation) -> {
             animation.apply(paint);
-            numRestores += animation.apply(canvas) ? 1 : 0;
-            numRestores += animation.apply(canvas, shape) ? 1 : 0;
-        }
+            acc += animation.apply(canvas) ? 1 : 0;
+            acc += animation.apply(canvas, shape) ? 1 : 0;
+            return acc;
+        }, Integer::sum);
+
         shape.drawOnCanvas(canvas, paint);
 
         for (int i = 0; i < numRestores; i++) {
