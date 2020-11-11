@@ -4,7 +4,11 @@ import androidx.annotation.Nullable;
 
 public class AnimationFactory {
 
-    public Animation getAnimation(Animation.Type animationType, @Nullable AnimationSettings settings) {
+    public Animation getAnimation(Animation.Type animationType) {
+        return getAnimation(animationType, new AnimationSettings() {});
+    }
+
+    public Animation getAnimation(Animation.Type animationType, AnimationSettings settings) {
         switch (animationType) {
             case Blink:
                 return Animation.blink(settings);

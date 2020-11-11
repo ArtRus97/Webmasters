@@ -1,5 +1,8 @@
 package com.example.webmasters.models.graphic_design;
 
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import androidx.databinding.Bindable;
 import androidx.databinding.library.baseAdapters.BR;
 
@@ -38,6 +41,7 @@ public class Logo extends AbstractLogo {
         mShape = shape;
         // Notify observers.
         notifyPropertyChanged(BR.shape);
+
     }
 
     @Bindable
@@ -130,5 +134,32 @@ public class Logo extends AbstractLogo {
         mShape.setY(y);
         notifyPropertyChanged(BR.shapeY);
         notifyPropertyChanged(BR.shape);
+    }
+
+    @Override
+    public int getX() {
+        return 0;
+    }
+
+    @Override
+    public int getY() {
+        return 0;
+    }
+
+    @Override
+    public Paint getPaint(Context context) {
+        return null;
+    }
+
+    @Override
+    public void drawOnCanvas(Canvas canvas, Context context) {
+        mShape.drawOnCanvas(canvas, context);
+        mText.drawOnCanvas(canvas, context);
+    }
+
+    @Override
+    public void drawOnCanvas(Canvas canvas, Paint paint) {
+        mShape.drawOnCanvas(canvas, paint);
+        mText.drawOnCanvas(canvas, paint);
     }
 }

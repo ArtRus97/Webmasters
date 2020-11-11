@@ -11,6 +11,8 @@ import com.example.webmasters.types.ICanvasDrawable;
 
 
 public abstract class Animation {
+    public final float MINIMUM;
+    public final float MAXIMUM;
     public enum Type {
         Rotation,
         Blink
@@ -22,7 +24,13 @@ public abstract class Animation {
 
     public Animation(String name, AnimationSettings settings) {
         mSettings = settings;
+        MINIMUM = settings.minimum;
+        MAXIMUM = settings.maximum;
         mName = name;
+    }
+
+    final public void setChangePerSecond(final float change) {
+        mSettings.changePerSecond = change;
     }
 
     final public void setInterval(final int milliseconds) {
@@ -80,24 +88,21 @@ public abstract class Animation {
             mValue += getChangePerInterval();
         }
 
-        mValue = Math.min(mSettings.maximum, Math.max(mSettings.minimum, mValue));
+        mValue = Math.min(MAXIMUM, Math.max(MINIMUM, mValue));
 
-        if (mValue >= mSettings.maximum)
+        if (mValue >= MAXIMUM)
             if (mSettings.reverse)
                 mIsReverse = true;
             else
-                mValue = mSettings.minimum;
-        else if (mValue <= mSettings.minimum)
+                mValue = MINIMUM;
+        else if (mValue <= MINIMUM)
             mIsReverse = false;
     }
 
     static Animation blink(AnimationSettings settings) {
+        settings.reverse = true;
+        settings.maximum = 255;
         return new Animation("Blink", settings) {
-            {
-                settings.reverse = true;
-                settings.maximum = 255;
-            }
-
             protected void transformPaint(final Paint paint) {
                 paint.setAlpha((int) getValue());
             }
@@ -105,10 +110,9 @@ public abstract class Animation {
     }
 
     static Animation rotation(AnimationSettings settings) {
+        settings.maximum = 360f;
+        settings.reverse = true;
         return new Animation("Rotation", settings) {
-            {
-                settings.maximum = 360f;
-            }
             final protected boolean transformCanvas(Canvas canvas, ICanvasDrawable drawable) {
                 canvas.rotate(getValue(), drawable.getX(), drawable.getY());
                 return true;
