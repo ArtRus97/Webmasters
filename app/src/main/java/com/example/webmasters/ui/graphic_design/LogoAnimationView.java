@@ -12,6 +12,7 @@ import com.example.webmasters.models.graphic_design.ShapeAnimator;
 import com.example.webmasters.types.IShape;
 
 import java.util.Collection;
+import java.util.List;
 
 public class LogoAnimationView extends LogoView {
     ShapeAnimator mShapeAnimator = new ShapeAnimator(this);
@@ -21,7 +22,7 @@ public class LogoAnimationView extends LogoView {
     }
 
 
-    public void setAnimations(Collection<Animation> animations) {
+    public void setAnimations(List<Animation> animations) {
         mShapeAnimator.setAnimations(animations);
     }
 

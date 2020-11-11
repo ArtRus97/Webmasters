@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.webmasters.R;
+import com.example.webmasters.adapters.AnimationAdapter;
 import com.example.webmasters.databinding.FragmentAnimationsBinding;
 
 public class AnimationsFragment extends Fragment {
@@ -32,5 +33,6 @@ public class AnimationsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         GraphicDesignViewModel model = new ViewModelProvider(requireActivity()).get(GraphicDesignViewModel.class);
         mBinding.setModel(model);
+        mBinding.cardAnimationControls.setAdapter(new AnimationAdapter(model.getAnimations()));
     }
 }
