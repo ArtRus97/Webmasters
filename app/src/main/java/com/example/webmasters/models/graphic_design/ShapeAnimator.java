@@ -37,7 +37,6 @@ public class ShapeAnimator {
     public void setInterval(final int milliseconds) {
         mInterval = milliseconds;
         // Update animations with the new interval as well.
-        mAnimations.forEach(animation -> animation.setInterval(milliseconds));
     }
 
     /**

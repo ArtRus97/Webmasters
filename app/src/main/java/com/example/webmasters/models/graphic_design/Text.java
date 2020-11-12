@@ -52,6 +52,7 @@ public class Text implements IText {
         mPosition[0] = x;
     }
 
+    @Override
     public int getX() {
         return mPosition[0];
     }
@@ -60,6 +61,7 @@ public class Text implements IText {
         mPosition[1] = y;
     }
 
+    @Override
     public int getY() {
         return mPosition[1];
     }
@@ -68,6 +70,7 @@ public class Text implements IText {
         mIsBold = bold;
     }
 
+    @Override
     public boolean isBold() {
         return mIsBold;
     }
