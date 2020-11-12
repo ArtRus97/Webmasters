@@ -4,25 +4,26 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.example.webmasters.models.graphic_design.*;
+import com.example.webmasters.types.IAnimationViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * @author JIkaheimo (Jaakko Ikäheimo)
  */
-public class GraphicDesignViewModel extends ViewModel {
+public class GraphicDesignViewModel extends ViewModel implements IAnimationViewModel {
     private final MutableLiveData<Boolean> mIsInitialized;
+    private final MutableLiveData<List<Boolean>> mAnimationStates;
     private final MutableLiveData<Logo> mLogo;
     private final MutableLiveData<List<Animation>> mAnimations;
     private final MutableLiveData<List<Shape>> mShapes;
-    private final MutableLiveData<Integer> mInterval;
 
     /**
      * Default constructor.
      */
     public GraphicDesignViewModel() {
-        mInterval = new MutableLiveData<>(10);
         mIsInitialized = new MutableLiveData<>(false);
         mLogo = new MutableLiveData<>(new Logo());
 
@@ -30,6 +31,7 @@ public class GraphicDesignViewModel extends ViewModel {
         createShapes();
 
         mAnimations = new MutableLiveData<>();
+        mAnimationStates = new MutableLiveData<>();
         createAnimations();
     }
 
@@ -41,17 +43,21 @@ public class GraphicDesignViewModel extends ViewModel {
     private void createAnimations() {
         AnimationFactory animationFactory = new AnimationFactory();
 
+        // Create pre-defined animations.
         ArrayList<Animation> animations = new ArrayList<Animation>() {{
-            add(animationFactory.getAnimation(Animation.Type.Blink));
-            add(animationFactory.getAnimation(Animation.Type.Rotation));
+            add(animationFactory.getAnimation(AnimationFactory.AnimationType.Blink));
+            add(animationFactory.getAnimation(AnimationFactory.AnimationType.Rotation));
         }};
 
+        ArrayList<Boolean> animationStates = new ArrayList<Boolean>();
+
+        // Add some model related configurations.
         animations.forEach(animation -> {
-            Log.d("ASDddd", animation.MAXIMUM+"");
-            animation.setInterval(getInterval());
             animation.setChangePerSecond(animation.MAXIMUM / 2);
+            animationStates.add(false);
         });
 
+        mAnimationStates.setValue(animationStates);
         mAnimations.setValue(animations);
     }
 
@@ -81,12 +87,14 @@ public class GraphicDesignViewModel extends ViewModel {
         return mShapes.getValue();
     }
 
-    public Integer getInterval() {
-        return mInterval.getValue();
-    }
+
 
     public List<Animation> getAnimations() {
         return mAnimations.getValue();
+    }
+
+    public List<Boolean> getAnimationStates() {
+        return mAnimationStates.getValue();
     }
 
     public Boolean getInitialized() {

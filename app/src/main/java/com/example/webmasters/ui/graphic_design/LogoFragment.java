@@ -20,7 +20,6 @@ import com.example.webmasters.models.graphic_design.Shape;
 import com.example.webmasters.models.graphic_design.ShapeFactory;
 
 public class LogoFragment extends Fragment {
-
     private FragmentLogosBinding mBinding;
     private GraphicDesignViewModel mModel;
 

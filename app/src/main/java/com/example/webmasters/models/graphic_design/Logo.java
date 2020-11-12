@@ -41,7 +41,6 @@ public class Logo extends AbstractLogo {
         mShape = shape;
         // Notify observers.
         notifyPropertyChanged(BR.shape);
-
     }
 
     @Bindable

@@ -5,17 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="com.example.webmasters.converters.SharedConverters" />
+        <import type="com.example.webmasters.adapters.AnimationAdapter" />
         <import type="com.example.webmasters.models.graphic_design.Animation" />
-        <!-- Takes List of Animation(s) as "input" -->
+
+        <!-- List of Animation(s) manipulated by the controls -->
         <variable
             name="animations"
             type="java.util.List&lt;Animation>" />
-        <!-- AnimationAdapter used by the RecyclerView -->
+        <!-- array of animation states -->
         <variable
             name="adapter"
-            type="androidx.recyclerview.widget.RecyclerView.Adapter" />
-
+            type="AnimationAdapter" />
     </data>
 
     <com.example.webmasters.ui.shared.ExtendedCardView
@@ -42,9 +43,23 @@
                 android:id="@+id/seekAnimationInterval"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:min="@{10}"
+                android:max="@{120}"
+                android:progress="@={adapter.firstAnimation.FPS}"
+                app:layout_constraintBottom_toBottomOf="@+id/textView"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textView"
+                app:layout_constraintTop_toTopOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@{Animation.formatFPS(adapter.firstAnimation.FPS)}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recyclerAnimation" />
+                app:layout_constraintTop_toBottomOf="@+id/recyclerAnimation" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

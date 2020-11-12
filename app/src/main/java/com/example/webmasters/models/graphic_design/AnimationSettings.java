@@ -7,8 +7,8 @@ package com.example.webmasters.models.graphic_design;
  * @author (Jikaheimo) Jaakko Ikäheimo
  */
 public abstract class AnimationSettings {
-    // The interval of animation updates in milliseconds.
-    public float interval = 0f;
+    // The fps of animation updates.
+    public int fps = 60;
     // How much the animation value gets changed in a second.
     public float changePerSecond = 1f;
     // Initial animation value.
