@@ -2,20 +2,35 @@ package com.example.webmasters.models.graphic_design;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 
+import androidx.annotation.NonNull;
 import com.example.webmasters.types.ICanvasDrawable;
 
 
 
+
+
 public abstract class Animation {
+    public enum Type {
+        Rotation,
+        Blink
+    }
+    private String mName = "Unnamed";
     private AnimationSettings mSettings;
     private float mValue = 0;
     private boolean mIsReverse = false;
 
-    public Animation(AnimationSettings settings) {
+    public Animation(String name, AnimationSettings settings) {
         mSettings = settings;
-        Log.d("ASD", mSettings.maximum+"f");
+        mName = name;
+    }
+
+    final public void setInterval(final int milliseconds) {
+        mSettings.interval = milliseconds;
+    }
+
+    final public String getName() {
+        return mName;
     }
 
 
@@ -77,7 +92,12 @@ public abstract class Animation {
     }
 
     static Animation blink(AnimationSettings settings) {
-        return new Animation(settings) {
+        return new Animation("Blink", settings) {
+            {
+                settings.reverse = true;
+                settings.maximum = 255;
+            }
+
             protected void transformPaint(final Paint paint) {
                 paint.setAlpha((int) getValue());
             }
@@ -85,8 +105,10 @@ public abstract class Animation {
     }
 
     static Animation rotation(AnimationSettings settings) {
-
-        return new Animation(settings) {
+        return new Animation("Rotation", settings) {
+            {
+                settings.maximum = 360f;
+            }
             final protected boolean transformCanvas(Canvas canvas, ICanvasDrawable drawable) {
                 canvas.rotate(getValue(), drawable.getX(), drawable.getY());
                 return true;
@@ -94,37 +116,10 @@ public abstract class Animation {
         };
     }
 
-}
-
-/**
- * AnimationSettings defines an abstract wrapper
- * class for settings used to customize animations.
- *
- * @author (Jikaheimo) Jaakko Ikäheimo
- */
-abstract class AnimationSettings {
-    // The interval of animation updates in milliseconds.
-    public float interval = 0f;
-    // How much the animation value gets changed in a second.
-    public float changePerSecond = 1f;
-    // Initial animation value.
-    public float initialValue = 0f;
-    // The minimum animation value.
-    public float minimum = 0f;
-    // The maximum animation value.
-    public float maximum = 0f;
-    // Is the animation reversing.
-    public boolean reverse = false;
-
-    public AnimationSettings() {
-        config();
+    @NonNull
+    final public String toString() {
+        return mName;
     }
-
-    /**
-     * config is called whenever new animation settings
-     * gets created.
-     *
-     * Notes: Add any setup code here.
-     */
-    protected abstract void config();
 }
+
+

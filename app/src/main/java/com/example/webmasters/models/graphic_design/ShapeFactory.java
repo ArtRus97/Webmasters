@@ -8,6 +8,9 @@ import android.graphics.Path;
 import com.example.webmasters.types.ICanvasDrawable;
 import com.example.webmasters.types.IShape;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 class StarShape extends Shape {
     private int mNumSpikes;
     private int mOuterRadius;
@@ -64,7 +67,7 @@ public class ShapeFactory {
      * createShapes returns some pre-defines shapes with custom canvas rendering.
      * @return custom shapes.
      */
-    public Shape[] createShapes() {
+    public List<Shape> createShapes() {
         Shape defaultShape = new Shape();
 
         StarShape star5 = new StarShape(5);
@@ -85,7 +88,15 @@ public class ShapeFactory {
             }
         };
 
-        return new Shape[] {defaultShape, star5, star10, flowerShape, spikyShape};
+        return new ArrayList<Shape>() {
+            {
+                add(defaultShape);
+                add(star5);
+                add(star10);
+                add(flowerShape);
+                add(spikyShape);
+            }
+        };
     }
 
 }

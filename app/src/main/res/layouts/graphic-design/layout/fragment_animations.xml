@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="logo"
-            type="com.example.webmasters.models.graphic_design.Logo" />
+            name="model"
+            type="com.example.webmasters.ui.graphic_design.GraphicDesignViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,9 +17,49 @@
         tools:context=".ui.graphic_design.AnimationsFragment">
 
         <com.example.webmasters.ui.graphic_design.LogoAnimationView
+            android:id="@+id/logoAnimationView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:animations="@{model.animations}"
+            app:layout_constraintBottom_toTopOf="@+id/scrollControls"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="0.3"
+            app:shape="@{model.logo.shape}"
+            app:text="@{model.logo.text}" />
+
+        <ScrollView
+            android:id="@+id/scrollControls"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:shape="@{logo.shape}"
-            app:text="@{logo.text}" />
+            android:layout_height="0dp"
+            android:padding="0dp"
+            android:requiresFadingEdge="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logoAnimationView"
+            app:layout_constraintVertical_weight="0.7">
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/layoutControls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <include
+                    android:id="@+id/card_animation_controls"
+                    layout="@layout/card_animation_controls"
+                    bind:animations="@{model.animations}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </ScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

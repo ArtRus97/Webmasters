@@ -3,15 +3,25 @@ package com.example.webmasters.models.graphic_design;
 import androidx.databinding.Bindable;
 import androidx.databinding.library.baseAdapters.BR;
 
-import com.example.webmasters.types.IShape;
+import com.example.webmasters.Utils;
 import com.example.webmasters.types.IText;
 
 public class Logo extends AbstractLogo {
-    final public float MIN_SCALE = 0.5f;
-    final public float MAX_SCALE = 2.0f;
+    static final public float MIN_SHAPE_SCALE = 0.5f;
+    static final public float MAX_SHAPE_SCALE = 2.0f;
+    static final public float DEFAULT_SHAPE_SCALE = (MAX_SHAPE_SCALE + MIN_SHAPE_SCALE) / 2;
+
+    static final public int MIN_TEXT_SIZE = 18;
+    static final public int MAX_TEXT_SIZE = 54;
+    static final public int DEFAULT_TEXT_SIZE = (MAX_TEXT_SIZE + MIN_TEXT_SIZE) / 2;
 
     final private Text mText = new Text();
     private Shape mShape = new Shape();
+
+    public Logo() {
+        setTextSize(DEFAULT_TEXT_SIZE);
+        setShapeScale(DEFAULT_SHAPE_SCALE);
+    }
 
     @Bindable
     public IText getText() {
@@ -31,7 +41,7 @@ public class Logo extends AbstractLogo {
     }
 
     @Bindable
-    public IShape getShape() {
+    public Shape getShape() {
         return mShape;
     }
 
@@ -43,8 +53,13 @@ public class Logo extends AbstractLogo {
     }
 
     public void setTextSize(int textSize) {
+        // Make sure text size does not go over boundaries.
+        textSize = Utils.minmax(textSize, MIN_TEXT_SIZE, MAX_TEXT_SIZE).intValue();
+        // Check for redundant operation.
         if (getTextSize() == textSize) return;
+        // Update text size.
         mText.setSize(textSize);
+        // Notify observers.
         notifyPropertyChanged(BR.textSize);
         notifyPropertyChanged(BR.text);
     }
@@ -65,7 +80,7 @@ public class Logo extends AbstractLogo {
 
     public void setShapeScale(float scale) {
         // Make sure scaling does not go over boundaries.
-        scale = Math.max(MIN_SCALE, Math.min(scale, MAX_SCALE));
+        scale = Utils.minmax(scale, MIN_SHAPE_SCALE, MAX_SHAPE_SCALE).floatValue();
         // Check for redundant operation.
         if (getShapeScale() == scale) return;
         // Update scale.

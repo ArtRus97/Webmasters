@@ -11,8 +11,8 @@ import com.example.webmasters.ui.shared.ColorButton;
 public class LogoBindingAdapters {
 
 
-    @BindingAdapter(value = {"app:customColor", "app:customColorAttrChanged"}, requireAll = false)
-    public static void setCustomColor(ColorButton view, int color, final InverseBindingListener listener) {
+    @BindingAdapter(value = {"app:color", "app:colorAttrChanged"}, requireAll = false)
+    public static void setColor(ColorButton view, int color, final InverseBindingListener listener) {
         view.setColor(color);
         view.onColorChanged(new Observable.OnPropertyChangedCallback() {
             @Override
@@ -22,8 +22,8 @@ public class LogoBindingAdapters {
         });
     }
 
-    @InverseBindingAdapter(attribute = "app:customColor", event = "app:customColorAttrChanged")
-    public static int getCustomColor(ColorButton view) {
+    @InverseBindingAdapter(attribute = "app:color", event = "app:colorAttrChanged")
+    public static int getColor(ColorButton view) {
         return view.getColor();
     }
 
