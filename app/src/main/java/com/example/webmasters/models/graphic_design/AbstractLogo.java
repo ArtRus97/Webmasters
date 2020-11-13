@@ -1,101 +1,199 @@
 package com.example.webmasters.models.graphic_design;
 
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
+import androidx.databinding.library.baseAdapters.BR;
 import com.example.webmasters.types.ILogo;
 
 /**
- * AbstractLogo implements some common ILogo interface methods.
+ * AbstractLogo implements some basic functionality of ILogo interface.
+ * <p>
+ * v 1.0.0 Base class created.
+ * v 1.1.0 Move ICanvasDrawable implementations/overrides from Logo to AbstractLogo
  *
  * @author JIkaheimo (Jaakko Ikäheimo)
  */
 abstract public class AbstractLogo extends BaseObservable implements ILogo {
 
-    abstract void setTextValue(String textValue);
+    abstract void setShape(final Shape shape);
 
+    @Override
     @Bindable
-    public String getTextValue() {
+    abstract public Shape getShape();
+
+    abstract void setText(final Text text);
+
+    @Override
+    @Bindable
+    abstract public Text getText();
+
+
+    final public void setTextValue(final String value) {
+        getText().setValue(value);
+        notifyPropertyChanged(BR.text);
+    };
+
+    @Override
+    @Bindable
+    final public String getTextValue() {
         return getText().getValue();
     }
 
+    final public void setTextSize(final int textSize) {
+        getText().setSize(textSize);
+        notifyPropertyChanged(BR.text);
+    };
 
-    abstract void setTextSize(int textSize);
-
+    @Override
     @Bindable
-    public int getTextSize() {
+    final public int getTextSize() {
         return getText().getSize();
     }
 
+    final public void setTextColor(final int textColor) {
+        getText().setColor(textColor);
+        notifyPropertyChanged(BR.text);
+    }
 
-    abstract void setTextColor(int textColor);
-
+    @Override
     @Bindable
-    public int getTextColor() {
+    final public int getTextColor() {
         return getText().getColor();
     }
 
 
-    abstract void setTextX(int textX);
+    final public void setTextX(int textX) {
+        getText().setX(textX);
+        notifyPropertyChanged(BR.text);
+    };
 
+    @Override
     @Bindable
-    public int getTextX() {
+    final public int getTextX() {
         return getText().getX();
     }
 
 
-    abstract void setTextY(int textY);
+    final public void setTextY(int textY) {
+        getText().setY(textY);
+        notifyPropertyChanged(BR.text);
+    }
 
+    @Override
     @Bindable
-    public int getTextY() {
+    final public int getTextY() {
         return getText().getY();
     }
 
 
-    abstract void setTextBold(boolean isBold);
+    final public void setTextBold(final boolean isBold) {
+        getText().setBold(isBold);
+        notifyPropertyChanged(BR.text);
+    }
 
+    @Override
     @Bindable
-    public boolean getTextBold() {
+    final public boolean getTextBold() {
         return getText().isBold();
     }
 
 
-    abstract void setTextItalic(boolean isItalic);
+    final public void setTextItalic(final boolean isItalic) {
+        getText().setItalic(isItalic);
+        notifyPropertyChanged(BR.text);
+    }
 
+    @Override
     @Bindable
-    public boolean getTextItalic() {
+    final public boolean getTextItalic() {
         return getText().isItalic();
     }
 
 
-    abstract void setShapeScale(float shapeScale);
-
-    @Bindable
-    public float getShapeScale() {
-        return getShape().getScale();
+    final public void setShapeScale(final float shapeScale) {
+        getShape().setScale(shapeScale);
+        notifyPropertyChanged(BR.shape);
     }
 
-
-    abstract void setShapeColor(int shapeColor);
-
+    @Override
     @Bindable
-    public int getShapeColor() {
+    final public float getShapeScale() {
+        return getShape().getScale();
+
+    }
+
+    final public void setShapeColor(final int shapeColor) {
+        getShape().setColor(shapeColor);
+        notifyPropertyChanged(BR.shape);
+    }
+
+    @Override
+    @Bindable
+    final public int getShapeColor() {
         return getShape().getColor();
     }
 
 
-    abstract void setShapeX(int x);
+    final public void setShapeX(final int x) {
+        getShape().setX(x);
+        notifyPropertyChanged(BR.shape);
+    }
 
+    @Override
     @Bindable
-    public int getShapeX() {
+    final public int getShapeX() {
         return getShape().getX();
     }
 
+    /**
+     * setShapeY sets the logo shape y coordinate.
+     *
+     * @param y (int) coordinate of logo shape.
+     */
+    final public void setShapeY(final int y) {
+        getShape().setY(y);
+        notifyPropertyChanged(BR.shape);
+    };
 
-    abstract void setShapeY(int y);
-
+    @Override
     @Bindable
-    public int getShapeY() {
+    final public int getShapeY() {
         return getShape().getY();
+    }
+
+    @Override
+    final public int getX() {
+        // Logo x-coordinate should always be at 0.
+        return 0;
+    }
+
+    @Override
+    final public int getY() {
+        // Logo y-coordinate should always be at 0.
+        return 0;
+    }
+
+    @Override
+    final public Paint getPaint(final Context context) {
+        // Logo does not have a Paint itself.
+        return null;
+    }
+
+    @Override
+    final public void drawOnCanvas(final Canvas canvas, final Context context) {
+        // Draw the sub-components.
+        getShape().drawOnCanvas(canvas, context);
+        getText().drawOnCanvas(canvas, context);
+    }
+
+    @Override
+    final public void drawOnCanvas(final Canvas canvas, final Paint paint) {
+        // Draw the sub-components with the given paint.
+        getShape().drawOnCanvas(canvas, paint);
+        getText().drawOnCanvas(canvas, paint);
     }
 }

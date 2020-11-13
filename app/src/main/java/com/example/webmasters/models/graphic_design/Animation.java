@@ -3,34 +3,154 @@ package com.example.webmasters.models.graphic_design;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import android.util.Log;
 import androidx.annotation.NonNull;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+import com.example.webmasters.BR;
+import com.example.webmasters.types.IAnimation;
 import com.example.webmasters.types.ICanvasDrawable;
 
+import java.util.Locale;
 
-
-
-
-public abstract class Animation {
-    public enum Type {
-        Rotation,
-        Blink
-    }
-    private String mName = "Unnamed";
-    private AnimationSettings mSettings;
-    private float mValue = 0;
+/**
+ * Animation is an abstract base class for animations used to animate different
+ * canvas drawable graphics.
+ *
+ * @author JIkaheimo (Jaakko Ikäheimo)
+ */
+public abstract class Animation extends BaseObservable implements IAnimation {
+    /**
+     * Immutable properties
+     **/
+    // Minimum boundary of the animation.
+    public final float MINIMUM;
+    // Maximum boundary of the animation.
+    public final float MAXIMUM;
+    // Name of the animation.
+    public final String NAME;
+    /**
+     * Mutable properties
+     */
+    // The amount animation value changes in second.
+    private float mChangePerSecond;
+    // Frames per second for the animation
+    private int mFPS;
+    // The current value of the animation.
+    private float mValue;
+    // Is animation allowed to reverse when it reaches its maximum.
+    private boolean mAllowReverse = false;
+    // Is animation currently reversed.
     private boolean mIsReverse = false;
+    // Is animation currently playing.
+    private boolean mIsPlaying = false;
+    // Last time animation was updated.
+    private long mLastUpdate = System.currentTimeMillis();
 
-    public Animation(String name, AnimationSettings settings) {
-        mSettings = settings;
-        mName = name;
+
+    /**
+     * Constructor
+     *
+     * @param name     (String) of the animation
+     * @param settings (AnimationSettings) used to configure the animation.
+     */
+    public Animation(final String name, final AnimationSettings settings) {
+        NAME = name;
+        // Map animation settings to properties.
+        mChangePerSecond = settings.changePerSecond;
+        mValue = settings.initialValue;
+        mFPS = settings.fps;
+        MINIMUM = settings.minimum;
+        MAXIMUM = settings.maximum;
+        mAllowReverse = settings.reverse;
     }
 
-    final public void setInterval(final int milliseconds) {
-        mSettings.interval = milliseconds;
+
+    /**
+     * setChangePerSecond sets the amount animation changes in a second.
+     *
+     * @param changePerSecond (float)
+     */
+    final public void setChangePerSecond(final float changePerSecond) {
+        if (mChangePerSecond == changePerSecond) return;
+        mChangePerSecond = changePerSecond;
+        notifyPropertyChanged(BR.changePerSecond);
     }
 
-    final public String getName() {
-        return mName;
+    @Override
+    @Bindable
+    public float getChangePerSecond() {
+        return mChangePerSecond;
+    }
+
+
+    @Override
+    @Bindable
+    public boolean getAllowReversed() {
+        return mAllowReverse;
+    }
+
+    public void setIsPlaying(boolean isPlaying) {
+        mIsPlaying = isPlaying;
+        notifyPropertyChanged(BR.playing);
+    }
+
+    @Override
+    @Bindable
+    public boolean isPlaying() {
+        return mIsPlaying;
+    }
+
+    @Override
+    @Bindable
+    public float getMaximum() {
+        return MAXIMUM;
+    }
+
+    @Override
+    @Bindable
+    public float getMinimum() {
+        return MINIMUM;
+    }
+
+    @Override
+    @Bindable
+    public boolean getIsReversed() {
+        return mAllowReverse;
+    }
+
+    final public void setFPS(int fps) {
+        Log.d("ASD", fps + "");
+        if (mFPS == fps) return;
+        mFPS = fps;
+        notifyPropertyChanged(BR.fPS);
+    }
+
+
+    @Override
+    @Bindable
+    final public int getFPS() {
+        return mFPS;
+    }
+
+
+    @Override
+    @Bindable
+    public float getInterval() {
+        return (1f / mFPS * 1000);
+    }
+
+    @Override
+    @Bindable
+    public float getValue() {
+        return mValue;
+    }
+
+
+    @Override
+    @Bindable
+    public String getName() {
+        return NAME;
     }
 
 
@@ -65,60 +185,61 @@ public abstract class Animation {
 
     }
 
+    /**
+     * shouldUpdate returns true if the animation should update based
+     * on its internal state.
+     *
+     * @return should animation update as boolan.
+     */
+    private boolean shouldUpdate() {
+        long millisSinceUpdate = System.currentTimeMillis() - mLastUpdate;
+        return (millisSinceUpdate > getInterval()) && isPlaying();
+    }
+
+
+    /**
+     * getChangePerInterval returns the amount animation value
+     * changes every interval.
+     *
+     * @return the change of animation per interval as a float.
+     */
     private float getChangePerInterval() {
-        return mSettings.interval / 1000f * mSettings.changePerSecond;
+        return getInterval() / 1000f * mChangePerSecond;
     }
 
-    public float getValue() {
-        return mValue;
-    }
+    /**
+     * update handles the update of animation.
+     */
+    private void update() {
+        if (!shouldUpdate()) return;
 
-    public void update() {
-        if (mSettings.reverse && mIsReverse) {
+        if (mAllowReverse && mIsReverse)
             mValue -= getChangePerInterval();
-        } else {
+        else
             mValue += getChangePerInterval();
-        }
 
-        mValue = Math.min(mSettings.maximum, Math.max(mSettings.minimum, mValue));
 
-        if (mValue >= mSettings.maximum)
-            if (mSettings.reverse)
+        mValue = Math.min(MAXIMUM, Math.max(MINIMUM, mValue));
+
+        if (mValue >= MAXIMUM)
+            if (mAllowReverse)
                 mIsReverse = true;
             else
-                mValue = mSettings.minimum;
-        else if (mValue <= mSettings.minimum)
+                mValue = MINIMUM;
+        else if (mValue <= MINIMUM)
             mIsReverse = false;
+
+        mLastUpdate = System.currentTimeMillis();
     }
 
-    static Animation blink(AnimationSettings settings) {
-        return new Animation("Blink", settings) {
-            {
-                settings.reverse = true;
-                settings.maximum = 255;
-            }
-
-            protected void transformPaint(final Paint paint) {
-                paint.setAlpha((int) getValue());
-            }
-        };
-    }
-
-    static Animation rotation(AnimationSettings settings) {
-        return new Animation("Rotation", settings) {
-            {
-                settings.maximum = 360f;
-            }
-            final protected boolean transformCanvas(Canvas canvas, ICanvasDrawable drawable) {
-                canvas.rotate(getValue(), drawable.getX(), drawable.getY());
-                return true;
-            }
-        };
-    }
 
     @NonNull
     final public String toString() {
-        return mName;
+        return getName();
+    }
+
+    public static String formatFPS(int fps) {
+        return String.format(Locale.ENGLISH, "FPS %d:", fps);
     }
 }
 

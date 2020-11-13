@@ -3,6 +3,7 @@ package com.example.webmasters.adapters;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.InverseBindingAdapter;
@@ -29,6 +30,7 @@ public class SharedBindingAdapters {
                 if (changeListener != null)
                     changeListener.onChange();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -45,5 +47,15 @@ public class SharedBindingAdapters {
     @InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
     public static Object getSelectedValue(AppCompatSpinner spinner) {
         return spinner.getSelectedItem();
+    }
+
+    @BindingAdapter(value = {"android:formatArgs"})
+    public static void setText(TextView view, Object[] formatArgs) {
+        view.setText(String.format(view.getText().toString(), formatArgs));
+    }
+
+    @BindingAdapter(value = {"android:formatArgs"})
+    public static void setText(TextView view, Object formatArg) {
+        view.setText(String.format(view.getText().toString(), formatArg));
     }
 }

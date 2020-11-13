@@ -1,5 +1,6 @@
 package com.example.webmasters.ui.game_activity;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -19,12 +20,14 @@ NOTE: SNAKE IS ROTATED BY SWIPING TO THE DIRECTION OF WHERE YOU WANNA TURN TO.
  Activity used for running the game.
 ******************************************/
 public class gameActivity extends AppCompatActivity implements View.OnTouchListener {
+    MediaPlayer musicPlayer;
 
     //Variables for game-view, game-engine, movement-speed interval
     private GameEngine gameEngine;
     private SnakeView snakeView;
     private final Handler handler = new Handler();
     private final long updateDelay = 200;
+
 
     //variables used for mouse-event
     private float prevX, prevY;
@@ -39,6 +42,8 @@ public class gameActivity extends AppCompatActivity implements View.OnTouchListe
         gameEngine.initGame();
         snakeView = (SnakeView) findViewById(R.id.snakeView);
         snakeView.setOnTouchListener(this);
+        musicPlayer = MediaPlayer.create(this, R.raw.game_music);
+        musicPlayer.start();
 
         startUpdateHandler();
     }
@@ -65,6 +70,9 @@ public class gameActivity extends AppCompatActivity implements View.OnTouchListe
     //Called when the game ends
     private void OnGameLost(){
         Toast.makeText(this, "You lost.", Toast.LENGTH_SHORT).show();
+        musicPlayer.stop();
+        musicPlayer = MediaPlayer.create(this, R.raw.game_over_sound);
+        musicPlayer.start();
     }
 
 
@@ -100,5 +108,10 @@ public class gameActivity extends AppCompatActivity implements View.OnTouchListe
                     }
                 } break;
         } return true;
+    }
+
+    protected void onPause() {
+        super.onPause();
+        musicPlayer.stop();
     }
 }

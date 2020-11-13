@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.webmasters.models.graphic_design.Shape;
+import com.example.webmasters.types.ILogo;
 import com.example.webmasters.types.IShape;
 import com.example.webmasters.types.IText;
 
@@ -126,16 +127,24 @@ public class LogoView extends View {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    final public void draw(Canvas canvas) {
         super.draw(canvas);
-        canvas.save();
+
+
         canvas.translate(0, mSettings.yPosition);
         canvas.drawPath(mPath, mSettings.mDrawPaint);
+
+        // Draw the logo
+        int numRestores = canvas.save();
         if (mSettings.shape != null)
             drawShape(canvas, mSettings.shape);
+        canvas.restoreToCount(numRestores);
+
+        numRestores = canvas.save();
         if (mSettings.text != null)
             drawText(canvas, mSettings.text);
-        canvas.restore();
+        canvas.restoreToCount(numRestores);
+
     }
 
 
@@ -229,15 +238,11 @@ class DrawSettings {
      * initPaints() initializes the paints used to draw logos.
      */
     private void initPaints() {
-
-
         mDrawPaint.setColor(Color.RED);
         mDrawPaint.setStyle(Paint.Style.STROKE);
         mDrawPaint.setStrokeJoin(Paint.Join.ROUND);
         mDrawPaint.setStrokeCap(Paint.Cap.ROUND);
         mDrawPaint.setStrokeWidth(10);
-
-
     }
 
 
