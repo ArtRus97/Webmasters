@@ -1,22 +1,25 @@
 package com.example.webmasters.ui;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
+import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.webmasters.databinding.ActivityMainBinding;
-import com.example.webmasters.databinding.FragmentLogosBinding;
 import com.example.webmasters.models.graphic_design.Logo;
 import com.example.webmasters.ui.game_activity.gameActivity;
 import com.example.webmasters.ui.graphic_design.GraphicDesignActivity;
 import com.example.webmasters.R;
 import com.example.webmasters.ui.web_store.WebStoreActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,13 +33,29 @@ public class MainActivity extends AppCompatActivity {
         binding.buttonWebStore.setOnClickListener((this::onNavigationClick));
         binding.buttonGame.setOnClickListener(this::onNavigationClick);
 
-        AccountManager accountManager = AccountManager.get(this);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            mAuth.signInAnonymously()
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (!task.isSuccessful()) {
+                                // If sign in fails, display a message to the user.
+                                Log.w("ASD", "signInAnonymously:failure", task.getException());
+                                Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("ASD", "signInAnonymously:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                Log.d("ASD", user.getUid());
+                            }
 
-        Account[] list = accountManager.getAccounts();
-
-        for (Account account : list) {
-            Log.d("asd", "account = " + account.name);
+                            // ...
+                        }
+                    });
         }
+
 
         binding.getRoot().post(() -> {
 
@@ -57,17 +76,6 @@ public class MainActivity extends AppCompatActivity {
             binding.executePendingBindings();
         });
 
-        /*
-        Bundle options = new Bundle();
-        am.getAccounts();
-        am.getAuthToken(
-                myAccount_,                     // Account retrieved using getAccountsByType()
-                "Manage your tasks",            // Auth scope
-                options,                        // Authenticator-specific options
-                this,                           // Your activity
-                new OnTokenAcquired(),          // Callback called when a token is successfully acquired
-                new Handler(new OnError()));    // Callback called if an error occurs
-        */
         setContentView(binding.getRoot());
     }
 
@@ -90,4 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("MainActivity", "Invalid navigation!");
         }
     }
+
+
 }
