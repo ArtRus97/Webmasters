@@ -1,9 +1,10 @@
 package com.example.webmasters.ui.graphic_design;
 
-import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.example.webmasters.models.graphic_design.*;
+import com.example.webmasters.models.graphic_design.utils.AnimationFactory;
+import com.example.webmasters.models.graphic_design.utils.ShapeFactory;
 import com.example.webmasters.types.IAnimationViewModel;
 
 import java.util.ArrayList;

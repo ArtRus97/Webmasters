@@ -1,23 +1,17 @@
 package com.example.webmasters.ui.graphic_design;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.webmasters.R;
 import com.example.webmasters.databinding.FragmentLogosBinding;
 import com.example.webmasters.models.graphic_design.Logo;
-import com.example.webmasters.models.graphic_design.Shape;
-import com.example.webmasters.models.graphic_design.ShapeFactory;
 
 public class LogoFragment extends Fragment {
     private FragmentLogosBinding mBinding;

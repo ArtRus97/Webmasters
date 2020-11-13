@@ -2,7 +2,8 @@ package com.example.webmasters.models.graphic_design;
 
 /**
  * AnimationSettings defines a container class for settings
- * used to configure an animation.
+ * used to configure an animation. Also specifies the default
+ * settings used.
  *
  * @author (Jikaheimo) Jaakko Ikäheimo
  */

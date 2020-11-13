@@ -1,4 +1,4 @@
-package com.example.webmasters.models.graphic_design;
+package com.example.webmasters.models.graphic_design.utils;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -9,6 +9,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
+import com.example.webmasters.models.graphic_design.Animation;
 import com.example.webmasters.types.IShape;
 
 import java.util.ArrayList;

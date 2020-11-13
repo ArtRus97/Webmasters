@@ -1,8 +1,9 @@
-package com.example.webmasters.models.graphic_design;
+package com.example.webmasters.models.graphic_design.utils;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import androidx.annotation.Nullable;
+import com.example.webmasters.models.graphic_design.Animation;
+import com.example.webmasters.models.graphic_design.AnimationSettings;
 import com.example.webmasters.types.ICanvasDrawable;
 
 public class AnimationFactory {
