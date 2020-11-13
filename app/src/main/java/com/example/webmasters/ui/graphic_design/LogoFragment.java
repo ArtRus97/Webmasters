@@ -21,7 +21,6 @@ public class LogoFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         mModel = new ViewModelProvider(requireActivity()).get(GraphicDesignViewModel.class);
         mBinding = FragmentLogosBinding.inflate(getLayoutInflater());
 
