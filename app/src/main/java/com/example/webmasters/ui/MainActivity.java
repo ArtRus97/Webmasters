@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.webmasters.databinding.ActivityMainBinding;
 import com.example.webmasters.models.graphic_design.Logo;
 import com.example.webmasters.ui.game_activity.gameActivity;
+import com.example.webmasters.ui.game_activity.gameMenu;
 import com.example.webmasters.ui.graphic_design.GraphicDesignActivity;
 import com.example.webmasters.R;
 import com.example.webmasters.ui.web_store.WebStoreActivity;
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentStore);
                 break;
             case R.id.buttonGame:
-                Intent intentGame = new Intent(this, gameActivity.class);
+                Intent intentGame = new Intent(this, gameMenu.class);
                 startActivity(intentGame);
                 break;
             default:

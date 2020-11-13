@@ -1,7 +1,10 @@
 package com.example.webmasters.ui.game_activity.engine;
 
+import android.media.MediaPlayer;
+
 import androidx.constraintlayout.solver.widgets.analyzer.Direct;
 
+import com.example.webmasters.R;
 import com.example.webmasters.ui.game_activity.classes.Coordinate;
 import com.example.webmasters.ui.game_activity.enums.Direction;
 import com.example.webmasters.ui.game_activity.enums.GameState;
@@ -10,10 +13,15 @@ import com.example.webmasters.ui.game_activity.enums.TileType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import android.media.MediaPlayer;
+
 /**********************************
  Class used for game's logic
  **********************************/
 public class GameEngine {
+    MediaPlayer playEat;
+
     //Game view's size
     public static final int GameWidth = 28;
     public static final int GameHeight = 42;
