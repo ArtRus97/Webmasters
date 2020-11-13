@@ -6,9 +6,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 import androidx.databinding.InverseMethod;
 import androidx.databinding.ObservableField;
 
+import com.example.webmasters.BR;
 import com.example.webmasters.types.IText;
 
 /**
@@ -16,8 +19,8 @@ import com.example.webmasters.types.IText;
  *
  * @author JIkaheimo (Jaakko Ikäheimo)
  */
-public class Text implements IText {
-    private int[] mPosition = {0, 0};
+public class Text extends BaseObservable implements IText {
+    final private int[] mPosition = {0, 0};
     private int mSize = 12;
     private int mColor = Color.WHITE;
     private String mValue = "";
@@ -25,60 +28,85 @@ public class Text implements IText {
     private boolean mIsBold = false;
 
     public void setSize(int size) {
+        if (mSize == size) return;
         mSize = size;
+        notifyPropertyChanged(BR.size);
     }
 
+    @Override
+    @Bindable
     public int getSize() {
         return mSize;
     }
 
     public void setColor(int color) {
+        if (mColor == color) return;
         mColor = color;
+        notifyPropertyChanged(BR.color);
     }
 
+    @Override
+    @Bindable
     public int getColor() {
         return mColor;
     }
 
     public void setValue(String value) {
+        if (mValue.equals(value)) return;
         mValue = value;
+        notifyPropertyChanged(BR.value);
     }
 
+    @Override
+    @Bindable
     public String getValue() {
         return mValue;
     }
 
     public void setX(int x) {
+        if (getX() == x) return;
         mPosition[0] = x;
+        notifyPropertyChanged(BR.x);
     }
 
     @Override
+    @Bindable
     public int getX() {
         return mPosition[0];
     }
 
     public void setY(int y) {
+        if (getY() == y) return;
         mPosition[1] = y;
+        notifyPropertyChanged(BR.y);
     }
 
     @Override
+    @Bindable
     public int getY() {
         return mPosition[1];
     }
 
     public void setBold(boolean bold) {
+        if (mIsBold == bold) return;
         mIsBold = bold;
+        notifyPropertyChanged(BR.bold);
     }
 
     @Override
+    @Bindable
     public boolean isBold() {
         return mIsBold;
     }
 
     public void setItalic(boolean italic) {
+        if (mIsItalic == italic) return;
         mIsItalic = italic;
+        notifyPropertyChanged(BR.italic);
     }
 
+    @Override
+    @Bindable
     public boolean isItalic() {
         return mIsItalic;
     }

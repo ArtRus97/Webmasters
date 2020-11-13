@@ -1,15 +1,13 @@
-package com.example.webmasters.models.graphic_design;
+package com.example.webmasters.models.graphic_design.utils;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
-import com.example.webmasters.types.ICanvasDrawable;
-import com.example.webmasters.types.IShape;
+import com.example.webmasters.models.graphic_design.Shape;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 class StarShape extends Shape {
     private int mNumSpikes;

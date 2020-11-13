@@ -1,54 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+
+        <data>
+            <variable
+                name="logo"
+                type="com.example.webmasters.types.ILogo" />
+        </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.MainActivity">
 
 
-    <TextView
-        android:id="@+id/textTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Webmasters"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.example.webmasters.ui.graphic_design.LogoAnimationView
+            android:id="@+id/logoView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/buttonGraphicDesign"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread"
+            app:layout_constraintVertical_weight="0.5"
+            app:shape="@{logo.shape}"
+            app:text="@{logo.text}" />
 
-    <Button
-        android:id="@+id/buttonGraphicDesign"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Graphic Design"
-        app:layout_constraintBottom_toTopOf="@+id/buttonWebStore"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+        <Button
+            android:id="@+id/buttonGraphicDesign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Graphic Design"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGame"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logoView" />
 
-    <Button
-        android:id="@+id/buttonWebStore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Webstore"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGraphicDesign" />
+        <Button
+            android:id="@+id/buttonGame"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="21dp"
+            android:text="Game"
+            app:layout_constraintBottom_toTopOf="@+id/buttonWebStore"
+            app:layout_constraintEnd_toEndOf="@+id/buttonGraphicDesign"
+            app:layout_constraintStart_toStartOf="@+id/buttonGraphicDesign"
+            app:layout_constraintTop_toBottomOf="@+id/buttonGraphicDesign" />
 
-    <Button
-        android:id="@+id/buttonGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="157dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="161dp"
-        android:layout_marginBottom="21dp"
-        android:text="Game"
-        app:layout_constraintBottom_toTopOf="@+id/buttonWebStore"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGraphicDesign" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/buttonWebStore"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="Webstore"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/buttonGame"
+            app:layout_constraintStart_toStartOf="@+id/buttonGame"
+            app:layout_constraintTop_toBottomOf="@+id/buttonGame" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -7,7 +7,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import androidx.databinding.InverseMethod;
 import com.example.webmasters.BR;
 import com.example.webmasters.types.IAnimation;
 import com.example.webmasters.types.ICanvasDrawable;
@@ -15,15 +14,24 @@ import com.example.webmasters.types.ICanvasDrawable;
 import java.util.Locale;
 
 /**
+ * Animation is an abstract base class for animations used to animate different
+ * canvas drawable graphics.
+ *
  * @author JIkaheimo (Jaakko Ikäheimo)
  */
 public abstract class Animation extends BaseObservable implements IAnimation {
+    /**
+     * Immutable properties
+     **/
     // Minimum boundary of the animation.
     public final float MINIMUM;
     // Maximum boundary of the animation.
     public final float MAXIMUM;
     // Name of the animation.
     public final String NAME;
+    /**
+     * Mutable properties
+     */
     // The amount animation value changes in second.
     private float mChangePerSecond;
     // Frames per second for the animation
@@ -39,13 +47,14 @@ public abstract class Animation extends BaseObservable implements IAnimation {
     // Last time animation was updated.
     private long mLastUpdate = System.currentTimeMillis();
 
+
     /**
      * Constructor
      *
      * @param name     (String) of the animation
      * @param settings (AnimationSettings) used to configure the animation.
      */
-    public Animation(String name, AnimationSettings settings) {
+    public Animation(final String name, final AnimationSettings settings) {
         NAME = name;
         // Map animation settings to properties.
         mChangePerSecond = settings.changePerSecond;
@@ -57,8 +66,15 @@ public abstract class Animation extends BaseObservable implements IAnimation {
     }
 
 
-    final public void setChangePerSecond(final float change) {
-        mChangePerSecond = change;
+    /**
+     * setChangePerSecond sets the amount animation changes in a second.
+     *
+     * @param changePerSecond (float)
+     */
+    final public void setChangePerSecond(final float changePerSecond) {
+        if (mChangePerSecond == changePerSecond) return;
+        mChangePerSecond = changePerSecond;
+        notifyPropertyChanged(BR.changePerSecond);
     }
 
     @Override
@@ -67,12 +83,6 @@ public abstract class Animation extends BaseObservable implements IAnimation {
         return mChangePerSecond;
     }
 
-
-    @Override
-    @Bindable
-    public float getMaximum() {
-        return MAXIMUM;
-    }
 
     @Override
     @Bindable
@@ -93,6 +103,12 @@ public abstract class Animation extends BaseObservable implements IAnimation {
 
     @Override
     @Bindable
+    public float getMaximum() {
+        return MAXIMUM;
+    }
+
+    @Override
+    @Bindable
     public float getMinimum() {
         return MINIMUM;
     }
@@ -104,7 +120,7 @@ public abstract class Animation extends BaseObservable implements IAnimation {
     }
 
     final public void setFPS(int fps) {
-        Log.d("ASD", fps+"");
+        Log.d("ASD", fps + "");
         if (mFPS == fps) return;
         mFPS = fps;
         notifyPropertyChanged(BR.fPS);
@@ -169,10 +185,24 @@ public abstract class Animation extends BaseObservable implements IAnimation {
 
     }
 
+    /**
+     * shouldUpdate returns true if the animation should update based
+     * on its internal state.
+     *
+     * @return should animation update as boolan.
+     */
     private boolean shouldUpdate() {
-        return (System.currentTimeMillis() - mLastUpdate) > getInterval();
+        long millisSinceUpdate = System.currentTimeMillis() - mLastUpdate;
+        return (millisSinceUpdate > getInterval()) && isPlaying();
     }
 
+
+    /**
+     * getChangePerInterval returns the amount animation value
+     * changes every interval.
+     *
+     * @return the change of animation per interval as a float.
+     */
     private float getChangePerInterval() {
         return getInterval() / 1000f * mChangePerSecond;
     }
@@ -181,7 +211,7 @@ public abstract class Animation extends BaseObservable implements IAnimation {
      * update handles the update of animation.
      */
     private void update() {
-        if (!shouldUpdate() || !mIsPlaying) return;
+        if (!shouldUpdate()) return;
 
         if (mAllowReverse && mIsReverse)
             mValue -= getChangePerInterval();
