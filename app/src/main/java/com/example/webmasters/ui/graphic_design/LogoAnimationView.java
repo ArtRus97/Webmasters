@@ -7,11 +7,9 @@ import android.util.AttributeSet;
 import androidx.annotation.Nullable;
 
 import com.example.webmasters.models.graphic_design.Animation;
-import com.example.webmasters.models.graphic_design.Shape;
-import com.example.webmasters.models.graphic_design.ShapeAnimator;
+import com.example.webmasters.models.graphic_design.utils.ShapeAnimator;
 import com.example.webmasters.types.IShape;
 
-import java.util.Collection;
 import java.util.List;
 
 public class LogoAnimationView extends LogoView {
