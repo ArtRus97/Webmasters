@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.game_activity.gameOptions">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        tools:context=".ui.game_activity.gameMenu">
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/game_menu_background" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/gameTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:fontFamily="casual"
+                android:text="Options"
+                android:textAlignment="center"
+                android:textColor="#FFAA00"
+                android:textSize="80sp"
+                android:textStyle="bold"
+                android:typeface="normal" />
+
+            <TextView
+                android:id="@+id/musicOnOff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:background="#72151414"
+                android:fontFamily="casual"
+                android:text="Music:"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#FFD400"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/chkbMusicOnOff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="185dp"
+                android:layout_marginRight="10dp"
+                android:buttonTint="#F57F17"
+                android:checked="true"
+                android:fontFamily="casual"
+                android:text="Enabled"
+                android:textAllCaps="false"
+                android:textColor="#F57F17"
+                android:textColorHighlight="#FF6F00"
+                android:textColorHint="#F57F17"
+                android:textColorLink="#FF6F00"
+                android:textCursorDrawable="@android:drawable/alert_light_frame"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/musicVoltxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:background="#72151414"
+                android:fontFamily="casual"
+                android:text="Music Volume:"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#FFD400"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/musicVolSlider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#72151414"
+                android:value="20.0"
+                android:valueFrom="0.0"
+                android:valueTo="100.0"
+                app:haloColor="#F57F17"
+                app:thumbColor="#E65100"
+                app:tickColorInactive="#FF6F00"
+                app:trackColorActive="#F57F17"
+                app:trackColorInactive="#7CF57F17" />
+
+            <TextView
+                android:id="@+id/ctrlSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:background="#72151414"
+                android:fontFamily="casual"
+                android:text="Controls type:"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#FFD400"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <Switch
+                android:id="@+id/ctrlTypeSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="150dp"
+                android:layout_marginRight="150dp"
+                android:enabled="true"
+                android:showText="true"
+                android:textColorHighlight="#FF6F00"
+                android:textColorLink="#FF6F00"
+                android:textCursorDrawable="@android:drawable/alert_light_frame"
+                android:textOff="Buttons"
+                android:textOn="Swipe"
+                tools:checked="true" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.web_store.products.ProductActivity"></activity>
+        <activity android:name=".ui.game_activity.gameOptions"></activity>
+        <activity android:name=".ui.game_activity.gameShop" />
+        <activity android:name=".ui.game_activity.gameMenu" />
+        <activity android:name=".ui.web_store.products.ProductActivity" />
         <activity android:name=".ui.web_store.WebStoreActivity" />
         <activity android:name=".ui.graphic_design.GraphicDesignActivity" />
         <activity android:name=".ui.game_activity.gameActivity" />
