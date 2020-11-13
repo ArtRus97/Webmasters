@@ -1,6 +1,7 @@
 package com.example.webmasters.ui.graphic_design;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.webmasters.databinding.FragmentLogosBinding;
 import com.example.webmasters.models.graphic_design.Logo;
+import com.example.webmasters.services.FirebaseService;
 
 public class LogoFragment extends Fragment {
     private FragmentLogosBinding mBinding;
@@ -23,6 +25,11 @@ public class LogoFragment extends Fragment {
 
         mModel = new ViewModelProvider(requireActivity()).get(GraphicDesignViewModel.class);
         mBinding = FragmentLogosBinding.inflate(getLayoutInflater());
+
+        mModel.getLogoObservable().observe(this, logo -> {
+            mBinding.setLogo(logo);
+        });
+
 
         boolean isInitialized = mModel.getInitialized();
 
@@ -45,7 +52,6 @@ public class LogoFragment extends Fragment {
 
             mBinding.setModel(mModel);
             mBinding.executePendingBindings();
-
         });
     }
 
@@ -57,6 +63,12 @@ public class LogoFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        // Fetch user logo.
+        (new FirebaseService()).getLogo(tempLogo -> {
+            if (tempLogo == null) return;
+            mModel.setLogo(tempLogo);
+        });
         mBinding.logoView.setSwipeListener(new LogoView.SwipeListener() {
             @Override
             public void onSwipeDown() {
@@ -69,5 +81,11 @@ public class LogoFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        (new FirebaseService()).addLogo(mModel.getLogo());
     }
 }

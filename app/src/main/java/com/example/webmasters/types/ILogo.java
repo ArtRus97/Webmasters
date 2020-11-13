@@ -1,5 +1,8 @@
 package com.example.webmasters.types;
 
+import com.example.webmasters.models.graphic_design.Shape;
+import com.example.webmasters.models.graphic_design.Text;
+
 /**
  * ILogo defines an interface for logos.
  *
@@ -13,16 +16,17 @@ public interface ILogo extends ICanvasDrawable {
     /**
      * getText returns the text of logo.
      *
-     * @return the text of logo as IText.
+     * @return the text of logo as Text.
      */
-    IText getText();
+    Text getText();
+
 
     /**
      * getShape returns the shape of logo.
      *
-     * @return the shape of logo as IShape.
+     * @return the shape of logo as Shape.
      */
-    IShape getShape();
+    Shape getShape();
 
     /**
      * getTextValue returns the value of logo text.
