@@ -7,6 +7,7 @@ package com.example.webmasters.types;
  * v 1.0.0 Base interface created.
  */
 public interface IShape extends ICanvasDrawable {
+
     /**
      * getColor returns the color of shape.
      * @return the color of text as int.
