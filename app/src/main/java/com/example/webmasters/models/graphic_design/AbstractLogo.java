@@ -14,6 +14,7 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
 
     abstract void setTextValue(String textValue);
 
+    @Override
     @Bindable
     public String getTextValue() {
         return getText().getValue();
@@ -22,6 +23,7 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
 
     abstract void setTextSize(int textSize);
 
+    @Override
     @Bindable
     public int getTextSize() {
         return getText().getSize();
@@ -30,6 +32,7 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
 
     abstract void setTextColor(int textColor);
 
+    @Override
     @Bindable
     public int getTextColor() {
         return getText().getColor();
@@ -38,6 +41,7 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
 
     abstract void setTextX(int textX);
 
+    @Override
     @Bindable
     public int getTextX() {
         return getText().getX();
@@ -46,6 +50,7 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
 
     abstract void setTextY(int textY);
 
+    @Override
     @Bindable
     public int getTextY() {
         return getText().getY();
@@ -54,6 +59,7 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
 
     abstract void setTextBold(boolean isBold);
 
+    @Override
     @Bindable
     public boolean getTextBold() {
         return getText().isBold();
@@ -62,6 +68,7 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
 
     abstract void setTextItalic(boolean isItalic);
 
+    @Override
     @Bindable
     public boolean getTextItalic() {
         return getText().isItalic();
@@ -70,6 +77,7 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
 
     abstract void setShapeScale(float shapeScale);
 
+    @Override
     @Bindable
     public float getShapeScale() {
         return getShape().getScale();
@@ -78,6 +86,7 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
 
     abstract void setShapeColor(int shapeColor);
 
+    @Override
     @Bindable
     public int getShapeColor() {
         return getShape().getColor();
@@ -86,6 +95,7 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
 
     abstract void setShapeX(int x);
 
+    @Override
     @Bindable
     public int getShapeX() {
         return getShape().getX();
@@ -94,6 +104,7 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
 
     abstract void setShapeY(int y);
 
+    @Override
     @Bindable
     public int getShapeY() {
         return getShape().getY();

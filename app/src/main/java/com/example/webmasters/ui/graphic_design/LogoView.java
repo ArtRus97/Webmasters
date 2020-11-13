@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.webmasters.models.graphic_design.Shape;
+import com.example.webmasters.types.ILogo;
 import com.example.webmasters.types.IShape;
 import com.example.webmasters.types.IText;
 

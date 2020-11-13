@@ -1,8 +1,18 @@
 package com.example.webmasters.types;
 
-import androidx.databinding.InverseMethod;
-
-public interface ILogo {
+/**
+ * ILogo defines an interface for logo classes.
+ * @author JIkaheimo (Jaakko Ikäheimo)
+ *
+ * v 1.0.0 Base interface created.
+ * v 1.1.0 Text typefaces added.
+ * v 1.2.0 Shape and shape property accessors added.
+ */
+public interface ILogo extends ICanvasDrawable {
+    /**
+     * getText returns the text of logo.
+     * @return the text of logo as IText.
+     */
     IText getText();
     IShape getShape();
 
