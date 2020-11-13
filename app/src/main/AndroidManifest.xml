@@ -12,8 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".ui.web_store.ProductActivity"></activity>
+        <activity android:name=".ui.web_store.CartActivity"></activity>
+        <activity android:name=".ui.web_store.ProductActivity" />
         <activity android:name=".ui.web_store.WebStoreActivity" />
         <activity android:name=".ui.graphic_design.GraphicDesignActivity" />
         <activity android:name=".ui.game_activity.gameActivity" />
