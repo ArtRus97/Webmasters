@@ -30,7 +30,6 @@ public class LogoFragment extends Fragment {
             mBinding.setLogo(logo);
         });
 
-
         boolean isInitialized = mModel.getInitialized();
 
         mBinding.getRoot().post(() -> {
@@ -49,9 +48,6 @@ public class LogoFragment extends Fragment {
                 logo.setShapeX(xBoundary / 2);
                 logo.setShapeY(yBoundary / 2);
             }
-
-            mBinding.setModel(mModel);
-            mBinding.executePendingBindings();
         });
     }
 
@@ -63,12 +59,15 @@ public class LogoFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-        // Fetch user logo.
+        // Fetch user logo and display it.
         (new FirebaseService()).getLogo(tempLogo -> {
             if (tempLogo == null) return;
             mModel.setLogo(tempLogo);
         });
+
+        mBinding.setModel(mModel);
+        mBinding.executePendingBindings();
+
         mBinding.logoView.setSwipeListener(new LogoView.SwipeListener() {
             @Override
             public void onSwipeDown() {
@@ -86,6 +85,7 @@ public class LogoFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        // Store logo.
         (new FirebaseService()).addLogo(mModel.getLogo());
     }
 }

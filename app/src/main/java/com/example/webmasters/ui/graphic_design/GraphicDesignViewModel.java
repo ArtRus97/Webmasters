@@ -49,6 +49,7 @@ public class GraphicDesignViewModel extends ViewModel implements IAnimationViewM
         ArrayList<Animation> animations = new ArrayList<Animation>() {{
             add(animationFactory.getAnimation(AnimationFactory.AnimationType.Blink));
             add(animationFactory.getAnimation(AnimationFactory.AnimationType.Rotation));
+            add(animationFactory.getAnimation(AnimationFactory.AnimationType.Movement));
         }};
 
         ArrayList<Boolean> animationStates = new ArrayList<Boolean>();

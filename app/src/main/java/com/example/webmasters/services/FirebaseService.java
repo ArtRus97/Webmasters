@@ -21,16 +21,13 @@ public class FirebaseService {
     }
 
     public void addLogo(Logo logo) {
-        mFirestore.collection("logos").document(getUser()).set(logo)
-        .addOnSuccessListener(documentReference -> {
-
-            Log.d("ASD", "New logo added!");
-        })
-        .addOnFailureListener(Throwable::printStackTrace);
+        mFirestore
+                .collection("logos")
+                .document(getUser())
+                .set(logo);
     }
 
     public void getLogo(Consumer<Logo> callback) {
-
         mFirestore.collection("logos").document(getUser()).get()
         .addOnSuccessListener(documentSnapshot -> {
            callback.accept(documentSnapshot.toObject(Logo.class));

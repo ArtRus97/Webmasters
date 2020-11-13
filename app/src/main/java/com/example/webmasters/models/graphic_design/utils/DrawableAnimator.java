@@ -10,16 +10,17 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.example.webmasters.models.graphic_design.Animation;
+import com.example.webmasters.types.ICanvasDrawable;
 import com.example.webmasters.types.IShape;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * ShapeAnimator handles animation of shapes.
+ * DrawableAnimator allows easier animation of different ICanvasDrawables.
  * @author Jikaheimo (Jaakko Ikäheimo)
  */
-public class ShapeAnimator {
+public class DrawableAnimator {
     // The handler used to run the animation method.
     private final Handler mAnimationHandler;
     // The view animator is used on.
@@ -49,7 +50,7 @@ public class ShapeAnimator {
         setInterval((int)(seconds * 1000));
     }
 
-    public ShapeAnimator(View view) {
+    public DrawableAnimator(View view) {
         mView = view;
         mAnimations = new ArrayList<>();
         mAnimationHandler = new Handler(Looper.getMainLooper());
@@ -60,28 +61,23 @@ public class ShapeAnimator {
         mAnimations = animations;
     }
 
-
     /**
      * drawShape will draw the given shape on the canvas
      * based on the current state of the animator.
      * @param canvas (Canvas) canvas being drawn on.
-     * @param shape (IShape) shape being drawn.
+     * @param drawable (IShape) shape being drawn.
      */
-    public void drawShape(@NonNull final Canvas canvas, @NonNull final IShape shape) {
-        Paint paint = shape.getPaint(mView.getContext());
+    public void draw(@NonNull final Canvas canvas, @NonNull final ICanvasDrawable drawable) {
+        Paint paint = drawable.getPaint(mView.getContext());
 
-        int numRestores = mAnimations.stream().reduce(0, (acc, animation) -> {
+        // Apply animation to canvas.
+        mAnimations.forEach(animation -> {
             animation.apply(paint);
-            acc += animation.apply(canvas) ? 1 : 0;
-            acc += animation.apply(canvas, shape) ? 1 : 0;
-            return acc;
-        }, Integer::sum);
+            animation.apply(canvas);
+            animation.apply(canvas, drawable);
+        });
 
-        shape.drawOnCanvas(canvas, paint);
-
-        for (int i = 0; i < numRestores; i++) {
-            canvas.restore();
-        }
+        drawable.drawOnCanvas(canvas, paint);
     }
 
     private void animate() {

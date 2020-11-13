@@ -16,7 +16,8 @@ public class AnimationFactory {
     // Pre-defined animation types.
     public enum AnimationType {
         Rotation,
-        Blink
+        Blink,
+        Movement
     }
 
     /**
@@ -36,6 +37,8 @@ public class AnimationFactory {
                 return blink(settings);
             case Rotation:
                 return rotation(settings);
+            case Movement:
+                return movement(settings);
         }
         return null;
     }
@@ -46,7 +49,7 @@ public class AnimationFactory {
      * @param settings (AnimationSettings)
      * @return blink animation.
      */
-    static Animation blink(final AnimationSettings settings) {
+    private static Animation blink(final AnimationSettings settings) {
         // Add blink animation specific settings.
         settings.reverse = true;
         settings.maximum = 255;
@@ -62,12 +65,34 @@ public class AnimationFactory {
     }
 
     /**
+     * movement creates a new movement animation configured with the given settings.
+     *
+     * @param settings (AnimationSettings)
+     * @return movement animation.
+     */
+    private static Animation movement(final AnimationSettings settings) {
+        // Add movement animation specific settings.
+        settings.reverse = false;
+        settings.initialValue = 0;
+        settings.maximum = 50;
+
+        // Create new movement animation.
+        return new Animation("Movement", settings) {
+            @Override
+            protected boolean transformCanvas(Canvas canvas) {
+                canvas.translate(getValue(), 0);
+                return true;
+            }
+        };
+    }
+
+    /**
      * rotation creates a new rotation animation configured with the given settings.
      *
      * @param settings (AnimationSettings)
      * @return rotation animation.
      */
-    static Animation rotation(final AnimationSettings settings) {
+    private static Animation rotation(final AnimationSettings settings) {
         // Add rotation animation specific settings.
         settings.maximum = 360f;
         settings.reverse = true;
