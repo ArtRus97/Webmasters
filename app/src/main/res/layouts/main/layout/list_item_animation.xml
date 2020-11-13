@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+        <import type="android.graphics.Color" />
+        <variable name="isSelected"
+            type="boolean"/>
+        <variable
+            name="animation"
+            type="com.example.webmasters.models.graphic_design.Animation" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layoutAnimationItem"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:background="@{isSelected ? Color.RED : Color.TRANSPARENT}"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:checked="@={animation.playing}"
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textSize="18sp"
+            android:id="@+id/textAnimationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{animation.name}"
+            tools:text="Rolling" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
