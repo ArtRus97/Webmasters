@@ -8,6 +8,7 @@
         app:showAsAction="always"/>
     <item
         android:id="@+id/cart"
+        android:onClick="openCart"
         android:title="Cart"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 </menu>

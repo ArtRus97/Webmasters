@@ -1,10 +1,17 @@
 package com.example.webmasters.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
+import com.example.webmasters.models.graphic_design.Logo;
 import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.services.ProductApi;
+import com.example.webmasters.ui.web_store.CartActivity;
+import com.example.webmasters.ui.web_store.ProductActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,12 +25,17 @@ public class WebStoreSingleton {
     private Context mContext;
     public final HashMap<String, Product> mProducts = new HashMap<>();
 
+    private final FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser mAuthCurrentUser = mAuth.getCurrentUser();
+
     // private constructor restricted to this class itself
     private WebStoreSingleton(Context context) {
         mContext = context;
     }
 
     public void getProducts(Consumer<List<Product>> handler) {
+
         if (mProducts.isEmpty())
             ProductApi.fetchProducts(mContext, products -> {
                 // Fetch product data from API.
@@ -34,11 +46,13 @@ public class WebStoreSingleton {
         // Otherwise just return the fetched products.
         else
             handler.accept(new ArrayList<>(mProducts.values()));
+
     }
 
     public Product getProduct(String id) {
         return mProducts.get(id);
     }
+
 
     // static method to create instance of Singleton class
     public static synchronized WebStoreSingleton getInstance(Context context) {
