@@ -2,7 +2,11 @@ package com.example.webmasters.services;
 
 import android.util.Log;
 import com.example.webmasters.models.graphic_design.Logo;
+import com.example.webmasters.models.graphic_design.Shape;
+import com.example.webmasters.models.graphic_design.Text;
+import com.example.webmasters.models.graphic_design.utils.ShapeFactory;
 import com.example.webmasters.types.ILogo;
+import com.example.webmasters.types.ShapeType;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,7 +24,7 @@ public class FirebaseService {
         return mAuthCurrentUser.getUid();
     }
 
-    public void addLogo(Logo logo) {
+    public void addLogo(ILogo logo) {
         mFirestore
                 .collection("logos")
                 .document(getUser())
@@ -29,8 +33,15 @@ public class FirebaseService {
 
     public void getLogo(Consumer<Logo> callback) {
         mFirestore.collection("logos").document(getUser()).get()
-        .addOnSuccessListener(documentSnapshot -> {
-           callback.accept(documentSnapshot.toObject(Logo.class));
-        });
+                .addOnSuccessListener(documentSnapshot -> {
+                    Logo logo = documentSnapshot.toObject(Logo.class);
+                    if (logo != null) {
+                        ShapeType shapeType = logo.getShape().getType();
+                        Log.d("ASD", shapeType.toString());
+                        Shape shape = ShapeFactory.applyShapeType(logo.getShape(), shapeType);
+                        logo.setShape(shape);
+                    }
+                    callback.accept(logo);
+                });
     }
 }

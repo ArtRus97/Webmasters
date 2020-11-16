@@ -1,22 +1,27 @@
 package com.example.webmasters.models.graphic_design;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.databinding.Observable;
 import androidx.databinding.library.baseAdapters.BR;
 
 import com.example.webmasters.Utils;
+import com.example.webmasters.models.graphic_design.utils.ShapeFactory;
+import com.google.firebase.firestore.Exclude;
 
 /**
  * Logo is a basic implementation of AbstractLogo class.
  *
  * @author JIkaheimo (Jaakko Ikäheimo)
- *
+ * <p>
  * v 1.0.0 Base class created.
  * v 1.0.1 Observer notifiers added.
  * v 1.1.0 Text typefaces added.
  */
-public class Logo extends AbstractLogo  {
+public class Logo extends AbstractLogo {
 
     /**
      * Constants
@@ -37,18 +42,29 @@ public class Logo extends AbstractLogo  {
      */
 
     // The text of the logo.
-    private Text mText = new Text(){{
-        setSize(DEFAULT_TEXT_SIZE);
-    }};
+    private Text mText;
 
     // The shape of the logo.
-    private Shape mShape = new Shape(){{
-        setScale(DEFAULT_SHAPE_SCALE);
-    }};
+    private Shape mShape;
+
+
+    public Logo() {
+        setText(new Text() {{
+            setSize(DEFAULT_TEXT_SIZE);
+        }});
+        setShape(ShapeFactory.defaultShape());
+    }
 
 
     final public void setText(final Text text) {
+        // Update property listeners.
+        if (mText != null)
+            mText.removeOnPropertyChangedCallback(this.onTextPropertyChanged);
+        text.addOnPropertyChangedCallback(this.onTextPropertyChanged);
+        // Set text.
         mText = text;
+        // Notify observers.
+        notifyPropertyChanged(BR.text);
     }
 
     @Override
@@ -58,12 +74,11 @@ public class Logo extends AbstractLogo  {
     }
 
 
-    final public void setShape(@NonNull final Shape shape) {
-        // Update the new shape with the previous one.
-        shape.setX(mShape.getX());
-        shape.setY(mShape.getY());
-        shape.setScale(mShape.getScale());
-        shape.setColor(mShape.getColor());
+    final public void setShape(final Shape shape) {
+        // Update property listeners.
+        if (mShape != null)
+            mShape.removeOnPropertyChangedCallback(this.onShapePropertyChanged);
+        shape.addOnPropertyChangedCallback(this.onShapePropertyChanged);
         // Set shape.
         mShape = shape;
         // Notify observers.

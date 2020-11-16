@@ -273,8 +273,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            app:selectedValue="@={model.logo.shape}"
-                            android:entries="@{model.initialized ? model.shapes : null}"
+                            app:selectedValue="@={logo.shapeType}"
+                            android:entries="@{model.shapeTypes}"
                             app:layout_constraintBottom_toBottomOf="@+id/labelShapeType"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/labelShapeType"
@@ -285,7 +285,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="32dp"
-                            android:text="@{String.valueOf(model.logo.shapeScale)}"
+                            android:text="@{String.valueOf(logo.shapeScale)}"
                             app:layout_constraintStart_toStartOf="@+id/labelShapeColor"
                             app:layout_constraintTop_toBottomOf="@+id/buttonShapeColor"
                             tools:text="Scale: 1" />
@@ -318,7 +318,7 @@
                             android:layout_height="wrap_content"
                             android:max="@{canvasView.width}"
                             android:progress="@={logo.shapeX}"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@+id/labelShapeX"
                             app:layout_constraintEnd_toStartOf="@+id/labelShapeY"
                             app:layout_constraintStart_toStartOf="@+id/seekShapeScale"
                             app:layout_constraintTop_toTopOf="@+id/labelShapeX" />
@@ -366,6 +366,15 @@
                             android:text="@string/color_label"
                             app:layout_constraintStart_toStartOf="@+id/labelShapeType"
                             app:layout_constraintTop_toBottomOf="@+id/spinnerShapeType" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/labelShapeX" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

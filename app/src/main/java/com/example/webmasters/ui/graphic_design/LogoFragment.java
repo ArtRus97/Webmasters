@@ -1,16 +1,13 @@
 package com.example.webmasters.ui.graphic_design;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.example.webmasters.databinding.FragmentLogosBinding;
 import com.example.webmasters.models.graphic_design.Logo;
 import com.example.webmasters.services.FirebaseService;
@@ -28,15 +25,16 @@ public class LogoFragment extends Fragment {
 
         mModel.getLogoObservable().observe(this, logo -> {
             mBinding.setLogo(logo);
+            mBinding.executePendingBindings();
         });
 
-        boolean isInitialized = mModel.getInitialized();
+        boolean isInitialized = mModel.getInitialized().getValue();
+        mBinding.setModel(mModel);
 
         mBinding.getRoot().post(() -> {
             mBinding.setCanvasView(mBinding.logoView);
             mBinding.executePendingBindings();
 
-            // Update controls based on the size of the logo boundaries.
             Logo logo = mModel.getLogo();
 
             int xBoundary = mBinding.logoView.getWidth();
@@ -48,7 +46,18 @@ public class LogoFragment extends Fragment {
                 logo.setShapeX(xBoundary / 2);
                 logo.setShapeY(yBoundary / 2);
             }
+
+            mModel.setLogo(logo);
         });
+
+        // Fetch user logo and display it.
+        (new FirebaseService()).getLogo(tempLogo -> mBinding.getRoot().post(() -> {
+            // Use user logo.
+            if (tempLogo == null) return;
+            mModel.setLogo(tempLogo);
+
+            mBinding.executePendingBindings();
+        }));
     }
 
     @Override
@@ -59,15 +68,6 @@ public class LogoFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        // Fetch user logo and display it.
-        (new FirebaseService()).getLogo(tempLogo -> {
-            if (tempLogo == null) return;
-            mModel.setLogo(tempLogo);
-        });
-
-        mBinding.setModel(mModel);
-        mBinding.executePendingBindings();
-
         mBinding.logoView.setSwipeListener(new LogoView.SwipeListener() {
             @Override
             public void onSwipeDown() {
@@ -82,10 +82,4 @@ public class LogoFragment extends Fragment {
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // Store logo.
-        (new FirebaseService()).addLogo(mModel.getLogo());
-    }
 }

@@ -61,9 +61,8 @@ public class MainActivity extends AppCompatActivity {
         binding.getRoot().post(() -> {
 
             // Update controls based on the size of the logo boundaries.
-            Logo logo = new Logo(){{
-                    setTextValue("Webmasters");
-            }};
+            Logo logo = new Logo();
+            logo.setTextValue("Webmasters");
 
             int xBoundary = binding.logoView.getWidth();
             int yBoundary = binding.logoView.getHeight();

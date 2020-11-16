@@ -13,6 +13,7 @@ import androidx.databinding.ObservableField;
 
 import com.example.webmasters.BR;
 import com.example.webmasters.types.IText;
+import com.google.firebase.firestore.Exclude;
 
 /**
  * A very basic implementation of IText interface.
@@ -59,11 +60,11 @@ public class Text extends BaseObservable implements IText {
 
     @Override
     @Bindable
-    public String getValue() {
+    final public String getValue() {
         return mValue;
     }
 
-    public void setX(int x) {
+    final public void setX(final int x) {
         if (getX() == x) return;
         mPosition[0] = x;
         notifyPropertyChanged(BR.x);
@@ -71,11 +72,11 @@ public class Text extends BaseObservable implements IText {
 
     @Override
     @Bindable
-    public int getX() {
+    final public int getX() {
         return mPosition[0];
     }
 
-    public void setY(int y) {
+    final public void setY(final int y) {
         if (getY() == y) return;
         mPosition[1] = y;
         notifyPropertyChanged(BR.y);
@@ -83,11 +84,11 @@ public class Text extends BaseObservable implements IText {
 
     @Override
     @Bindable
-    public int getY() {
+    final public int getY() {
         return mPosition[1];
     }
 
-    public void setBold(boolean bold) {
+    final public void setBold(final boolean bold) {
         if (mIsBold == bold) return;
         mIsBold = bold;
         notifyPropertyChanged(BR.bold);
@@ -95,11 +96,11 @@ public class Text extends BaseObservable implements IText {
 
     @Override
     @Bindable
-    public boolean isBold() {
+    final public boolean isBold() {
         return mIsBold;
     }
 
-    public void setItalic(boolean italic) {
+    final public void setItalic(final boolean italic) {
         if (mIsItalic == italic) return;
         mIsItalic = italic;
         notifyPropertyChanged(BR.italic);
@@ -107,7 +108,7 @@ public class Text extends BaseObservable implements IText {
 
     @Override
     @Bindable
-    public boolean isItalic() {
+    final public boolean isItalic() {
         return mIsItalic;
     }
 
@@ -116,8 +117,9 @@ public class Text extends BaseObservable implements IText {
      *
      * @return Typeface of the thext.
      */
-    public Typeface getTypeface() {
-        int typeface;
+    @Exclude
+    final public Typeface getTypeface() {
+        final int typeface;
 
         if (mIsItalic && mIsBold)
             typeface = Typeface.BOLD_ITALIC;
@@ -132,8 +134,8 @@ public class Text extends BaseObservable implements IText {
     }
 
 
-    public Paint getPaint(Context context) {
-        Paint paint = new Paint();
+    final public Paint getPaint(final Context context) {
+        final Paint paint = new Paint();
 
         paint.setStyle(Paint.Style.FILL);
         paint.setTextSize(IText.spAsPixels(context, mSize));

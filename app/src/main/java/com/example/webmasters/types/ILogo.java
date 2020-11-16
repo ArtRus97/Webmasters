@@ -20,7 +20,6 @@ public interface ILogo extends ICanvasDrawable {
      */
     Text getText();
 
-
     /**
      * getShape returns the shape of logo.
      *
@@ -63,16 +62,52 @@ public interface ILogo extends ICanvasDrawable {
      */
     int getTextY();
 
+    /**
+     * getTextBold returns true if the logo text is in bold.
+     *
+     * @return is logo text bold as boolean.
+     */
     boolean getTextBold();
 
+    /**
+     * getTextItalic returns true if the logo text is in italic.
+     *
+     * @return is logo text italic as boolean
+     */
     boolean getTextItalic();
 
+    /**
+     * getShapeColor returns the color of logo shape.
+     *
+     * @return logo shape color as int.
+     */
     int getShapeColor();
 
+    /**
+     * getShapeScale returns the scale of logo shape.
+     *
+     * @return logo shape scale as float.
+     */
     float getShapeScale();
 
+    /**
+     * getShapeX returns the horizontal coordinate of logo shape.
+     *
+     * @return logo horizontal coordinate as int.
+     */
     int getShapeX();
 
+    /**
+     * getShapeY returns the vertical coordinate of logo shape.
+     *
+     * @return logo vertical coordinate as int.
+     */
     int getShapeY();
 
+    /**
+     * getShapeType returns the type of logo shape.
+     *
+     * @return logo shape type as ShapeType.
+     */
+    ShapeType getShapeType();
 }
