@@ -6,7 +6,9 @@ import android.widget.Toast;
 
 import com.example.webmasters.models.graphic_design.Logo;
 import com.example.webmasters.models.webstore.Product;
+import com.example.webmasters.services.FirebaseService;
 import com.example.webmasters.services.ProductApi;
+import com.example.webmasters.services.FirebaseService;
 import com.example.webmasters.ui.web_store.CartActivity;
 import com.example.webmasters.ui.web_store.ProductActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,10 +27,6 @@ public class WebStoreSingleton {
     private Context mContext;
     public final HashMap<String, Product> mProducts = new HashMap<>();
 
-    private final FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private FirebaseUser mAuthCurrentUser = mAuth.getCurrentUser();
-
     // private constructor restricted to this class itself
     private WebStoreSingleton(Context context) {
         mContext = context;
@@ -36,14 +34,13 @@ public class WebStoreSingleton {
 
     public void getProducts(Consumer<List<Product>> handler) {
 
-        if (mProducts.isEmpty())
-            ProductApi.fetchProducts(mContext, products -> {
-                // Fetch product data from API.
+        if (mProducts.isEmpty()) {
+            (new FirebaseService()).getProducts(products -> {
                 for (Product product : products)
                     mProducts.put(product.getId(), product);
                 handler.accept(new ArrayList<>(mProducts.values()));
             });
-        // Otherwise just return the fetched products.
+        }
         else
             handler.accept(new ArrayList<>(mProducts.values()));
 

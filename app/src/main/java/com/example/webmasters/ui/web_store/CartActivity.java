@@ -64,7 +64,7 @@ public class CartActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             Product product = mProducts.get(position);
-            holder.binding.setHolder(holder);
+            //holder.binding.setHolder(holder);
             holder.binding.setProduct(product);
             Picasso.get().load(product.getImageUrl()).into(holder.image);
         }
