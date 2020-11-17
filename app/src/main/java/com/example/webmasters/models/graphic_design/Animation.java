@@ -78,6 +78,7 @@ public abstract class Animation extends BaseObservable implements IAnimation {
         if (mChangePerSecond == changePerSecond) return;
         mChangePerSecond = changePerSecond;
         notifyPropertyChanged(BR.changePerSecond);
+        notifyPropertyChanged(BR.duration);
     }
 
     @Override
@@ -115,6 +116,23 @@ public abstract class Animation extends BaseObservable implements IAnimation {
     @Bindable
     final public float getMinimum() {
         return MINIMUM;
+    }
+
+    /**
+     * setDuration sets the animation duration.
+     */
+    final public void setDuration(float duration) {
+        setChangePerSecond((MAXIMUM - MINIMUM) / duration);
+    }
+
+    /**
+     * getDuration returns the duration of the animation in seconds.
+     *
+     * @return duration of the animation as float.
+     */
+    @Bindable
+    final public float getDuration() {
+        return (MAXIMUM - MINIMUM) / mChangePerSecond;
     }
 
 
@@ -191,7 +209,12 @@ public abstract class Animation extends BaseObservable implements IAnimation {
     protected void transformCanvas(Canvas canvas) {
     }
 
+    /**
+     * transformPaint transform the given paint with the animation values.
+     * @param paint (Paint) to transform.
+     */
     protected void transformPaint(Paint paint) {
+        // Method stub: Override this.
     }
 
     /**
@@ -205,7 +228,6 @@ public abstract class Animation extends BaseObservable implements IAnimation {
         return (millisSinceUpdate > getInterval()) && isPlaying();
     }
 
-
     /**
      * getChangePerInterval returns the amount animation value
      * changes every interval.
@@ -215,6 +237,7 @@ public abstract class Animation extends BaseObservable implements IAnimation {
     private float getChangePerInterval() {
         return getInterval() / 1000f * mChangePerSecond;
     }
+
 
     /**
      * update handles the update of animation.
@@ -245,6 +268,10 @@ public abstract class Animation extends BaseObservable implements IAnimation {
     @NonNull
     final public String toString() {
         return getName();
+    }
+
+    public static String formatDuration(float duration) {
+        return String.format(Locale.ENGLISH, "Duration (s) %4.2f:", duration);
     }
 
     public static String formatFPS(int fps) {

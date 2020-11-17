@@ -15,7 +15,7 @@
         android:id="@+id/layoutAnimationItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@{isSelected ? Color.RED : Color.TRANSPARENT}"
+        android:background="@{isSelected ? Color.GRAY : Color.TRANSPARENT}"
         android:orientation="horizontal"
         android:paddingStart="5dp">
 

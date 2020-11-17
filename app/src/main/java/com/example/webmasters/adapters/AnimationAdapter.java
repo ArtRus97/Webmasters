@@ -9,6 +9,7 @@ import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableList;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.webmasters.converters.SharedConverters;
 import com.example.webmasters.databinding.ListItemAnimationBinding;
 import com.example.webmasters.models.graphic_design.Animation;
 
@@ -26,9 +27,19 @@ public class AnimationAdapter extends RecyclerView.Adapter<AnimationViewHolder> 
         mSelectedAnimations = new ObservableArrayList<>();
     }
 
-    public void updateFPS(int fps) {
+    final public void updateFPS(int fps) {
         mSelectedAnimations.forEach(animation -> animation.setFPS(fps));
     }
+
+    /**
+     * updateChangePerSecond updates all the selected animations with the given change per second.
+     * @param cps
+     */
+    final public void updateDuration(final int duration) {
+        float changePerSecond = SharedConverters.intToFloat(duration);
+        mSelectedAnimations.forEach(animation -> animation.setDuration(changePerSecond));
+    }
+
 
     @NonNull
     @Override
@@ -47,7 +58,7 @@ public class AnimationAdapter extends RecyclerView.Adapter<AnimationViewHolder> 
             if (mSelectedAnimations.contains(animation)) {
                 mSelectedAnimations.remove(animation);
                 holder.setState(false);
-            // Add animation as selected.
+                // Add animation as selected.
             } else {
                 mSelectedAnimations.add(animation);
                 holder.setState(true);
