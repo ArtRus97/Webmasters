@@ -21,10 +21,8 @@ import com.squareup.picasso.Picasso;
 import java.util.Objects;
 
 public class ProductActivity extends AppCompatActivity {
-    Intent intent = getIntent();
-    String productId = Objects.requireNonNull(intent.getExtras()).getString("productId");
-    Product product = WebStoreSingleton.getInstance(this).getProduct(productId);
-    EditText editTextAmount = findViewById(R.id.editTextAmount);
+    String productId;
+    EditText editTextAmount;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -36,6 +34,11 @@ public class ProductActivity extends AppCompatActivity {
         TextView textViewDesc = findViewById(R.id.labelDescription);
         TextView textViewPrice = findViewById(R.id.labelPrice);
         ImageView imageViewPic = findViewById(R.id.imageViewPic);
+        editTextAmount = findViewById(R.id.editTextAmount);
+
+        Intent intent = getIntent();
+        productId = Objects.requireNonNull(intent.getExtras()).getString("productId");
+        Product product = WebStoreSingleton.getInstance(this).getProduct(productId);
 
         textViewTitle.setText(product.getName());
         textViewDesc.setText(product.getDescription());
