@@ -1,7 +1,9 @@
 package com.example.webmasters.services;
 
+import android.content.Context;
 import android.util.Log;
 import com.example.webmasters.models.graphic_design.Logo;
+import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.types.ILogo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,5 +34,12 @@ public class FirebaseService {
         .addOnSuccessListener(documentSnapshot -> {
            callback.accept(documentSnapshot.toObject(Logo.class));
         });
+    }
+
+    public void getProducts(Consumer<Product[]> callback) {
+        mFirestore.collection("Products").document(getUser()).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    callback.accept(documentSnapshot.toObject(Product[].class));
+                });
     }
 }

@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,5 +45,10 @@ public class ProductActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.webstore_menu, menu);
         return true;
+    }
+
+    public void openCart(MenuItem item) {
+        Intent intentStore = new Intent(this, CartActivity.class);
+        startActivity(intentStore);
     }
 }
