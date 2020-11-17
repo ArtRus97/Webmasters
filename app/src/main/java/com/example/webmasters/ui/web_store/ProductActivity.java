@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.webmasters.R;
+import com.example.webmasters.databinding.ActivityProductBinding;
+import com.example.webmasters.databinding.ActivityProductViewBinding;
 import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.ui.WebStoreSingleton;
 import com.squareup.picasso.Picasso;
@@ -23,29 +25,27 @@ import java.util.Objects;
 public class ProductActivity extends AppCompatActivity {
     String productId;
     EditText editTextAmount;
+    Product mProduct;
+    ActivityProductBinding mBinding;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product);
-
-        TextView textViewTitle = findViewById(R.id.labelTitle);
-        TextView textViewDesc = findViewById(R.id.labelDescription);
-        TextView textViewPrice = findViewById(R.id.labelPrice);
-        ImageView imageViewPic = findViewById(R.id.imageViewPic);
-        editTextAmount = findViewById(R.id.editTextAmount);
-
+        mBinding = ActivityProductBinding.inflate(getLayoutInflater());
         Intent intent = getIntent();
         productId = Objects.requireNonNull(intent.getExtras()).getString("productId");
-        Product product = WebStoreSingleton.getInstance(this).getProduct(productId);
+        mProduct = WebStoreSingleton.getInstance(this).getProduct(productId);
 
-        textViewTitle.setText(product.getName());
-        textViewDesc.setText(product.getDescription());
-        textViewPrice.setText(product.getPrice().toString());
-        if (!product.getImageUrl().isEmpty())
-            Picasso.get().load(product.getImageUrl()).into(imageViewPic);
+        mBinding.labelTitle.setText(mProduct.getName());
+        mBinding.labelDescription.setText(mProduct.getDescription());
+        mBinding.labelPrice.setText(mProduct.getPrice().toString());
 
+        // Display product image from URL if one is available.
+        if (!mProduct.getImageUrl().isEmpty())
+            Picasso.get().load(mProduct.getImageUrl()).into(mBinding.imageViewPic);
+
+        setContentView(mBinding.getRoot());
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,7 +54,8 @@ public class ProductActivity extends AppCompatActivity {
     }
 
     public void addToCart(View view) {
-        WebStoreSingleton.getInstance(this).addToCart(productId, editTextAmount.getText().toString());
+        int numItems = Integer.parseInt(mBinding.editTextAmount.getText().toString());
+        WebStoreSingleton.getInstance(this).addToCart(mProduct.getId(), numItems);
     }
 
     public void openCart(MenuItem item) {
