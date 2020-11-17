@@ -26,6 +26,7 @@ public class WebStoreSingleton {
     private static WebStoreSingleton mInstance = null;
     private Context mContext;
     public final HashMap<String, Product> mProducts = new HashMap<>();
+    public ArrayList<Product> cart;
 
     // private constructor restricted to this class itself
     private WebStoreSingleton(Context context) {
@@ -49,6 +50,12 @@ public class WebStoreSingleton {
 
     public Product getProduct(String id) {
         return mProducts.get(id);
+    }
+
+    public void addToCart(String productId, String amountString) {
+        Integer amount = Integer.parseInt(amountString);
+        for (int position=0; position <= amount; position++)
+                cart.add(mProducts.get(productId));
     }
 
 
