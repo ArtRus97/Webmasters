@@ -1,19 +1,20 @@
 package com.example.webmasters.ui.graphic_design;
 
 import android.util.Log;
-import androidx.databinding.InverseMethod;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
-import com.example.webmasters.models.graphic_design.*;
+import com.example.webmasters.BR;
+import com.example.webmasters.models.graphic_design.Animation;
+import com.example.webmasters.models.graphic_design.Logo;
+import com.example.webmasters.models.graphic_design.Shape;
 import com.example.webmasters.models.graphic_design.utils.AnimationFactory;
-import com.example.webmasters.models.graphic_design.utils.ShapeFactory;
 import com.example.webmasters.services.FirebaseService;
 import com.example.webmasters.types.IAnimationViewModel;
 import com.example.webmasters.types.ShapeType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,31 +23,25 @@ import java.util.stream.Collectors;
  * @author JIkaheimo (Jaakko Ikäheimo)
  */
 public class GraphicDesignViewModel extends ViewModel implements IAnimationViewModel {
-    private final String TAG = "GraphicDesignViewModel";
-    private final MutableLiveData<Boolean> mIsInitialized;
     private final MutableLiveData<List<Boolean>> mAnimationStates;
-    private final MutableLiveData<Logo> mLogo;
+    private final MutableLiveData<Logo> mLogo = new MutableLiveData<>();
     private final MutableLiveData<List<Animation>> mAnimations;
     private final MutableLiveData<List<ShapeType>> mShapeTypes = new MutableLiveData<>();
-
 
     /**
      * Default constructor.
      */
     public GraphicDesignViewModel() {
-        mIsInitialized = new MutableLiveData<>(false);
-        mLogo = new MutableLiveData<>(new Logo());
+        // Try to fetch the user logo from firestore.
+        (new FirebaseService()).getLogo(this::onLogoFetched);
 
-        mShapeTypes.setValue(new ArrayList<ShapeType>() {{
-            add(ShapeType.FLOWER);
-            add(ShapeType.STAR);
-        }});
+        // Add different shape types.
+        mShapeTypes.setValue(Arrays.stream(ShapeType.values()).collect(Collectors.toList()));
 
         mAnimations = new MutableLiveData<>();
         mAnimationStates = new MutableLiveData<>();
         createAnimations();
     }
-
 
     /**
      * createAnimations adds some preset animations to the view model.
@@ -63,7 +58,7 @@ public class GraphicDesignViewModel extends ViewModel implements IAnimationViewM
             add(animationFactory.getAnimation(AnimationFactory.AnimationType.Movement));
         }};
 
-        ArrayList<Boolean> animationStates = new ArrayList<Boolean>();
+        ArrayList<Boolean> animationStates = new ArrayList<>();
 
         // Add some model related configurations.
         animations.forEach(animation -> {
@@ -75,12 +70,6 @@ public class GraphicDesignViewModel extends ViewModel implements IAnimationViewM
         mAnimations.setValue(animations);
     }
 
-    public void setLogo(Logo logo) {
-        mLogo.setValue(logo);
-    }
-
-
-
     public Shape getShape() {
         return mLogo.getValue().getShape();
     }
@@ -89,36 +78,41 @@ public class GraphicDesignViewModel extends ViewModel implements IAnimationViewM
         return mShapeTypes;
     }
 
-    public LiveData<Logo> getLogoObservable() {
+    public LiveData<Logo> getLogo() {
         return mLogo;
     }
 
-    public Logo getLogo() {
-        if (!getInitialized().getValue()) {
-            mLogo.getValue().setTextValue("Webmasters");
-            mIsInitialized.setValue(true);
-        }
-        return mLogo.getValue();
-    }
 
-
+    @Override
     public List<Animation> getAnimations() {
         return mAnimations.getValue();
     }
 
+    @Override
     public List<Boolean> getAnimationStates() {
         return mAnimationStates.getValue();
     }
 
-    public LiveData<Boolean> getInitialized() {
-        return mIsInitialized;
-    }
 
     @Override
     protected void onCleared() {
-        // Store logo.
+        // Store logo to firestore.
         (new FirebaseService()).addLogo(mLogo.getValue());
-
+        // Handle the actual view model clear.
         super.onCleared();
+    }
+
+    private void onLogoFetched(Logo logo) {
+        // Create default logo if user does not have one.
+        if (logo == null) {
+            logo = new Logo(){{
+                setTextValue("Webmasters");
+                setTextX(50);
+                setTextY(50);
+                setShapeX(50);
+                setShapeY(50);
+            }};
+        }
+        mLogo.postValue(logo);
     }
 }

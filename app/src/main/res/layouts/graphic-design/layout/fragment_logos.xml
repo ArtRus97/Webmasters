@@ -11,7 +11,6 @@
 
         <import type="com.example.webmasters.models.graphic_design.Text" />
 
-        <import type="com.example.webmasters.models.graphic_design.Logo" />
 
         <import type="com.example.webmasters.converters.LogoConverter" />
 
@@ -20,12 +19,9 @@
             type="com.example.webmasters.ui.graphic_design.GraphicDesignViewModel" />
 
         <variable
-            name="logo"
-            type="Logo" />
-
-        <variable
             name="canvasView"
             type="View" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,9 +40,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_weight="0.3"
-            app:onScale="@{logo::setShapeScale}"
-            app:shape="@{logo.shape}"
-            app:text="@{logo.text}" />
+            app:onScale="@{model.logo::setShapeScale}"
+            app:shape="@{model.logo.shape}"
+            app:text="@{model.logo.text}" />
 
         <ScrollView
             android:id="@+id/scrollControls"
@@ -98,7 +94,7 @@
                                 android:hint="@string/text_hint"
                                 android:inputType="text"
                                 android:maxLines="1"
-                                android:text="@={logo.textValue}"
+                                android:text="@={model.logo.textValue}"
                                 android:textSize="12sp" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -108,7 +104,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="24dp"
-                            android:text="@{LogoConverter.formatSize(logo.textSize)}"
+                            android:text="@{LogoConverter.formatSize(model.logo.textSize)}"
                             app:layout_constraintBottom_toBottomOf="@+id/layoutTextValue"
                             app:layout_constraintEnd_toStartOf="@+id/seekTextSize"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -121,9 +117,9 @@
                             android:id="@+id/seekTextSize"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:max="@{logo.MAX_TEXT_SIZE}"
-                            android:min="@{logo.MIN_TEXT_SIZE}"
-                            android:progress="@={logo.textSize}"
+                            android:max="@{model.logo.MAX_TEXT_SIZE}"
+                            android:min="@{model.logo.MIN_TEXT_SIZE}"
+                            android:progress="@={model.logo.textSize}"
                             app:layout_constraintBottom_toBottomOf="@+id/labelTextSize"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
@@ -139,7 +135,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:backgroundTint="@color/colorAccent"
-                            app:color="@={logo.textColor}"
+                            app:color="@={model.logo.textColor}"
                             app:layout_constraintBottom_toBottomOf="@+id/labelTextColor"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/labelTextColor"
@@ -160,7 +156,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="32dp"
-                            android:text="@{LogoConverter.formatX(logo.textX)}"
+                            android:text="@{LogoConverter.formatX(model.logo.textX)}"
                             app:layout_constraintEnd_toStartOf="@id/seekTextX"
                             app:layout_constraintStart_toStartOf="@+id/labelTextColor"
                             app:layout_constraintTop_toBottomOf="@+id/labelTextColor"
@@ -171,7 +167,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:max="@{canvasView.width}"
-                            android:progress="@={logo.textX}"
+                            android:progress="@={model.logo.textX}"
                             app:layout_constraintBottom_toBottomOf="@+id/labelTextX"
                             app:layout_constraintEnd_toStartOf="@+id/labelTextY"
                             app:layout_constraintStart_toEndOf="@+id/labelTextX" />
@@ -181,7 +177,7 @@
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{LogoConverter.formatY(logo.textY)}"
+                            android:text="@{LogoConverter.formatY(model.logo.textY)}"
                             app:layout_constraintBottom_toBottomOf="@+id/seekTextX"
                             app:layout_constraintEnd_toStartOf="@+id/seekTextY"
                             app:layout_constraintStart_toEndOf="@+id/seekTextX"
@@ -193,7 +189,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:max="@{canvasView.height}"
-                            android:progress="@={logo.textY}"
+                            android:progress="@={model.logo.textY}"
                             app:layout_constraintBottom_toBottomOf="@+id/labelTextY"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/labelTextY"
@@ -213,7 +209,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:checked="@={logo.textBold}"
+                            android:checked="@={model.logo.textBold}"
                             android:drawableBottom="@drawable/ic_baseline_format_bold_24"
                             android:gravity="center"
                             android:textOff=""
@@ -228,7 +224,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:checked="@={logo.textItalic}"
+                            android:checked="@={model.logo.textItalic}"
                             android:drawableBottom="@drawable/ic_baseline_format_italic_24"
                             android:gravity="center"
                             android:textOff=""
@@ -273,7 +269,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            app:selectedValue="@={logo.shapeType}"
+                            app:selectedValue="@={model.logo.shapeType}"
                             android:entries="@{model.shapeTypes}"
                             app:layout_constraintBottom_toBottomOf="@+id/labelShapeType"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -285,7 +281,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="32dp"
-                            android:text="@{String.valueOf(logo.shapeScale)}"
+                            android:text="@{String.valueOf(model.logo.shapeScale)}"
                             app:layout_constraintStart_toStartOf="@+id/labelShapeColor"
                             app:layout_constraintTop_toBottomOf="@+id/buttonShapeColor"
                             tools:text="Scale: 1" />
@@ -294,9 +290,9 @@
                             android:id="@+id/seekShapeScale"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:max="@{LogoConverter.scaleToPercent(logo.MAX_SHAPE_SCALE)}"
-                            android:min="@{LogoConverter.scaleToPercent(logo.MIN_SHAPE_SCALE)}"
-                            android:progress="@={LogoConverter.scaleToPercent(logo.shapeScale)}"
+                            android:max="@{LogoConverter.scaleToPercent(model.logo.MAX_SHAPE_SCALE)}"
+                            android:min="@{LogoConverter.scaleToPercent(model.logo.MIN_SHAPE_SCALE)}"
+                            android:progress="@={LogoConverter.scaleToPercent(model.logo.shapeScale)}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/buttonShapeColor"
                             app:layout_constraintTop_toTopOf="@+id/labelShapeScale"
@@ -307,7 +303,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="32dp"
-                            android:text="@{LogoConverter.formatX(logo.shapeX)}"
+                            android:text="@{LogoConverter.formatX(model.logo.shapeX)}"
                             app:layout_constraintStart_toStartOf="@+id/labelShapeScale"
                             app:layout_constraintTop_toBottomOf="@id/labelShapeScale"
                             tools:text="X: 0" />
@@ -317,7 +313,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:max="@{canvasView.width}"
-                            android:progress="@={logo.shapeX}"
+                            android:progress="@={model.logo.shapeX}"
                             app:layout_constraintBottom_toBottomOf="@+id/labelShapeX"
                             app:layout_constraintEnd_toStartOf="@+id/labelShapeY"
                             app:layout_constraintStart_toStartOf="@+id/seekShapeScale"
@@ -328,7 +324,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="32dp"
-                            android:text="@{LogoConverter.formatY(logo.shapeY)}"
+                            android:text="@{LogoConverter.formatY(model.logo.shapeY)}"
                             app:layout_constraintBottom_toBottomOf="@+id/seekShapeX"
                             app:layout_constraintEnd_toStartOf="@+id/seekShapeY"
                             app:layout_constraintStart_toEndOf="@+id/seekShapeX"
@@ -341,7 +337,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="32dp"
                             android:max="@{canvasView.height}"
-                            android:progress="@={logo.shapeY}"
+                            android:progress="@={model.logo.shapeY}"
                             app:layout_constraintBottom_toBottomOf="@+id/labelShapeY"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/labelShapeY"
@@ -352,7 +348,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             app:backgroundTint="@color/colorAccent"
-                            app:color="@={logo.shapeColor}"
+                            app:color="@={model.logo.shapeColor}"
                             app:layout_constraintBottom_toBottomOf="@+id/labelShapeColor"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/spinnerShapeType"
@@ -382,8 +378,14 @@
                 </com.example.webmasters.ui.shared.ExtendedCardView>
 
 
+
+
             </androidx.appcompat.widget.LinearLayoutCompat>
         </ScrollView>
+
+        <include
+            android:id="@+id/overlayProgress"
+            layout="@layout/overlay_progress" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

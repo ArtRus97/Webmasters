@@ -1,73 +1,64 @@
 package com.example.webmasters.ui.graphic_design;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+import com.example.webmasters.Utils;
 import com.example.webmasters.databinding.FragmentLogosBinding;
 import com.example.webmasters.models.graphic_design.Logo;
-import com.example.webmasters.services.FirebaseService;
 
 public class LogoFragment extends Fragment {
     private FragmentLogosBinding mBinding;
     private GraphicDesignViewModel mModel;
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Get view model instance.
         mModel = new ViewModelProvider(requireActivity()).get(GraphicDesignViewModel.class);
+
+        // Enable view binding.
         mBinding = FragmentLogosBinding.inflate(getLayoutInflater());
-
-        mModel.getLogoObservable().observe(this, logo -> {
-            mBinding.setLogo(logo);
-            mBinding.executePendingBindings();
-        });
-
-        boolean isInitialized = mModel.getInitialized().getValue();
-        mBinding.setModel(mModel);
-
-        mBinding.getRoot().post(() -> {
-            mBinding.setCanvasView(mBinding.logoView);
-            mBinding.executePendingBindings();
-
-            Logo logo = mModel.getLogo();
-
-            int xBoundary = mBinding.logoView.getWidth();
-            int yBoundary = mBinding.logoView.getHeight();
-
-            if (!isInitialized) {
-                logo.setTextX(xBoundary / 2);
-                logo.setTextY(yBoundary / 2);
-                logo.setShapeX(xBoundary / 2);
-                logo.setShapeY(yBoundary / 2);
-            }
-
-            mModel.setLogo(logo);
-        });
-
-        // Fetch user logo and display it.
-        (new FirebaseService()).getLogo(tempLogo -> mBinding.getRoot().post(() -> {
-            // Use user logo.
-            if (tempLogo == null) return;
-            mModel.setLogo(tempLogo);
-
-            mBinding.executePendingBindings();
-        }));
+        mBinding.setLifecycleOwner(this);
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceStatenceState) {
+        // Setup loading overlay.
+        LiveData<Logo> mLogo = mModel.getLogo();
+        FrameLayout layoutProgress = mBinding.overlayProgress.layoutProgress;
+        mLogo.observe(getViewLifecycleOwner(), logo -> {
+            if (mBinding.getCanvasView() == null) {
+                mBinding.setCanvasView(mBinding.logoView);
+                mBinding.executePendingBindings();
+            }
+            if (mBinding.getModel() == null) {
+                mBinding.setModel(mModel);
+                mBinding.executePendingBindings();
+            }
+            Utils.animateView(layoutProgress, View.GONE, 0, 200);
+        });
+        Utils.animateView(layoutProgress, View.VISIBLE, 0.4f, 200);
+
+        super.onCreateView(inflater, container, savedInstanceStatenceState);
         return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        // Setup swipe listener to toggle the visibility of logo controls.
         mBinding.logoView.setSwipeListener(new LogoView.SwipeListener() {
             @Override
             public void onSwipeDown() {
