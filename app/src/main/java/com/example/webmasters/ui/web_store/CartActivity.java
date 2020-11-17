@@ -32,10 +32,8 @@ public class CartActivity extends AppCompatActivity {
         RecyclerView recyclerViewProducts = findViewById(R.id.recyclerViewCart);
 
         recyclerViewProducts.setLayoutManager(new LinearLayoutManager(this));
-        WebStoreSingleton.getInstance(this).getProducts(products -> {
-            recyclerViewAdapter = new FillCart(this, products);
+            recyclerViewAdapter = new FillCart(this, WebStoreSingleton.getInstance(this).getCart());
             recyclerViewProducts.setAdapter(recyclerViewAdapter);
-        });
     }
 
     public void OpenProduct(String productId) {

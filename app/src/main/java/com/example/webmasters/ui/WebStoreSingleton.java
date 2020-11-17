@@ -58,6 +58,10 @@ public class WebStoreSingleton {
                 cart.add(mProducts.get(productId));
     }
 
+    public ArrayList<Product> getCart() {
+        return cart;
+    }
+
 
     // static method to create instance of Singleton class
     public static synchronized WebStoreSingleton getInstance(Context context) {
