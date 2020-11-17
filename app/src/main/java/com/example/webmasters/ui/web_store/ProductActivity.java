@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,7 +21,8 @@ import com.squareup.picasso.Picasso;
 import java.util.Objects;
 
 public class ProductActivity extends AppCompatActivity {
-
+    String productId;
+    EditText editTextAmount;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -30,21 +34,27 @@ public class ProductActivity extends AppCompatActivity {
         TextView textViewDesc = findViewById(R.id.labelDescription);
         TextView textViewPrice = findViewById(R.id.labelPrice);
         ImageView imageViewPic = findViewById(R.id.imageViewPic);
+        editTextAmount = findViewById(R.id.editTextAmount);
 
         Intent intent = getIntent();
-        String productName = Objects.requireNonNull(intent.getExtras()).getString("productId");
-
-        Product product = WebStoreSingleton.getInstance(this).getProduct(productName);
+        productId = Objects.requireNonNull(intent.getExtras()).getString("productId");
+        Product product = WebStoreSingleton.getInstance(this).getProduct(productId);
 
         textViewTitle.setText(product.getName());
         textViewDesc.setText(product.getDescription());
         textViewPrice.setText(product.getPrice().toString());
-        Picasso.get().load(product.getImageUrl()).into(imageViewPic);
+        if (!product.getImageUrl().isEmpty())
+            Picasso.get().load(product.getImageUrl()).into(imageViewPic);
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.webstore_menu, menu);
         return true;
+    }
+
+    public void addToCart(View view) {
+        WebStoreSingleton.getInstance(this).addToCart(productId, editTextAmount.getText().toString());
     }
 
     public void openCart(MenuItem item) {
