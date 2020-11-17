@@ -6,8 +6,12 @@ import android.graphics.Paint;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
+import androidx.databinding.Observable;
 import androidx.databinding.library.baseAdapters.BR;
+import com.example.webmasters.models.graphic_design.utils.ShapeFactory;
 import com.example.webmasters.types.ILogo;
+import com.example.webmasters.types.ShapeType;
+import com.google.firebase.firestore.Exclude;
 
 /**
  * AbstractLogo implements some basic functionality of ILogo interface.
@@ -18,13 +22,22 @@ import com.example.webmasters.types.ILogo;
  * @author JIkaheimo (Jaakko Ikäheimo)
  */
 abstract public class AbstractLogo extends BaseObservable implements ILogo {
-
+    /**
+     * setShape sets the shape of logo
+     *
+     * @param shape (Shape) of logo.
+     */
     abstract void setShape(final Shape shape);
 
     @Override
     @Bindable
     abstract public Shape getShape();
 
+    /**
+     * setText sets the text of logo.
+     *
+     * @param text (Text) of logo.
+     */
     abstract void setText(final Text text);
 
     @Override
@@ -32,12 +45,18 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
     abstract public Text getText();
 
 
+    /**
+     * setTextValue sets the logo text value.
+     *
+     * @param value (String) of the logo text.
+     */
     final public void setTextValue(final String value) {
         getText().setValue(value);
         notifyPropertyChanged(BR.text);
-    };
+    }
 
     @Override
+    @Exclude
     @Bindable
     final public String getTextValue() {
         return getText().getValue();
@@ -46,9 +65,11 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
     final public void setTextSize(final int textSize) {
         getText().setSize(textSize);
         notifyPropertyChanged(BR.text);
-    };
+    }
+
 
     @Override
+    @Exclude
     @Bindable
     final public int getTextSize() {
         return getText().getSize();
@@ -60,30 +81,34 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
     }
 
     @Override
+    @Exclude
     @Bindable
     final public int getTextColor() {
         return getText().getColor();
     }
 
 
-    final public void setTextX(int textX) {
+    final public void setTextX(final int textX) {
         getText().setX(textX);
         notifyPropertyChanged(BR.text);
-    };
+    }
+
 
     @Override
+    @Exclude
     @Bindable
     final public int getTextX() {
         return getText().getX();
     }
 
 
-    final public void setTextY(int textY) {
+    final public void setTextY(final int textY) {
         getText().setY(textY);
         notifyPropertyChanged(BR.text);
     }
 
     @Override
+    @Exclude
     @Bindable
     final public int getTextY() {
         return getText().getY();
@@ -96,6 +121,7 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
     }
 
     @Override
+    @Exclude
     @Bindable
     final public boolean getTextBold() {
         return getText().isBold();
@@ -108,6 +134,7 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
     }
 
     @Override
+    @Exclude
     @Bindable
     final public boolean getTextItalic() {
         return getText().isItalic();
@@ -120,10 +147,10 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
     }
 
     @Override
+    @Exclude
     @Bindable
     final public float getShapeScale() {
         return getShape().getScale();
-
     }
 
     final public void setShapeColor(final int shapeColor) {
@@ -132,37 +159,63 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
     }
 
     @Override
+    @Exclude
     @Bindable
     final public int getShapeColor() {
         return getShape().getColor();
     }
 
 
+    /**
+     * setShapeX sets the horizontal coordinate of logo shape.
+     *
+     * @param x (int) horizontal coordinate of logo shape.
+     */
     final public void setShapeX(final int x) {
         getShape().setX(x);
         notifyPropertyChanged(BR.shape);
     }
 
     @Override
+    @Exclude
     @Bindable
     final public int getShapeX() {
         return getShape().getX();
     }
 
     /**
-     * setShapeY sets the logo shape y coordinate.
+     * setShapeY sets the vertical coordinate of logo shape..
      *
-     * @param y (int) coordinate of logo shape.
+     * @param y (int) vertical coordinate of logo shape.
      */
     final public void setShapeY(final int y) {
         getShape().setY(y);
         notifyPropertyChanged(BR.shape);
-    };
+    }
+
 
     @Override
+    @Exclude
     @Bindable
     final public int getShapeY() {
         return getShape().getY();
+    }
+
+    /**
+     * setShapeType sets the logo shape type
+     *
+     * @param shapeType (ShapeType) of the shape.
+     */
+    final public void setShapeType(final ShapeType shapeType) {
+        getShape().setType(shapeType);
+        notifyPropertyChanged(BR.shape);
+    }
+
+    @Override
+    @Exclude
+    @Bindable
+    public ShapeType getShapeType() {
+        return getShape().getType();
     }
 
     @Override
@@ -196,4 +249,61 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
         getShape().drawOnCanvas(canvas, paint);
         getText().drawOnCanvas(canvas, paint);
     }
+
+
+    // onShapePropertyChanged propagates the change from logo's shape to the corresponding logo property.
+    final protected OnPropertyChangedCallback onShapePropertyChanged = new OnPropertyChangedCallback() {
+        @Override
+        public void onPropertyChanged(Observable sender, int propertyId) {
+            switch (propertyId) {
+                case BR.x:
+                    notifyPropertyChanged(BR.shapeX);
+                    break;
+                case BR.y:
+                    notifyPropertyChanged(BR.shapeY);
+                    break;
+                case BR.color:
+                    notifyPropertyChanged(BR.shapeColor);
+                    break;
+                case BR.scale:
+                    notifyPropertyChanged(BR.shapeScale);
+                    break;
+                case BR.type:
+                    // Update shape draw function.
+                    setShape(ShapeFactory.applyShapeType(getShape(), getShapeType()));
+                    notifyPropertyChanged(BR.shapeType);
+                    break;
+            }
+        }
+    };
+
+    // onTextPropertyChanged propagates the change from logo's text to the corresponding logo property.
+    final protected OnPropertyChangedCallback onTextPropertyChanged = new OnPropertyChangedCallback() {
+        @Override
+        public void onPropertyChanged(Observable sender, int propertyId) {
+            switch (propertyId) {
+                case BR.x:
+                    notifyPropertyChanged(BR.textX);
+                    break;
+                case BR.y:
+                    notifyPropertyChanged(BR.textY);
+                    break;
+                case BR.bold:
+                    notifyPropertyChanged(BR.textBold);
+                    break;
+                case BR.italic:
+                    notifyPropertyChanged(BR.textItalic);
+                    break;
+                case BR.color:
+                    notifyPropertyChanged(BR.textColor);
+                    break;
+                case BR.value:
+                    notifyPropertyChanged(BR.textValue);
+                    break;
+                case BR.size:
+                    notifyPropertyChanged(BR.textSize);
+                    break;
+            }
+        }
+    };
 }

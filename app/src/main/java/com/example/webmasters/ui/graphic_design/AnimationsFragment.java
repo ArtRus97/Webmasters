@@ -25,6 +25,7 @@ public class AnimationsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         mBinding = FragmentAnimationsBinding.inflate(getLayoutInflater());
+        mBinding.setLifecycleOwner(this);
         return mBinding.getRoot();
     }
 

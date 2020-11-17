@@ -1,9 +1,11 @@
 package com.example.webmasters.adapters;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.InverseBindingAdapter;
@@ -48,6 +50,20 @@ public class SharedBindingAdapters {
     public static Object getSelectedValue(AppCompatSpinner spinner) {
         return spinner.getSelectedItem();
     }
+
+    @BindingAdapter(value = {"android:max"}, requireAll = false)
+    public static void setMax(AppCompatSeekBar view, int max) {
+        int value =  view.getProgress();
+        view.setMax(max);
+        view.setProgress(value);
+    }
+
+    @BindingAdapter(value = {"android:progress"}, requireAll = false)
+    public static void setProgress(AppCompatSeekBar view, int progress) {
+        view.setProgress(progress);
+    }
+
+
 
     @BindingAdapter(value = {"android:formatArgs"})
     public static void setText(TextView view, Object[] formatArgs) {

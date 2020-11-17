@@ -33,7 +33,7 @@ public class WebStoreSingleton {
     }
 
     public void getProducts(Consumer<List<Product>> handler) {
-
+        // Fetch products from database if they have not been fetched.
         if (mProducts.isEmpty()) {
             (new FirebaseService()).getProducts(products -> {
                 for (Product product : products)
@@ -41,6 +41,7 @@ public class WebStoreSingleton {
                 handler.accept(new ArrayList<>(mProducts.values()));
             });
         }
+        // Otherwise just return products.
         else
             handler.accept(new ArrayList<>(mProducts.values()));
 

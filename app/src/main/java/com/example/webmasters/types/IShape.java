@@ -7,6 +7,17 @@ package com.example.webmasters.types;
  * v 1.0.0 Base interface created.
  */
 public interface IShape extends ICanvasDrawable {
+    /**
+     * getType returns the type of shape.
+     * @return the type of shape as ShapeType.
+     */
+    ShapeType getType();
+
+    /**
+     * getParameter returns the parameter of shape.
+     * @return the parameter of shapes as int.
+     */
+    int getParameter();
 
     /**
      * getColor returns the color of shape.

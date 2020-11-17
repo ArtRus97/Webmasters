@@ -10,15 +10,32 @@ import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import com.example.webmasters.BR;
+import com.example.webmasters.models.graphic_design.utils.ShapeFactory;
 import com.example.webmasters.types.IShape;
+import com.example.webmasters.types.ShapeType;
+
+import java.util.Objects;
 
 public class Shape extends BaseObservable implements IShape {
-    private String mName = "Unnamed";
+    // The name of the shape.
+    protected String mName = "Unnamed";
+    // The type of the shape.
+    protected ShapeType mType;
+    // The parameter of the shape.
+    protected int mParameter;
+    // The position of the shape.
     private int[] mPosition = {0, 0};
+    // The color of the shape.
     private int mColor = Color.GREEN;
+    // The scale of the shape.
     private float mScale = 1.0f;
 
     public Shape() {
+    }
+
+    public Shape(ShapeType type, String name) {
+        this(name);
+        mType = type;
     }
 
     public Shape(String name) {
@@ -26,11 +43,39 @@ public class Shape extends BaseObservable implements IShape {
         notifyPropertyChanged(BR.name);
     }
 
+    /**
+     * setParameter sets the parameter of the shape.
+     *
+     * @param parameter (int) of the shape.
+     */
+    final public void setParameter(final int parameter) {
+        mParameter = parameter;
+    }
+
+    @Override
+    @Bindable
+    final public int getParameter() {
+        return mParameter;
+    }
+
+
     final public String getName() {
         return mName;
     }
 
-    final public void setX(int x) {
+    public void setType(ShapeType type) {
+        if (mType == type) return;
+        mType = type;
+        notifyPropertyChanged(BR.type);
+    }
+
+    @Override
+    @Bindable
+    final public ShapeType getType() {
+        return mType;
+    }
+
+    final public void setX(final int x) {
         if (getX() == x) return;
         mPosition[0] = x;
         notifyPropertyChanged(BR.x);
@@ -42,7 +87,7 @@ public class Shape extends BaseObservable implements IShape {
         return mPosition[0];
     }
 
-    final public void setY(int y) {
+    final public void setY(final int y) {
         if (getY() == y) return;
         mPosition[1] = y;
         notifyPropertyChanged(BR.y);
@@ -54,7 +99,7 @@ public class Shape extends BaseObservable implements IShape {
         return mPosition[1];
     }
 
-    final public void setColor(int color) {
+    final public void setColor(final int color) {
         if (mColor == color) return;
         mColor = color;
         notifyPropertyChanged(BR.color);
@@ -66,6 +111,11 @@ public class Shape extends BaseObservable implements IShape {
         return mColor;
     }
 
+    /**
+     * setScale sets the scale of the shape.
+     *
+     * @param scale (float) of the shape as float.
+     */
     final public void setScale(final float scale) {
         if (mScale == scale) return;
         mScale = scale;
@@ -127,13 +177,7 @@ public class Shape extends BaseObservable implements IShape {
      * @param paint  (Paint) used to draw the shape.
      */
     protected void onDraw(final Canvas canvas, final Paint paint) {
-        float NUM_OVALS = 7f;
-        for (int ovalIndex = 0; ovalIndex < NUM_OVALS; ovalIndex++) {
-            double fraction = 2 * Math.PI * (ovalIndex / NUM_OVALS);
-            float y = (float) (getY() + Math.sin(fraction) * 50);
-            float x = (float) (getX() + Math.cos(fraction) * 50);
-            canvas.drawCircle(x, y, 10, paint);
-        }
+        canvas.drawRect(getX() - 30, getY() - 30, getX() + 30, getY() + 30, paint);
     }
 
     /**
@@ -163,5 +207,18 @@ public class Shape extends BaseObservable implements IShape {
     @NonNull
     final public String toString() {
         return mName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Shape shape = (Shape) o;
+        return mType == shape.mType && mParameter == shape.mParameter;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mParameter, mType);
     }
 }

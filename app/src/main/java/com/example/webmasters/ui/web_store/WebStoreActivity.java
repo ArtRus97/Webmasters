@@ -77,7 +77,8 @@ public class WebStoreActivity extends AppCompatActivity {
             Product product = mProducts.get(position);
             holder.binding.setHolder(holder);
             holder.binding.setProduct(product);
-            Picasso.get().load(product.getImageUrl()).into(holder.image);
+            if (!product.getImageUrl().isEmpty())
+                Picasso.get().load(product.getImageUrl()).into(holder.image);
         }
 
         @Override

@@ -12,32 +12,57 @@ public class Product {
     private float mPrice;
     private String mImageUrl;
 
-    public String getId() {
+    final public void setId(final String id) {
+        this.mId = id;
+    }
+
+    final public void setName(final String name) {
+        this.mName = name;
+    }
+
+    final public void setDescription(final String description) {
+        this.mDescription = description;
+    }
+
+    final public void setCategory(final String category) {
+        this.mCategory = category;
+    }
+
+    public void setPrice(final float price) {
+        this.mPrice = price;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.mImageUrl = imageUrl;
+    }
+
+    final public String getId() {
         return mId;
     }
 
-    public String getName() {
+    final public String getName() {
         return mName;
     }
 
-    public String getDescription() {
+    final public String getDescription() {
         return mDescription;
     }
 
-    public String getCategory() {
+    final public String getCategory() {
         return mCategory;
     }
 
-    public Float getPrice() {
+    final public Float getPrice() {
         return mPrice;
     }
 
-    public String getImageUrl() {
+    final public String getImageUrl() {
         return mImageUrl;
     }
 
     /**
      * fromJSON parses the given product data from JSON to Java object.
+     *
      * @param jsonProduct (JSONObject)
      * @return the parsed product as an object.
      */
