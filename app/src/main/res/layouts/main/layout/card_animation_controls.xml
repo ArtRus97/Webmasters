@@ -5,63 +5,101 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="com.example.webmasters.converters.SharedConverters" />
+
         <import type="com.example.webmasters.adapters.AnimationAdapter" />
+
         <import type="com.example.webmasters.models.graphic_design.Animation" />
 
-        <!-- List of Animation(s) manipulated by the controls -->
+        <import type="android.view.View" />
+
         <variable
             name="animations"
             type="java.util.List&lt;Animation>" />
-        <!-- array of animation states -->
         <variable
             name="adapter"
             type="AnimationAdapter" />
     </data>
 
-    <com.example.webmasters.ui.shared.ExtendedCardView
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        app:title="Animation">
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.example.webmasters.ui.shared.ExtendedCardView
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            app:title="Animations">
 
-            <androidx.recyclerview.widget.RecyclerView
-                tools:listitem="@layout/list_item_animation"
-                android:id="@+id/recyclerAnimation"
-                android:layout_width="0dp"
-                app:layout_constraintHeight_max="250dp"
-                android:layout_height="wrap_content"
-                app:adapter="@{adapter}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <SeekBar
-                android:id="@+id/seekAnimationInterval"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:min="@{10}"
-                android:max="@{120}"
-                android:progress="@={adapter.firstAnimation.FPS}"
-                app:layout_constraintBottom_toBottomOf="@+id/textView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView"
-                app:layout_constraintTop_toTopOf="@+id/textView" />
+                <TextView
+                    android:id="@+id/labelAnimationInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select by clicking, enable by checking:"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@{Animation.formatFPS(adapter.firstAnimation.FPS)}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerAnimation" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerAnimation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:scrollbars="vertical"
+                    app:adapter="@{adapter}"
+                    app:layout_constraintHeight_max="200dp"
+                    app:layout_constraintTop_toBottomOf="@+id/labelAnimationInfo"
+                    tools:listitem="@layout/list_item_animation" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.example.webmasters.ui.shared.ExtendedCardView>
+        </com.example.webmasters.ui.shared.ExtendedCardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:padding="5dp" />
+
+        <com.example.webmasters.ui.shared.ExtendedCardView
+            android:visibility="@{adapter.selectedAnimations.size() > 0  ? View.VISIBLE : View.GONE}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Controls">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/seekAnimationInterval"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:max="@{60}"
+                    android:min="@{10}"
+                    android:progress="@{adapter.firstAnimation.FPS}"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/textView"
+                    app:layout_constraintTop_toTopOf="@+id/textView"
+                    app:onProgress="@{adapter::updateFPS}" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@{Animation.formatFPS(adapter.firstAnimation.FPS)}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="FPS:" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.example.webmasters.ui.shared.ExtendedCardView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
