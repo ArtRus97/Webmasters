@@ -7,30 +7,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.View;
+import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.webmasters.R;
 import com.example.webmasters.databinding.ActivityProductViewBinding;
-import com.example.webmasters.databinding.FragmentLogosBinding;
 import com.example.webmasters.models.webstore.Product;
-import com.example.webmasters.services.ProductApi;
 import com.example.webmasters.ui.WebStoreSingleton;
-import com.example.webmasters.ui.game_activity.gameActivity;
 import com.squareup.picasso.Picasso;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 
 public class WebStoreActivity extends AppCompatActivity {
 
@@ -58,6 +48,11 @@ public class WebStoreActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ProductActivity.class);
         intent.putExtra("productId", productId);
         startActivity(intent);
+    }
+
+    public void openCart(MenuItem item) {
+        Intent intentStore = new Intent(this, CartActivity.class);
+        startActivity(intentStore);
     }
 
 

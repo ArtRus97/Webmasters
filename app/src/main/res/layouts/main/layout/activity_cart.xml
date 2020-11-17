@@ -4,6 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context=".ui.web_store.CartActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/price_font_color"
+        app:layout_constraintEnd_toStartOf="@+id/buttonPurchase"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewCart" />
+
+    <Button
+        android:id="@+id/buttonPurchase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewCart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

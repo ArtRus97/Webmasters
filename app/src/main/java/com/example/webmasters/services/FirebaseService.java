@@ -3,16 +3,14 @@ package com.example.webmasters.services;
 import android.util.Log;
 import com.example.webmasters.models.graphic_design.Logo;
 import com.example.webmasters.models.graphic_design.Shape;
-import com.example.webmasters.models.graphic_design.Text;
 import com.example.webmasters.models.graphic_design.utils.ShapeFactory;
+import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.types.ILogo;
 import com.example.webmasters.types.ShapeType;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class FirebaseService {
@@ -42,6 +40,13 @@ public class FirebaseService {
                         logo.setShape(shape);
                     }
                     callback.accept(logo);
+                });
+    }
+
+    public void getProducts(Consumer<Product[]> callback) {
+        mFirestore.collection("Products").document(getUser()).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    callback.accept(documentSnapshot.toObject(Product[].class));
                 });
     }
 }
