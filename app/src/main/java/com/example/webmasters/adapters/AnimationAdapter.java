@@ -26,6 +26,10 @@ public class AnimationAdapter extends RecyclerView.Adapter<AnimationViewHolder> 
         mSelectedAnimations = new ObservableArrayList<>();
     }
 
+    public void updateFPS(int fps) {
+        mSelectedAnimations.forEach(animation -> animation.setFPS(fps));
+    }
+
     @NonNull
     @Override
     public AnimationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -83,7 +87,6 @@ class AnimationViewHolder extends RecyclerView.ViewHolder {
     AnimationViewHolder(ListItemAnimationBinding binding) {
         super(binding.getRoot());
         mBinding = binding;
-        mBinding.layoutAnimationItem.setOnClickListener(this::onClick);
     }
 
     void setState(boolean isSelected) {
@@ -99,16 +102,5 @@ class AnimationViewHolder extends RecyclerView.ViewHolder {
         mAnimation = animation;
         mBinding.setAnimation(animation);
         mBinding.executePendingBindings();
-    }
-
-    private void onClick(View view) {
-
-        /*
-        if (mAnimation.isPlaying())
-            mAnimation.pause();
-        else
-            mAnimation.play();
-
-         */
     }
 }

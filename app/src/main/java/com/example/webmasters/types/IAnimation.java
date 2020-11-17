@@ -1,5 +1,7 @@
 package com.example.webmasters.types;
 
+import android.opengl.Visibility;
+
 /**
  * IAnimation defines an interface for general-purpose
  * animation classes.
