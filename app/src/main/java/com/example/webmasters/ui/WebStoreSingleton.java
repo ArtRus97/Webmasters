@@ -24,12 +24,11 @@ import java.util.function.Consumer;
 public class WebStoreSingleton {
     // static variable single_instance of type Singleton
     private static WebStoreSingleton mInstance = null;
-    private Context mContext;
     public final HashMap<String, Product> mProducts = new HashMap<>();
+    public ArrayList<Product> cart = new ArrayList<>();
 
     // private constructor restricted to this class itself
     private WebStoreSingleton(Context context) {
-        mContext = context;
     }
 
     public void getProducts(Consumer<List<Product>> handler) {
@@ -49,6 +48,15 @@ public class WebStoreSingleton {
 
     public Product getProduct(String id) {
         return mProducts.get(id);
+    }
+
+    public void addToCart(String productId, int numItems) {
+        for (int position=0; position <= numItems; position++)
+                cart.add(mProducts.get(productId));
+    }
+
+    public List<Product> getCart() {
+        return cart;
     }
 
 

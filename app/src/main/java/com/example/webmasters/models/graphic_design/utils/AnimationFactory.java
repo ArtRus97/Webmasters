@@ -17,7 +17,9 @@ public class AnimationFactory {
     public enum AnimationType {
         Rotation,
         Blink,
-        Movement
+        Movement,
+        SkewX,
+        SkewY
     }
 
     /**
@@ -39,6 +41,10 @@ public class AnimationFactory {
                 return rotation(settings);
             case Movement:
                 return movement(settings);
+            case SkewX:
+                return skewX(settings);
+            case SkewY:
+                return skewY(settings);
         }
         return null;
     }
@@ -65,6 +71,47 @@ public class AnimationFactory {
     }
 
     /**
+     * skewX creates a new skewX animation configured with the given settings.
+     *
+     * @param settings (AnimationSettings)
+     * @return skewX animation.
+     */
+    private static Animation skewX(final AnimationSettings settings) {
+        // Add skew animation specific settings.
+        settings.reverse = true;
+        settings.initialValue = 0;
+        settings.maximum = 0.5f;
+
+        // Create new skew animation.
+        return new Animation("Skew X", settings) {
+            @Override
+            protected void transformCanvas(Canvas canvas, ICanvasDrawable drawable) {
+                canvas.skew(getValue(), 0);
+            }
+        };
+    }
+
+    /**
+     * skewY creates a new skewY animation configured with the given settings.
+     *
+     * @param settings (AnimationSettings)
+     * @return skewY animation.
+     */
+    private static Animation skewY(final AnimationSettings settings) {
+        // Add skew animation specific settings.
+        settings.reverse = true;
+        settings.initialValue = 0;
+        settings.maximum = 0.5f;
+
+        // Create new skew animation.
+        return new Animation("Skew Y", settings) {
+            @Override
+            protected void transformCanvas(Canvas canvas, ICanvasDrawable drawable) {
+                canvas.skew(0, getValue());
+            }
+        };
+    }
+    /**
      * movement creates a new movement animation configured with the given settings.
      *
      * @param settings (AnimationSettings)
@@ -72,16 +119,15 @@ public class AnimationFactory {
      */
     private static Animation movement(final AnimationSettings settings) {
         // Add movement animation specific settings.
-        settings.reverse = false;
+        settings.reverse = true;
         settings.initialValue = 0;
         settings.maximum = 50;
 
         // Create new movement animation.
         return new Animation("Movement", settings) {
             @Override
-            protected boolean transformCanvas(Canvas canvas) {
+            protected void transformCanvas(Canvas canvas) {
                 canvas.translate(getValue(), 0);
-                return true;
             }
         };
     }
@@ -95,14 +141,13 @@ public class AnimationFactory {
     private static Animation rotation(final AnimationSettings settings) {
         // Add rotation animation specific settings.
         settings.maximum = 360f;
-        settings.reverse = true;
+        settings.reverse = false;
 
         // Create new rotation animation.
         return new Animation("Rotation", settings) {
             @Override
-            final protected boolean transformCanvas(Canvas canvas, ICanvasDrawable drawable) {
+            final protected void transformCanvas(Canvas canvas, ICanvasDrawable drawable) {
                 canvas.rotate(getValue(), drawable.getX(), drawable.getY());
-                return true;
             }
         };
     }

@@ -3,6 +3,7 @@ package com.example.webmasters.adapters;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.SeekBar;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatSeekBar;
@@ -10,8 +11,14 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.InverseBindingAdapter;
 import androidx.databinding.InverseBindingListener;
+import androidx.databinding.ObservableList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.webmasters.models.graphic_design.Animation;
+
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class SharedBindingAdapters {
 
@@ -63,6 +70,25 @@ public class SharedBindingAdapters {
         view.setProgress(progress);
     }
 
+    @BindingAdapter(value = {"app:onProgress"})
+    public static void setOnProgress(AppCompatSeekBar view, java.util.function.IntConsumer onProgress) {
+        view.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                onProgress.accept(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
 
 
     @BindingAdapter(value = {"android:formatArgs"})

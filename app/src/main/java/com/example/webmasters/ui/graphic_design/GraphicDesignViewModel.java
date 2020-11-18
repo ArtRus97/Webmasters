@@ -22,10 +22,11 @@ import java.util.stream.Collectors;
 /**
  * @author JIkaheimo (Jaakko Ikäheimo)
  */
-public class GraphicDesignViewModel extends ViewModel implements IAnimationViewModel {
-    private final MutableLiveData<List<Boolean>> mAnimationStates;
+public class GraphicDesignViewModel extends ViewModel{
+    private final MutableLiveData<List<Boolean>> mShapeAnimationStates = new MutableLiveData<>();
     private final MutableLiveData<Logo> mLogo = new MutableLiveData<>();
-    private final MutableLiveData<List<Animation>> mAnimations;
+    private final MutableLiveData<List<Animation>> mAnimations = new MutableLiveData<>();
+    private final MutableLiveData<List<Boolean>> mTextAnimationStates = new MutableLiveData<>();
     private final MutableLiveData<List<ShapeType>> mShapeTypes = new MutableLiveData<>();
 
     /**
@@ -38,8 +39,6 @@ public class GraphicDesignViewModel extends ViewModel implements IAnimationViewM
         // Add different shape types.
         mShapeTypes.setValue(Arrays.stream(ShapeType.values()).collect(Collectors.toList()));
 
-        mAnimations = new MutableLiveData<>();
-        mAnimationStates = new MutableLiveData<>();
         createAnimations();
     }
 
@@ -56,17 +55,22 @@ public class GraphicDesignViewModel extends ViewModel implements IAnimationViewM
             add(animationFactory.getAnimation(AnimationFactory.AnimationType.Blink));
             add(animationFactory.getAnimation(AnimationFactory.AnimationType.Rotation));
             add(animationFactory.getAnimation(AnimationFactory.AnimationType.Movement));
+            add(animationFactory.getAnimation(AnimationFactory.AnimationType.SkewX));
+            add(animationFactory.getAnimation(AnimationFactory.AnimationType.SkewY));
         }};
 
-        ArrayList<Boolean> animationStates = new ArrayList<>();
+        ArrayList<Boolean> shapeAnimationStates = new ArrayList<>();
+        ArrayList<Boolean> textAnimationStates = new ArrayList<>();
 
         // Add some model related configurations.
         animations.forEach(animation -> {
             animation.setChangePerSecond(animation.MAXIMUM / 2);
-            animationStates.add(false);
+            shapeAnimationStates.add(false);
+            textAnimationStates.add(false);
         });
 
-        mAnimationStates.setValue(animationStates);
+        mTextAnimationStates.setValue(textAnimationStates);
+        mShapeAnimationStates.setValue(shapeAnimationStates);
         mAnimations.setValue(animations);
     }
 
@@ -83,14 +87,16 @@ public class GraphicDesignViewModel extends ViewModel implements IAnimationViewM
     }
 
 
-    @Override
     public List<Animation> getAnimations() {
         return mAnimations.getValue();
     }
 
-    @Override
-    public List<Boolean> getAnimationStates() {
-        return mAnimationStates.getValue();
+    public List<Boolean> getShapeAnimationStates() {
+        return mShapeAnimationStates.getValue();
+    }
+
+    public List<Boolean> getTextAnimationStates() {
+        return mTextAnimationStates.getValue();
     }
 
 

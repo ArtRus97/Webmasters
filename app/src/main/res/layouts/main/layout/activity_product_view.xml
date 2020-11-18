@@ -5,7 +5,7 @@
         <import type="com.example.webmasters.converters.ProductConverter" />
         <variable
             name="holder"
-            type="com.example.webmasters.ui.web_store.WebStoreActivity.FillProductList.MyViewHolder" />
+            type="com.example.webmasters.adapters.ProductAdapter.MyViewHolder" />
         <variable
             name="product"
             type="com.example.webmasters.models.webstore.Product" />

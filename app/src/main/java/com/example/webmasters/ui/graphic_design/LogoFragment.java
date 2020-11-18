@@ -39,17 +39,16 @@ public class LogoFragment extends Fragment {
         LiveData<Logo> mLogo = mModel.getLogo();
         FrameLayout layoutProgress = mBinding.overlayProgress.layoutProgress;
         mLogo.observe(getViewLifecycleOwner(), logo -> {
-            if (mBinding.getCanvasView() == null) {
-                mBinding.setCanvasView(mBinding.logoView);
-                mBinding.executePendingBindings();
-            }
-            if (mBinding.getModel() == null) {
-                mBinding.setModel(mModel);
-                mBinding.executePendingBindings();
-            }
             Utils.animateView(layoutProgress, View.GONE, 0, 200);
         });
         Utils.animateView(layoutProgress, View.VISIBLE, 0.4f, 200);
+
+        if (mBinding.getCanvasView() == null)
+            mBinding.getRoot().post(() -> {
+                mBinding.setCanvasView(mBinding.logoView);
+                mBinding.executePendingBindings();
+                mBinding.setModel(mModel);
+            });
 
         super.onCreateView(inflater, container, savedInstanceStatenceState);
         return mBinding.getRoot();

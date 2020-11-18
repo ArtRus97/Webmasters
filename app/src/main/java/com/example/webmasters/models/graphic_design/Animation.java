@@ -29,6 +29,7 @@ public abstract class Animation extends BaseObservable implements IAnimation {
     public final float MAXIMUM;
     // Name of the animation.
     public final String NAME;
+
     /**
      * Mutable properties
      */
@@ -36,6 +37,8 @@ public abstract class Animation extends BaseObservable implements IAnimation {
     private float mChangePerSecond;
     // Frames per second for the animation
     private int mFPS;
+    // The default value of the animation.
+    private float mDefault;
     // The current value of the animation.
     private float mValue;
     // Is animation allowed to reverse when it reaches its maximum.
@@ -46,7 +49,6 @@ public abstract class Animation extends BaseObservable implements IAnimation {
     private boolean mIsPlaying = false;
     // Last time animation was updated.
     private long mLastUpdate = System.currentTimeMillis();
-
 
     /**
      * Constructor
@@ -59,6 +61,7 @@ public abstract class Animation extends BaseObservable implements IAnimation {
         // Map animation settings to properties.
         mChangePerSecond = settings.changePerSecond;
         mValue = settings.initialValue;
+        mDefault = mValue;
         mFPS = settings.fps;
         MINIMUM = settings.minimum;
         MAXIMUM = settings.maximum;
@@ -79,18 +82,19 @@ public abstract class Animation extends BaseObservable implements IAnimation {
 
     @Override
     @Bindable
-    public float getChangePerSecond() {
+    final public float getChangePerSecond() {
         return mChangePerSecond;
     }
 
 
     @Override
     @Bindable
-    public boolean getAllowReversed() {
+    final public boolean getAllowReversed() {
         return mAllowReverse;
     }
 
-    public void setIsPlaying(boolean isPlaying) {
+    final public void setIsPlaying(final boolean isPlaying) {
+        mValue = mDefault;
         mIsPlaying = isPlaying;
         notifyPropertyChanged(BR.playing);
     }
@@ -109,13 +113,23 @@ public abstract class Animation extends BaseObservable implements IAnimation {
 
     @Override
     @Bindable
-    public float getMinimum() {
+    final public float getMinimum() {
         return MINIMUM;
+    }
+
+
+    /**
+     * setIsReversed sets the animation to allow reversed transition.
+     *
+     * @param isReversed (boolean)
+     */
+    final public void setIsReversed(final boolean isReversed) {
+        mAllowReverse = isReversed;
     }
 
     @Override
     @Bindable
-    public boolean getIsReversed() {
+    final public boolean getIsReversed() {
         return mAllowReverse;
     }
 
@@ -136,20 +150,20 @@ public abstract class Animation extends BaseObservable implements IAnimation {
 
     @Override
     @Bindable
-    public float getInterval() {
+    final public float getInterval() {
         return (1f / mFPS * 1000);
     }
 
     @Override
     @Bindable
-    public float getValue() {
+    final public float getValue() {
         return mValue;
     }
 
 
     @Override
     @Bindable
-    public String getName() {
+    final public String getName() {
         return NAME;
     }
 
@@ -159,30 +173,25 @@ public abstract class Animation extends BaseObservable implements IAnimation {
         transformPaint(paint);
     }
 
-    final public boolean apply(final Canvas canvas) {
+    final public void apply(final Canvas canvas) {
         update();
         canvas.save();
         transformCanvas(canvas);
-        return true;
     }
 
-    final public boolean apply(final Canvas canvas, final ICanvasDrawable drawable) {
+    final public void apply(final Canvas canvas, final ICanvasDrawable drawable) {
         update();
         canvas.save();
         transformCanvas(canvas, drawable);
-        return true;
     }
 
-    protected boolean transformCanvas(Canvas canvas, ICanvasDrawable drawable) {
-        return false;
+    protected void transformCanvas(Canvas canvas, ICanvasDrawable drawable) {
     }
 
-    protected boolean transformCanvas(Canvas canvas) {
-        return false;
+    protected void transformCanvas(Canvas canvas) {
     }
 
     protected void transformPaint(Paint paint) {
-
     }
 
     /**

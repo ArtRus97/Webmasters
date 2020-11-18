@@ -14,23 +14,23 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/layoutAnimationItem"
         android:layout_width="match_parent"
-        android:padding="10dp"
+        android:layout_height="wrap_content"
         android:background="@{isSelected ? Color.RED : Color.TRANSPARENT}"
         android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:paddingStart="5dp">
 
         <CheckBox
-            android:checked="@={animation.playing}"
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:checked="@={animation.playing}" />
 
         <TextView
-            android:textSize="18sp"
             android:id="@+id/textAnimationName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{animation.name}"
+            android:textSize="18sp"
             tools:text="Rolling" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
