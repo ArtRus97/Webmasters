@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.example.webmasters.models.graphic_design.Logo;
+import com.example.webmasters.models.webstore.CartProduct;
 import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.services.FirebaseService;
 import com.example.webmasters.services.ProductApi;
@@ -25,6 +26,7 @@ public class WebStoreSingleton {
     // static variable single_instance of type Singleton
     private static WebStoreSingleton mInstance = null;
     public final HashMap<String, Product> mProducts = new HashMap<>();
+    public final HashMap<String, CartProduct>mCart = new HashMap<>();
     public ArrayList<Product> cart = new ArrayList<>();
 
     // private constructor restricted to this class itself
@@ -51,14 +53,19 @@ public class WebStoreSingleton {
     }
 
     public void addToCart(String productId, int numItems) {
+        /*
         for (int position=0; position <= numItems; position++)
                 cart.add(mProducts.get(productId));
+
+         */
+
+        mCart.put(productId, (CartProduct) mProducts.get(productId));
+        mCart.get(productId).setAmount(numItems);
     }
 
-    public List<Product> getCart() {
-        return cart;
+    public List<CartProduct> getCart() {
+        return new ArrayList<>(mCart.values());
     }
-
 
     // static method to create instance of Singleton class
     public static synchronized WebStoreSingleton getInstance(Context context) {

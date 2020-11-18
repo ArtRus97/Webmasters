@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <import type="com.example.webmasters.converters.ProductConverter" />
@@ -11,9 +13,7 @@
             type="com.example.webmasters.models.webstore.Product" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> holder.handleClick()}"
@@ -37,7 +37,6 @@
             android:text="@{product.name}"
             android:textSize="@dimen/title_font_size"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/labelDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageProduct"
             app:layout_constraintTop_toTopOf="parent" />
@@ -45,12 +44,12 @@
         <TextView
             android:id="@+id/labelDescription"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@{ProductConverter.formatDescription(product.description)}"
-            app:layout_constraintBottom_toTopOf="@+id/labelPrice"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageProduct"
             app:layout_constraintTop_toBottomOf="@+id/labelTitle" />
 
@@ -61,8 +60,25 @@
             android:text="@{ProductConverter.formatPrice(product.price)}"
             android:textColor="@color/price_font_color"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/textViewAmount"
+            app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
+
+        <Button
+            android:id="@+id/buttonRemove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remove"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
+
+        <TextView
+            android:id="@+id/textViewAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/buttonRemove"
+            app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
