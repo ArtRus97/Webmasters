@@ -1,22 +1,18 @@
 package com.example.webmasters.models.webstore;
 
 public class CartProduct extends Product {
-    private Integer amount;
-    private Float totalPrice;
+    private int mAmount = 0;
 
-    public final void setAmount(final Integer amount) {
-        this.amount = amount;
+    @Override
+    public float getPrice() {
+        return super.getPrice() * mAmount;
     }
 
-    public final void setTotalPrice(final Float totalPrice) {
-        this.totalPrice = totalPrice;
+    public final int getAmount() {
+        return mAmount;
     }
 
-    public final Integer getAmount() {
-        return amount;
-    }
-
-    public final Float getTotalPrice() {
-        return totalPrice;
+    public final void setAmount(final int amount) {
+        mAmount = amount;
     }
 }

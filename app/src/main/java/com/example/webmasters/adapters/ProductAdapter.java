@@ -16,11 +16,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
-    private LayoutInflater mInflater;
-    private List<Product> mProducts;
-    private Context mContext;
+    private final LayoutInflater mInflater;
+    private final List<? extends Product> mProducts;
+    private final Context mContext;
 
-    public ProductAdapter(Context context, List<Product> products) {
+    public ProductAdapter(Context context, List<? extends Product> products) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         // Get unique items.

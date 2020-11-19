@@ -2,8 +2,6 @@ package com.example.webmasters.models.webstore;
 
 import org.json.JSONObject;
 
-import java.net.URL;
-
 public class Product {
     private String mId;
     private String mName;
@@ -52,7 +50,7 @@ public class Product {
         return mCategory;
     }
 
-    final public Float getPrice() {
+    public float getPrice() {
         return mPrice;
     }
 
@@ -76,4 +74,5 @@ public class Product {
         product.mImageUrl = jsonProduct.optString("imageUrl", "");
         return product;
     }
+
 }

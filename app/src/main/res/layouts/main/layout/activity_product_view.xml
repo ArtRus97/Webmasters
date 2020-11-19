@@ -5,6 +5,7 @@
 
     <data>
         <import type="com.example.webmasters.converters.ProductConverter" />
+        <import type="com.example.webmasters.models.webstore.CartProduct" />
         <variable
             name="holder"
             type="com.example.webmasters.adapters.ProductAdapter.MyViewHolder" />
@@ -39,7 +40,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageProduct"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Placeholder title" />
 
         <TextView
             android:id="@+id/labelDescription"
@@ -51,17 +53,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageProduct"
-            app:layout_constraintTop_toBottomOf="@+id/labelTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/labelTitle"
+            tools:text="asdasfjasfjioasjfaosfjoasfjpoajsoffjoasfopoasfopajosfojpasofoasfoasf...." />
 
         <TextView
             android:id="@+id/labelPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="@{ProductConverter.formatPrice(product.price)}"
             android:textColor="@color/price_font_color"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/textViewAmount"
-            app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelDescription"
+            tools:text="35.00€" />
 
         <Button
             android:id="@+id/buttonRemove"
@@ -73,12 +79,14 @@
             app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
 
         <TextView
-            android:id="@+id/textViewAmount"
+            android:id="@+id/labelAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@+id/buttonRemove"
-            app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
+            android:layout_marginEnd="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/labelPrice"
+            app:layout_constraintEnd_toStartOf="@+id/labelPrice"
+            app:layout_constraintTop_toTopOf="@+id/labelPrice"
+            tools:text="@{ProductConverter.formatAmount(product)}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

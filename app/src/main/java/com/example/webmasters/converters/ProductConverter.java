@@ -1,5 +1,8 @@
 package com.example.webmasters.converters;
 
+import com.example.webmasters.models.webstore.CartProduct;
+import com.example.webmasters.models.webstore.Product;
+
 import java.util.Locale;
 
 public class ProductConverter {
@@ -11,5 +14,9 @@ public class ProductConverter {
     public static String formatDescription(final String description) {
         int descLength = Math.min(description.length(), 80);
         return description.substring(0, descLength) + "...";
+    }
+
+    public static String formatAmount(Product product) {
+        return (product instanceof CartProduct) ? ((CartProduct) product).getAmount() + "" : "";
     }
 }
