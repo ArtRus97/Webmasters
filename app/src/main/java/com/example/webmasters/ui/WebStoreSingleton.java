@@ -1,23 +1,12 @@
 package com.example.webmasters.ui;
 
 import android.content.Context;
-import android.content.Intent;
-import android.widget.Toast;
-
-import com.example.webmasters.models.graphic_design.Logo;
 import com.example.webmasters.models.webstore.CartProduct;
 import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.services.FirebaseService;
-import com.example.webmasters.services.ProductApi;
-import com.example.webmasters.services.FirebaseService;
-import com.example.webmasters.ui.web_store.CartActivity;
-import com.example.webmasters.ui.web_store.ProductActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
@@ -26,7 +15,7 @@ public class WebStoreSingleton {
     // static variable single_instance of type Singleton
     private static WebStoreSingleton mInstance = null;
     public final HashMap<String, Product> mProducts = new HashMap<>();
-    public final HashMap<String, CartProduct>mCart = new HashMap<>();
+    public final HashMap<String, CartProduct> mCart = new HashMap<>();
     public ArrayList<Product> cart = new ArrayList<>();
 
     // private constructor restricted to this class itself
@@ -58,9 +47,11 @@ public class WebStoreSingleton {
                 cart.add(mProducts.get(productId));
 
          */
-
-        mCart.put(productId, (CartProduct) mProducts.get(productId));
-        mCart.get(productId).setAmount(numItems);
+        Gson gson = new Gson();
+        Product product = mProducts.get(productId);
+        CartProduct cartProduct = gson.fromJson(gson.toJson(product), CartProduct.class);
+        cartProduct.setAmount(numItems);
+        mCart.put(productId, cartProduct);
     }
 
     public List<CartProduct> getCart() {

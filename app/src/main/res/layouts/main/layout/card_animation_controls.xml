@@ -23,16 +23,19 @@
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/animationLayout"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <com.example.webmasters.ui.shared.ExtendedCardView
-            android:layout_height="wrap_content"
+            android:id="@+id/cardAnimationList"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:title="Animations">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutAnimationList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -65,31 +68,33 @@
             android:padding="5dp" />
 
         <com.example.webmasters.ui.shared.ExtendedCardView
-            android:visibility="@{adapter.selectedAnimations.size() > 0  ? View.VISIBLE : View.GONE}"
+            android:id="@+id/cardAnimationControls"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="@{adapter.selectedAnimations.size() > 0  ? View.VISIBLE : View.GONE}"
             app:title="Controls">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutAnimationControls"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <androidx.appcompat.widget.AppCompatSeekBar
-                    android:id="@+id/seekAnimationInterval"
+                    android:id="@+id/seekFPS"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:max="@{60}"
                     android:min="@{10}"
                     android:progress="@{adapter.firstAnimation.FPS}"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView"
+                    app:layout_constraintBottom_toBottomOf="@+id/labelFPS"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/textView"
-                    app:layout_constraintTop_toTopOf="@+id/textView"
+                    app:layout_constraintStart_toEndOf="@+id/labelFPS"
+                    app:layout_constraintTop_toTopOf="@+id/labelFPS"
                     app:onProgress="@{adapter::updateFPS}" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/labelFPS"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -97,6 +102,30 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="FPS:" />
+
+                <TextView
+                    android:id="@+id/labelChangePerSecond"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@{Animation.formatDuration(adapter.firstAnimation.Duration)}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/labelFPS"
+                    tools:text="CPS:" />
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/seekChangePerSecond"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:max="@{SharedConverters.floatToInt(10)}"
+                    android:min="@{SharedConverters.floatToInt(0.2f)}"
+                    android:progress="@{SharedConverters.floatToInt(adapter.firstAnimation.duration)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/labelChangePerSecond"
+                    app:layout_constraintTop_toTopOf="@+id/labelChangePerSecond"
+                    app:onProgress="@{adapter::updateDuration}" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.example.webmasters.ui.shared.ExtendedCardView>

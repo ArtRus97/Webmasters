@@ -1,21 +1,15 @@
 package com.example.webmasters.ui.web_store;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.webmasters.R;
 import com.example.webmasters.databinding.ActivityProductBinding;
-import com.example.webmasters.databinding.ActivityProductViewBinding;
 import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.ui.WebStoreSingleton;
 import com.squareup.picasso.Picasso;
@@ -39,7 +33,7 @@ public class ProductActivity extends AppCompatActivity {
 
         mBinding.labelTitle.setText(mProduct.getName());
         mBinding.labelDescription.setText(mProduct.getDescription());
-        mBinding.labelPrice.setText(mProduct.getPrice().toString());
+        mBinding.labelPrice.setText(mProduct.getPrice() + "");
 
         // Display product image from URL if one is available.
         if (!mProduct.getImageUrl().isEmpty())
