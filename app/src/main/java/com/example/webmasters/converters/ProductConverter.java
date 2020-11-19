@@ -19,4 +19,11 @@ public class ProductConverter {
     public static String formatAmount(Product product) {
         return (product instanceof CartProduct) ? ((CartProduct) product).getAmount() + "" : "";
     }
+
+    public static Integer setVisibility(Product product) {
+        if (product instanceof CartProduct)
+            return 0;
+        else
+            return 8;
+    }
 }

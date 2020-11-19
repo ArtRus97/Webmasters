@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.webmasters.databinding.ActivityProductViewBinding;
+import com.example.webmasters.models.webstore.CartProduct;
 import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.ui.web_store.ProductActivity;
 import com.squareup.picasso.Picasso;
