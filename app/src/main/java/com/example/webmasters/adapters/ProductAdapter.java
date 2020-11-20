@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.webmasters.databinding.ActivityProductViewBinding;
 import com.example.webmasters.models.webstore.CartProduct;
 import com.example.webmasters.models.webstore.Product;
+import com.example.webmasters.ui.WebStoreSingleton;
+import com.example.webmasters.ui.web_store.CartActivity;
 import com.example.webmasters.ui.web_store.ProductActivity;
 import com.squareup.picasso.Picasso;
 
@@ -50,6 +52,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         mContext.startActivity(intent);
     }
 
+    public void removeProduct(String productId) {
+        CartActivity.removeProduct(productId);
+    }
+
     @Override
     public int getItemCount() {
         return mProducts.size();
@@ -67,6 +73,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
         public void handleClick() {
             OpenProduct(binding.getProduct().getId());
+        }
+
+        public void removeClick() {
+            removeProduct(binding.getProduct().getId());
         }
     }
 }

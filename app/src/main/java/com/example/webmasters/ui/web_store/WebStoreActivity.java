@@ -45,7 +45,6 @@ public class WebStoreActivity extends AppCompatActivity {
         return true;
     }
 
-
     public void openCart(MenuItem item) {
         Intent intentStore = new Intent(this, CartActivity.class);
         startActivity(intentStore);
