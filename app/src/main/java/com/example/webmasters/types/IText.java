@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import androidx.databinding.Bindable;
+import com.example.webmasters.models.graphic_design.Shadow;
 
 /**
  * IText defines an interface for classes of text format.
@@ -15,6 +16,12 @@ import androidx.databinding.Bindable;
  * v 1.1.0 Italic and bold typefaces added.
  */
 public interface IText extends ICanvasDrawable {
+    /**
+     * getShadow returns the shadow of text.
+     * @return the shadow of text as Shadow.
+     */
+    Shadow getShadow();
+
     /**
      * getValue returns the displayed text value.
      * @return the value of text as String.

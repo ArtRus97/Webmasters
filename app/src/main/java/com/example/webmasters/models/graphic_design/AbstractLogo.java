@@ -193,7 +193,6 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
         notifyPropertyChanged(BR.shape);
     }
 
-
     @Override
     @Exclude
     @Bindable
@@ -228,6 +227,20 @@ abstract public class AbstractLogo extends BaseObservable implements ILogo {
     final public int getY() {
         // Logo y-coordinate should always be at 0.
         return 0;
+    }
+
+    @Bindable
+    @Exclude
+    @Override
+    final public Shadow getShapeShadow() {
+        return getShape().getShadow();
+    }
+
+    @Bindable
+    @Exclude
+    @Override
+    public Shadow getTextShadow() {
+        return getText().getShadow();
     }
 
     @Override

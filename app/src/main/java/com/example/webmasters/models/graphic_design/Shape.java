@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.databinding.Observable;
 import com.example.webmasters.BR;
 import com.example.webmasters.models.graphic_design.utils.ShapeFactory;
 import com.example.webmasters.types.IShape;
@@ -16,7 +17,18 @@ import com.example.webmasters.types.ShapeType;
 
 import java.util.Objects;
 
+/**
+ * Shape is a basic implementation of IShape interface.
+ *
+ * @author JIkaheimo (Jaakko Ikäheimo)
+ * <p>
+ * v 1.0.0 Base class created.
+ * v 1.0.1 Observer notifiers added.
+ * v 1.1.0 Shape shadow added.
+ */
 public class Shape extends BaseObservable implements IShape {
+    // The shadow of the shaper
+    private Shadow mShadow;
     // The name of the shape.
     protected String mName = "Unnamed";
     // The type of the shape.
@@ -30,7 +42,11 @@ public class Shape extends BaseObservable implements IShape {
     // The scale of the shape.
     private float mScale = 1.0f;
 
+    /**
+     * Default constructor.
+     */
     public Shape() {
+        setShadow(new Shadow("Shape"));
     }
 
     public Shape(ShapeType type, String name) {
@@ -39,6 +55,7 @@ public class Shape extends BaseObservable implements IShape {
     }
 
     public Shape(String name) {
+        this();
         mName = name;
         notifyPropertyChanged(BR.name);
     }
@@ -62,6 +79,25 @@ public class Shape extends BaseObservable implements IShape {
     final public String getName() {
         return mName;
     }
+
+    final public void setShadow(final Shadow shadow) {
+        // Update property listeners.
+        if (mShadow != null)
+            mShadow.removeOnPropertyChangedCallback(this.onShadowPropertyChanged);
+        shadow.addOnPropertyChangedCallback(this.onShadowPropertyChanged);
+        // Set shadow.
+        mShadow = shadow;
+        // Notify observers.
+        notifyPropertyChanged(BR.shadow);
+    }
+
+
+    @Override
+    @Bindable
+    public Shadow getShadow() {
+        return mShadow;
+    }
+
 
     public void setType(ShapeType type) {
         if (mType == type) return;
@@ -132,11 +168,14 @@ public class Shape extends BaseObservable implements IShape {
     @Override
     public Paint getPaint(final Context context) {
         // Create new paint.
-        Paint paint = new Paint();
+        final Paint paint = new Paint();
         // Configure paint based on the state of the shape.
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(100);
+        paint.setAntiAlias(true);
         paint.setColor(mColor);
+        // Add shadow configurations.
+        paint.setShadowLayer(5f, mShadow.getX(), mShadow.getY(), mShadow.getColor());
         // Return configured paint.
         return paint;
     }
@@ -221,4 +260,11 @@ public class Shape extends BaseObservable implements IShape {
     public int hashCode() {
         return Objects.hash(mParameter, mType);
     }
+
+    final protected OnPropertyChangedCallback onShadowPropertyChanged = new OnPropertyChangedCallback() {
+        @Override
+        public void onPropertyChanged(Observable sender, int propertyId) {
+            notifyChange();
+        }
+    };
 }

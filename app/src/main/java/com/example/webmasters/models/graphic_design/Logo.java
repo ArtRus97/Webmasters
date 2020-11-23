@@ -48,6 +48,9 @@ public class Logo extends AbstractLogo {
     private Shape mShape;
 
 
+    /**
+     * Default constructor.
+     */
     public Logo() {
         setText(new Text() {{
             setSize(DEFAULT_TEXT_SIZE);
@@ -55,7 +58,7 @@ public class Logo extends AbstractLogo {
         setShape(ShapeFactory.defaultShape());
     }
 
-
+    @Override
     final public void setText(final Text text) {
         // Update property listeners.
         if (mText != null)
@@ -74,6 +77,7 @@ public class Logo extends AbstractLogo {
     }
 
 
+    @Override
     final public void setShape(final Shape shape) {
         // Update property listeners.
         if (mShape != null)
