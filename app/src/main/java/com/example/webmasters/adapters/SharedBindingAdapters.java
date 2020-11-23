@@ -1,6 +1,5 @@
 package com.example.webmasters.adapters;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.SeekBar;
@@ -11,14 +10,8 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.InverseBindingAdapter;
 import androidx.databinding.InverseBindingListener;
-import androidx.databinding.ObservableList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.webmasters.models.graphic_design.Animation;
-
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class SharedBindingAdapters {
 

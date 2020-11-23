@@ -40,7 +40,7 @@ public class LogoView extends View {
 
     public LogoView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         mGestureDetector = new GestureDetector(context, new GestureDetector.OnGestureListener() {
             private static final int SWIPE_MIN_DISTANCE = 120;

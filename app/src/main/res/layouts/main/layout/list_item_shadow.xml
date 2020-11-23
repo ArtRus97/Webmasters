@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.example.webmasters.models.graphic_design.Shadow" />
+
+        <import type="com.example.webmasters.converters.LogoConverter" />
+
+        <variable
+            name="shadow"
+            type="Shadow" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/labelColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/colorLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/buttonColor" />
+
+        <com.example.webmasters.ui.shared.ColorButton
+            android:id="@+id/buttonColor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:color="@={shadow.color}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/labelColor"
+            app:layout_constraintTop_toBottomOf="@+id/labelName" />
+
+        <TextView
+            android:id="@+id/labelXPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@{LogoConverter.formatX(shadow.x)}"
+            app:layout_constraintEnd_toStartOf="@+id/seekXPosition"
+            app:layout_constraintStart_toStartOf="@+id/labelColor"
+            app:layout_constraintTop_toBottomOf="@+id/labelColor" />
+
+        <SeekBar
+            android:id="@+id/seekXPosition"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:min="-5"
+            android:max="5"
+            android:progress="@={shadow.x}"
+            app:layout_constraintBottom_toBottomOf="@+id/labelXPosition"
+            app:layout_constraintEnd_toStartOf="@+id/labelYPosition"
+            app:layout_constraintStart_toEndOf="@+id/labelXPosition"
+            app:layout_constraintTop_toTopOf="@+id/labelXPosition"
+            tools:targetApi="o" />
+
+        <TextView
+            android:id="@+id/labelYPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{LogoConverter.formatY(shadow.y)}"
+            app:layout_constraintBottom_toBottomOf="@+id/seekXPosition"
+            app:layout_constraintEnd_toStartOf="@+id/seekYPosition"
+            app:layout_constraintStart_toEndOf="@id/seekXPosition"
+            app:layout_constraintTop_toTopOf="@+id/seekXPosition" />
+
+        <SeekBar
+            android:id="@+id/seekYPosition"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:min="-5"
+            android:max="5"
+            android:progress="@={shadow.y}"
+            app:layout_constraintBottom_toBottomOf="@+id/labelYPosition"
+            app:layout_constraintEnd_toEndOf="@+id/buttonColor"
+            app:layout_constraintStart_toEndOf="@+id/labelYPosition"
+            app:layout_constraintTop_toTopOf="@+id/labelYPosition"
+            tools:targetApi="o" />
+
+        <TextView
+            android:id="@+id/labelName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{shadow.name}"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Name placeholder" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

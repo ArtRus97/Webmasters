@@ -10,8 +10,9 @@ import android.graphics.Paint;
  *
  * v 1.0.0 Base interface created.
  * v 1.1.0 X and Y coordinates added.
+ * v 1.2.0 Extract position interface to IPositionable.
  */
-public interface ICanvasDrawable {
+public interface ICanvasDrawable extends IPositionable {
     /**
      * getPaint returns a Paint configured for the canvas drawable.
      * @param context (Context)
@@ -33,16 +34,4 @@ public interface ICanvasDrawable {
      * @param paint (Paint) paint used to draw the drawable.
      */
     void drawOnCanvas(Canvas canvas, Paint paint);
-
-    /**
-     * getX returns the x coordinate of the drawable.
-     * @return x coordinate as int.
-     */
-    int getX();
-
-    /**
-     * getY returns the y coordinate of the drawable.
-     * @return y coordinate as int.
-     */
-    int getY();
 }

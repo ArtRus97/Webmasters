@@ -377,7 +377,14 @@
 
                 </com.example.webmasters.ui.shared.ExtendedCardView>
 
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="12dp" />
 
+                <com.example.webmasters.ui.graphic_design.containers.ShadowControlsCard
+                    android:layout_width="match_parent"
+                    app:shadows="@{model.shadows}"
+                    android:layout_height="wrap_content" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>

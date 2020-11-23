@@ -6,29 +6,59 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
-import androidx.databinding.InverseMethod;
-import androidx.databinding.ObservableField;
+import androidx.databinding.*;
 
 import com.example.webmasters.BR;
 import com.example.webmasters.types.IText;
 import com.google.firebase.firestore.Exclude;
 
 /**
- * A very basic implementation of IText interface.
+ * Text is a very basic implementation of IText interface.
  *
  * @author JIkaheimo (Jaakko Ikäheimo)
+ * <p>
+ * v 1.0.0 Base class created.
+ * v 1.0.1 Observer notifiers added.
+ * v 1.1.0 Text shadow added.
  */
 public class Text extends BaseObservable implements IText {
+    // The shadow of the text.
+    private Shadow mShadow;
+    // The (x, y) position of the text.
     final private int[] mPosition = {0, 0};
+    // The size of the text as SP.
     private int mSize = 12;
+    // The color of the text.
     private int mColor = Color.WHITE;
+    // The value of the text.
     private String mValue = "";
+    // Is the text in italic typeface.
     private boolean mIsItalic = false;
+    // Is the text in bold typeface.
     private boolean mIsBold = false;
 
-    public void setSize(int size) {
+    public Text() {
+        setShadow(new Shadow("Text"));
+    }
+
+    final public void setShadow(final Shadow shadow) {
+        // Update property listeners.
+        if (mShadow != null)
+            mShadow.removeOnPropertyChangedCallback(this.onShadowPropertyChanged);
+        shadow.addOnPropertyChangedCallback(this.onShadowPropertyChanged);
+        // Set shadow.
+        mShadow = shadow;
+        // Notify observers.
+        notifyPropertyChanged(BR.shadow);
+    }
+
+    @Override
+    @Bindable
+    final public Shadow getShadow() {
+        return mShadow;
+    }
+
+    final public void setSize(final int size) {
         if (mSize == size) return;
         mSize = size;
         notifyPropertyChanged(BR.size);
@@ -36,11 +66,11 @@ public class Text extends BaseObservable implements IText {
 
     @Override
     @Bindable
-    public int getSize() {
+    final public int getSize() {
         return mSize;
     }
 
-    public void setColor(int color) {
+    final public void setColor(final int color) {
         if (mColor == color) return;
         mColor = color;
         notifyPropertyChanged(BR.color);
@@ -135,25 +165,34 @@ public class Text extends BaseObservable implements IText {
 
 
     final public Paint getPaint(final Context context) {
+        // Create new paint.
         final Paint paint = new Paint();
-
+        // Configure paint based on the state of the text.
         paint.setStyle(Paint.Style.FILL);
         paint.setTextSize(IText.spAsPixels(context, mSize));
         paint.setColor(mColor);
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setAntiAlias(true);
         paint.setTypeface(getTypeface());
-
+        // Add shadow configurations.
+        paint.setShadowLayer(5f, mShadow.getX(), mShadow.getY(), mShadow.getColor());
+        // Return configured paint.
         return paint;
     }
 
-    public void drawOnCanvas(Canvas canvas, Context context) {
+    public void drawOnCanvas(final Canvas canvas, final Context context) {
         Paint paint = getPaint(context);
         drawOnCanvas(canvas, paint);
     }
 
-    public void drawOnCanvas(Canvas canvas, Paint paint) {
+    public void drawOnCanvas(final Canvas canvas, final Paint paint) {
         canvas.drawText(mValue, getX(), getY(), paint);
     }
 
+    final protected OnPropertyChangedCallback onShadowPropertyChanged = new OnPropertyChangedCallback() {
+        @Override
+        public void onPropertyChanged(Observable sender, int propertyId) {
+            notifyChange();
+        }
+    };
 }
