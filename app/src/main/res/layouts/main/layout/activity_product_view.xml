@@ -60,12 +60,12 @@
             android:id="@+id/labelPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginEnd="24dp"
             android:text="@{ProductConverter.formatPrice(product.price)}"
             android:textColor="@color/price_font_color"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonRemove"
             app:layout_constraintTop_toBottomOf="@+id/labelDescription"
             tools:text="35.00€" />
 
@@ -75,8 +75,11 @@
             android:layout_height="wrap_content"
             android:text="Remove"
             android:visibility="gone"
+            android:onClick="@{() -> holder.removeClick()}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/labelDescription"
+            tools:visibility="@{ProductConverter.setVisibility(product)}" />
 
         <TextView
             android:id="@+id/labelAmount"
