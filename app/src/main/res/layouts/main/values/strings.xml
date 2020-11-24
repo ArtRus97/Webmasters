@@ -7,4 +7,7 @@
     <string name="text_hint">Text</string>
     <string name="remove_text">Remove</string>
     <string name="colorLabel">Color:</string>
+    <string name="priceText">Price:</string>
+    <string name="amountText">Amount:</string>
+    <string name="removeText">Remove</string>
 </resources>

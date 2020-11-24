@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -63,6 +64,9 @@ public class CartActivity extends AppCompatActivity {
     }
 
     public static void removeProduct(String productId) {
+        Toast toast = Toast.makeText(context, WebStoreSingleton.getInstance(context).mCart.get(productId).getName(),Toast.LENGTH_SHORT);
         WebStoreSingleton.getInstance(context).mCart.remove(productId);
+        toast.show();
+
     }
 }

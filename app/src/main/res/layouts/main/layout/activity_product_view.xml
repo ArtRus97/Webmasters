@@ -73,23 +73,49 @@
             android:id="@+id/buttonRemove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Remove"
-            android:visibility="gone"
+            android:backgroundTint="@color/cardview_dark_background"
             android:onClick="@{() -> holder.removeClick()}"
+            android:text="@string/removeText"
+            android:textColor="@android:color/white"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelDescription"
+            tools:layout_height="40dp"
+            tools:layout_width="90dp"
             tools:visibility="@{ProductConverter.setVisibility(product)}" />
 
         <TextView
-            android:id="@+id/labelAmount"
+            android:id="@+id/textViewlabelAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             app:layout_constraintBottom_toBottomOf="@+id/labelPrice"
-            app:layout_constraintEnd_toStartOf="@+id/labelPrice"
+            app:layout_constraintEnd_toStartOf="@+id/textViewPriceLabel"
             app:layout_constraintTop_toTopOf="@+id/labelPrice"
             tools:text="@{ProductConverter.formatAmount(product)}" />
+
+        <TextView
+            android:id="@+id/textViewPriceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/priceText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/labelPrice"
+            app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
+
+        <TextView
+            android:id="@+id/textViewAmountLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/amountText"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textViewlabelAmount"
+            app:layout_constraintTop_toBottomOf="@+id/labelDescription"
+            tools:visibility="@{ProductConverter.setVisibility(product)}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
