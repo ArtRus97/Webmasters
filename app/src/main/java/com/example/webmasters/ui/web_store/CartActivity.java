@@ -58,13 +58,18 @@ public class CartActivity extends AppCompatActivity {
         startActivity(intentStore);
     }
 
+    public void openHome(MenuItem item) {
+        Intent intentStore = new Intent(this, WebStoreActivity.class);
+        startActivity(intentStore);
+    }
+
     public void refresh() {
         finish();
         startActivity(getIntent());
     }
 
     public static void removeProduct(String productId) {
-        Toast toast = Toast.makeText(context, WebStoreSingleton.getInstance(context).mCart.get(productId).getName(),Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(context, "Removed: " + WebStoreSingleton.getInstance(context).mCart.get(productId).getName(),Toast.LENGTH_SHORT);
         WebStoreSingleton.getInstance(context).mCart.remove(productId);
         toast.show();
 
