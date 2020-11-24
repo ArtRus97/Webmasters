@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
@@ -22,6 +23,13 @@ public class gameOptions extends AppCompatActivity {
         musicPlayer = MediaPlayer.create(this, R.raw.game_menu_music);
         CheckBox chkbMusicOnOff = (CheckBox) findViewById(R.id.chkbMusicOnOff);
         chkbMusicOnOff.setOnCheckedChangeListener(this::OnCheckedChanged);
+        Button buttonMain = (Button) findViewById(R.id.backBtn);
+        buttonMain.setOnClickListener(this::onNavigationClick);
+    }
+
+    private void onNavigationClick(View view) {
+        Intent intentGraph = new Intent(this, gameMenu.class);
+        startActivity(intentGraph);
     }
 
     private void OnCheckedChanged(CompoundButton compoundButton, boolean b) {

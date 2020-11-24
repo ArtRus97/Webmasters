@@ -41,7 +41,6 @@
                 android:id="@+id/musicOnOff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
                 android:background="#72151414"
                 android:fontFamily="casual"
                 android:text="Music:"
@@ -74,7 +73,6 @@
                 android:id="@+id/musicVoltxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
                 android:background="#72151414"
                 android:fontFamily="casual"
                 android:text="Music Volume:"
@@ -102,7 +100,7 @@
                 android:id="@+id/ctrlSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:background="#72151414"
                 android:fontFamily="casual"
                 android:text="Controls type:"
@@ -112,20 +110,27 @@
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
-            <Switch
-                android:id="@+id/ctrlTypeSwitch"
+            <ToggleButton
+                android:id="@+id/toggleButton2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="150dp"
-                android:layout_marginRight="150dp"
-                android:enabled="true"
-                android:showText="true"
+                android:layout_marginLeft="160dp"
+                android:layout_marginRight="160dp"
+                android:text="ToggleButton"
+                android:textColor="#FFD400"
                 android:textColorHighlight="#FF6F00"
                 android:textColorLink="#FF6F00"
-                android:textCursorDrawable="@android:drawable/alert_light_frame"
-                android:textOff="Buttons"
-                android:textOn="Swipe"
-                tools:checked="true" />
+                android:textOff="Swipe"
+                android:textOn="Buttons" />
+
+            <Button
+                android:id="@+id/backBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="140dp"
+                android:text="Back" />
 
         </LinearLayout>
 

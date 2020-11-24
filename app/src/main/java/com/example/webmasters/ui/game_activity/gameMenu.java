@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.webmasters.R;
+import com.example.webmasters.ui.MainActivity;
 import com.example.webmasters.ui.graphic_design.GraphicDesignActivity;
 import com.example.webmasters.ui.web_store.WebStoreActivity;
 
@@ -25,9 +26,12 @@ public class gameMenu extends AppCompatActivity {
         Button buttonGame = (Button) findViewById(R.id.playButton);
         Button buttonShop = (Button) findViewById(R.id.shopButton);
         Button buttonOptions = (Button) findViewById(R.id.optionsButton);
+        Button buttonExit = (Button) findViewById(R.id.exitButton);
         buttonGame.setOnClickListener(this::onNavigationClick);
         buttonShop.setOnClickListener(this::onNavigationClick);
         buttonOptions.setOnClickListener(this::onNavigationClick);
+        buttonExit.setOnClickListener(this::onNavigationClick);
+
         musicPlayer = MediaPlayer.create(this, R.raw.game_menu_music);
         musicPlayer.start();
     }
@@ -48,7 +52,9 @@ public class gameMenu extends AppCompatActivity {
                 Intent intentGraph3 = new Intent(this, gameOptions.class);
                 startActivity(intentGraph3);
                 break;
-
+            case R.id.exitButton:
+                Intent intentGraph4 = new Intent(this, MainActivity.class);
+                startActivity(intentGraph4);
             default:
                 Log.e("MainActivity", "Invalid navigation!");
         }

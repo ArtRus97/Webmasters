@@ -5,6 +5,14 @@
     <string name="shape_label">Shape:</string>
     <string name="color_label">Color:</string>
     <string name="text_hint">Text</string>
+
+    <string-array name="Colors">
+        <item>Red</item>
+        <item>Green</item>
+        <item>Yellow</item>
+        <item>Cyan</item>
+        <item>Pink</item>
+    </string-array>
     <string name="remove_text">Remove</string>
     <string name="colorLabel">Color:</string>
     <string name="priceText">Price:</string>
@@ -14,3 +22,4 @@
     <string name="cartText">CART</string>
     <string name="returnText">Return to Webmasters</string>
 </resources>
+
