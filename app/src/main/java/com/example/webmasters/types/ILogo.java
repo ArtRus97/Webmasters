@@ -1,5 +1,6 @@
 package com.example.webmasters.types;
 
+import com.example.webmasters.models.graphic_design.Shadow;
 import com.example.webmasters.models.graphic_design.Shape;
 import com.example.webmasters.models.graphic_design.Text;
 
@@ -110,4 +111,19 @@ public interface ILogo extends ICanvasDrawable {
      * @return logo shape type as ShapeType.
      */
     ShapeType getShapeType();
+
+    /**
+     * getShapeShadow returns the shadow of logo shape.
+     *
+     * @return logo shape shadow as Shadow.
+     */
+    Shadow getShapeShadow();
+
+
+    /**
+     * getTextShadow returns the shadow of logo text.
+     *
+     * @return logo text shadow as Shadow.
+     */
+    Shadow getTextShadow();
 }

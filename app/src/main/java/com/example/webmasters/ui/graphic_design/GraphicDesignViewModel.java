@@ -1,16 +1,14 @@
 package com.example.webmasters.ui.graphic_design;
 
-import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import com.example.webmasters.BR;
 import com.example.webmasters.models.graphic_design.Animation;
 import com.example.webmasters.models.graphic_design.Logo;
+import com.example.webmasters.models.graphic_design.Shadow;
 import com.example.webmasters.models.graphic_design.Shape;
 import com.example.webmasters.models.graphic_design.utils.AnimationFactory;
 import com.example.webmasters.services.FirebaseService;
-import com.example.webmasters.types.IAnimationViewModel;
 import com.example.webmasters.types.ShapeType;
 
 import java.util.ArrayList;
@@ -22,10 +20,12 @@ import java.util.stream.Collectors;
 /**
  * @author JIkaheimo (Jaakko Ikäheimo)
  */
-public class GraphicDesignViewModel extends ViewModel{
+public class GraphicDesignViewModel extends ViewModel {
+
     private final MutableLiveData<List<Boolean>> mShapeAnimationStates = new MutableLiveData<>();
     private final MutableLiveData<Logo> mLogo = new MutableLiveData<>();
     private final MutableLiveData<List<Animation>> mAnimations = new MutableLiveData<>();
+    private final MutableLiveData<List<Shadow>> mShadows = new MutableLiveData<>();
     private final MutableLiveData<List<Boolean>> mTextAnimationStates = new MutableLiveData<>();
     private final MutableLiveData<List<ShapeType>> mShapeTypes = new MutableLiveData<>();
 
@@ -44,7 +44,7 @@ public class GraphicDesignViewModel extends ViewModel{
 
     /**
      * createAnimations adds some preset animations to the view model.
-     *
+     * <p>
      * Notes: Add any preset animations here!
      */
     private void createAnimations() {
@@ -75,7 +75,7 @@ public class GraphicDesignViewModel extends ViewModel{
     }
 
     public Shape getShape() {
-        return mLogo.getValue().getShape();
+        return getLogoValue().getShape();
     }
 
     public LiveData<List<ShapeType>> getShapeTypes() {
@@ -86,6 +86,14 @@ public class GraphicDesignViewModel extends ViewModel{
         return mLogo;
     }
 
+    private Logo getLogoValue() {
+        return mLogo.getValue();
+    }
+
+
+    public LiveData<List<Shadow>> getShadows() {
+        return mShadows;
+    }
 
     public List<Animation> getAnimations() {
         return mAnimations.getValue();
@@ -103,7 +111,7 @@ public class GraphicDesignViewModel extends ViewModel{
     @Override
     protected void onCleared() {
         // Store logo to firestore.
-        (new FirebaseService()).addLogo(mLogo.getValue());
+        (new FirebaseService()).addLogo(getLogoValue());
         // Handle the actual view model clear.
         super.onCleared();
     }
@@ -111,7 +119,7 @@ public class GraphicDesignViewModel extends ViewModel{
     private void onLogoFetched(Logo logo) {
         // Create default logo if user does not have one.
         if (logo == null) {
-            logo = new Logo(){{
+            logo = new Logo() {{
                 setTextValue("Webmasters");
                 setTextX(50);
                 setTextY(50);
@@ -119,6 +127,12 @@ public class GraphicDesignViewModel extends ViewModel{
                 setShapeY(50);
             }};
         }
+
+        List<Shadow> shadows = new ArrayList<>();
+        shadows.add(logo.getShapeShadow());
+        shadows.add(logo.getTextShadow());
+
+        mShadows.postValue(shadows);
         mLogo.postValue(logo);
     }
 }

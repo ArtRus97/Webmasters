@@ -44,6 +44,7 @@ public class ShapeFactory {
         newShape.setColor(shape.getColor());
         newShape.setX(shape.getX());
         newShape.setY(shape.getY());
+        newShape.setShadow(shape.getShadow());
         return newShape;
     }
 
@@ -110,6 +111,7 @@ public class ShapeFactory {
      */
     private static Shape flower() {
         return new Shape() {
+            // Initializer.
             {
                 mType = ShapeType.FLOWER;
                 mName = "Flower";
@@ -118,14 +120,15 @@ public class ShapeFactory {
 
             @Override
             protected void onDraw(Canvas canvas, Paint paint) {
+                Path path = new Path();
                 float NUM_OVALS = 7f;
                 for (int ovalIndex = 0; ovalIndex < NUM_OVALS; ovalIndex++) {
                     double fraction = 2 * Math.PI * (ovalIndex / NUM_OVALS);
                     float y = (float) (getY() + Math.sin(fraction) * 50);
                     float x = (float) (getX() + Math.cos(fraction) * 50);
-                    canvas.drawCircle(x, y, 10, paint);
+                    path.addCircle(x, y, 10, Path.Direction.CW);
                 }
-
+                canvas.drawPath(path, paint);
             }
         };
     }
