@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -18,6 +19,7 @@ import com.example.webmasters.R;
 import com.example.webmasters.adapters.ProductAdapter;
 import com.example.webmasters.databinding.ActivityProductViewBinding;
 import com.example.webmasters.models.webstore.Product;
+import com.example.webmasters.ui.MainActivity;
 import com.example.webmasters.ui.WebStoreSingleton;
 import com.squareup.picasso.Picasso;
 
@@ -50,4 +52,13 @@ public class WebStoreActivity extends AppCompatActivity {
         startActivity(intentStore);
     }
 
+    public void openHome(MenuItem item) {
+        Intent intentStore = new Intent(this, WebStoreActivity.class);
+        startActivity(intentStore);
+    }
+
+    public void returnMain(View view) {
+        Intent intentStore = new Intent(this, MainActivity.class);
+        startActivity(intentStore);
+    }
 }

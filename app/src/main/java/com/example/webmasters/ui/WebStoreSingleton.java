@@ -45,11 +45,6 @@ public class WebStoreSingleton {
     }
 
     public void addToCart(String productId, int numItems) {
-        /*
-        for (int position=0; position <= numItems; position++)
-                cart.add(mProducts.get(productId));
-
-         */
         Gson gson = new Gson();
         Product product = mProducts.get(productId);
         CartProduct cartProduct = gson.fromJson(gson.toJson(product), CartProduct.class);

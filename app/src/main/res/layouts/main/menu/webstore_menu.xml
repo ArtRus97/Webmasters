@@ -4,11 +4,12 @@
 
     <item
         android:id="@+id/categories"
-        android:title="Categories"
-        app:showAsAction="always"/>
+        android:title="@string/homeText"
+        android:onClick="openHome"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/cart"
         android:onClick="openCart"
-        android:title="Cart"
+        android:title="@string/cartText"
         app:showAsAction="always" />
 </menu>

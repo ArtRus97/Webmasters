@@ -56,4 +56,9 @@ public class ProductActivity extends AppCompatActivity {
         Intent intentStore = new Intent(this, CartActivity.class);
         startActivity(intentStore);
     }
+
+    public void openHome(MenuItem item) {
+        Intent intentStore = new Intent(this, WebStoreActivity.class);
+        startActivity(intentStore);
+    }
 }
