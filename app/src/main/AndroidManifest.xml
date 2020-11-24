@@ -10,14 +10,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-
-
-        <activity android:name=".ui.game_activity.gameOptions" />
+        android:theme="@style/AppTheme">
+        <activity android:name=".ui.game_activity.gameOptions"></activity>
         <activity android:name=".ui.game_activity.gameShop" />
         <activity android:name=".ui.game_activity.gameMenu" />
-        <activity android:name=".ui.web_store.CartActivity" />
         <activity android:name=".ui.web_store.ProductActivity" />
         <activity android:name=".ui.web_store.WebStoreActivity" />
         <activity android:name=".ui.graphic_design.GraphicDesignActivity" />

@@ -51,15 +51,15 @@ public class gameActivity extends AppCompatActivity implements View.OnTouchListe
     //Runs the game
     private void startUpdateHandler(){
         handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                gameEngine.Update();
-                if( gameEngine.getCurrentGameState() == GameState.Running ) {
-                    handler.postDelayed(this, updateDelay);
-                }
-                if(gameEngine.getCurrentGameState() == GameState.Lost){
-                    OnGameLost();
-                }
+                @Override
+                public void run() {
+                    gameEngine.Update();
+                    if( gameEngine.getCurrentGameState() == GameState.Running ) {
+                        handler.postDelayed(this, updateDelay);
+                    }
+                    if(gameEngine.getCurrentGameState() == GameState.Lost){
+                        OnGameLost();
+                    }
 
                 snakeView.setSnakeViewMap(gameEngine.getMap());
                 snakeView.invalidate();

@@ -36,26 +36,41 @@
             android:id="@+id/playButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="155dp"
             android:layout_marginTop="33dp"
-            android:insetLeft="170dp"
+            android:background="#FF6F00"
             android:text="Play"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:iconTint="#FF6F00"
+            app:rippleColor="@color/shopButton" />
 
         <Button
             android:id="@+id/shopButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="155dp"
             android:layout_marginTop="20dp"
-            android:insetLeft="165dp"
-            android:text="Store" />
+            android:text="Store"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/optionsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="148dp"
             android:layout_marginTop="15dp"
-            android:insetLeft="155dp"
-            android:text="Options" />
+            android:text="Options"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/exitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginRight="120dp"
+            android:text="Exit"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
