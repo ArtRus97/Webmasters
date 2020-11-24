@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-<resources></resources>
-=======
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="select_logo">Select logo</string>
@@ -8,5 +5,12 @@
     <string name="shape_label">Shape:</string>
     <string name="color_label">Color:</string>
     <string name="text_hint">Text</string>
+    
+    <string-array name="Colors">
+        <item>Red</item>
+        <item>Green</item>
+        <item>Yellow</item>
+        <item>Cyan</item>
+        <item>Pink</item>
+    </string-array>
 </resources>
->>>>>>> 506176b47f1ad9a8fdd44a477762a008985d86bb

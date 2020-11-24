@@ -37,6 +37,84 @@
                 android:textStyle="bold"
                 android:typeface="normal" />
 
+            <TextView
+                android:id="@+id/lblHeadColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#73000000"
+                android:fontFamily="casual"
+                android:text="Head color"
+                android:textAlignment="center"
+                android:textColor="#FFD400"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/HeadColorPicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#F57F17"
+                android:textSize="36sp"
+                android:layout_marginLeft="145dp"
+                android:layout_marginRight="145dp" />
+
+            <Button
+                android:id="@+id/buyHeadButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="140dp"
+                android:layout_marginRight="140dp"
+                android:background="#FFFF00"
+                android:backgroundTint="#FFFF00"
+                android:text="Buy"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblBodyColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#73000000"
+                android:fontFamily="casual"
+                android:text="Body color"
+                android:textAlignment="center"
+                android:textColor="#FFD400"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/bodyColorPicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="145dp"
+                android:layout_marginRight="145dp"
+                android:textColor="#F57F17"
+                android:textSize="36sp" />
+
+            <Button
+                android:id="@+id/buyBodyButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="140dp"
+                android:layout_marginRight="140dp"
+                android:background="#FFFF00"
+                android:backgroundTint="#FFFF00"
+                android:backgroundTintMode="add"
+                android:text="Buy"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/BackButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginRight="140dp"
+                android:background="#FFFF00"
+                android:backgroundTint="#FFFF00"
+                android:backgroundTintMode="add"
+                android:text="Back"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
     </FrameLayout>
