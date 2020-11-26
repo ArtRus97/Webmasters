@@ -34,34 +34,61 @@
         android:text="Product Description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonCart" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewPic" />
 
     <TextView
         android:id="@+id/labelPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Price"
         android:textColor="@color/price_font_color"
+        android:textSize="@dimen/title_font_size"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewPic" />
+        app:layout_constraintStart_toEndOf="@+id/textViewPriceLabel"
+        app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
 
     <Button
         android:id="@+id/buttonCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:onClick="addToCart"
         android:text="Add to Cart"
-        app:layout_constraintStart_toEndOf="@+id/editTextAmount"
-        app:layout_constraintTop_toBottomOf="@+id/labelPrice" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
 
     <EditText
         android:id="@+id/editTextAmount"
         android:layout_width="50sp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="number"
         android:text="1"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCart"
+        app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
+
+    <TextView
+        android:id="@+id/textViewPriceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/priceText"
+        android:textSize="@dimen/title_font_size"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labelPrice" />
+        app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
+
+    <TextView
+        android:id="@+id/textViewAmountLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/amountText"
+        android:textSize="@dimen/title_font_size"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/editTextAmount"
+        app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>
