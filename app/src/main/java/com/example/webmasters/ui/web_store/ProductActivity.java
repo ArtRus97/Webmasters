@@ -18,7 +18,6 @@ import java.util.Objects;
 
 public class ProductActivity extends AppCompatActivity {
     String productId;
-    EditText editTextAmount;
     Product mProduct;
     ActivityProductBinding mBinding;
 
