@@ -16,6 +16,7 @@
         <activity android:name=".ui.game_activity.gameMenu" />
         <activity android:name=".ui.web_store.ProductActivity" />
         <activity android:name=".ui.web_store.WebStoreActivity" />
+        <activity android:name=".ui.web_store.CartActivity" />
         <activity android:name=".ui.graphic_design.GraphicDesignActivity" />
         <activity android:name=".ui.game_activity.gameActivity" />
         <activity android:name=".ui.MainActivity">
