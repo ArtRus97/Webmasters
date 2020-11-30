@@ -1,12 +1,13 @@
 package com.example.webmasters.ui.graphic_design;
 
+import android.app.Application;
+import android.content.Context;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import com.example.webmasters.models.graphic_design.Animation;
-import com.example.webmasters.models.graphic_design.Logo;
-import com.example.webmasters.models.graphic_design.Shadow;
-import com.example.webmasters.models.graphic_design.Shape;
+import com.example.webmasters.R;
+import com.example.webmasters.models.graphic_design.*;
 import com.example.webmasters.models.graphic_design.utils.AnimationFactory;
 import com.example.webmasters.services.FirebaseService;
 import com.example.webmasters.types.ShapeType;
@@ -21,9 +22,9 @@ import java.util.stream.Collectors;
  * @author JIkaheimo (Jaakko Ikäheimo)
  */
 public class GraphicDesignViewModel extends ViewModel {
-
     private final MutableLiveData<List<Boolean>> mShapeAnimationStates = new MutableLiveData<>();
     private final MutableLiveData<Logo> mLogo = new MutableLiveData<>();
+    private final MutableLiveData<Theme> mTheme = new MutableLiveData<>();
     private final MutableLiveData<List<Animation>> mAnimations = new MutableLiveData<>();
     private final MutableLiveData<List<Shadow>> mShadows = new MutableLiveData<>();
     private final MutableLiveData<List<Boolean>> mTextAnimationStates = new MutableLiveData<>();
@@ -35,6 +36,8 @@ public class GraphicDesignViewModel extends ViewModel {
     public GraphicDesignViewModel() {
         // Try to fetch the user logo from firestore.
         (new FirebaseService()).getLogo(this::onLogoFetched);
+        // Try to fetch the user theme from firestore.
+        (new FirebaseService()).getTheme(this::onThemeFetched);
 
         // Add different shape types.
         mShapeTypes.setValue(Arrays.stream(ShapeType.values()).collect(Collectors.toList()));
@@ -86,6 +89,8 @@ public class GraphicDesignViewModel extends ViewModel {
         return mLogo;
     }
 
+    public LiveData<Theme> getTheme() { return mTheme; }
+
     private Logo getLogoValue() {
         return mLogo.getValue();
     }
@@ -107,11 +112,16 @@ public class GraphicDesignViewModel extends ViewModel {
         return mTextAnimationStates.getValue();
     }
 
-
+    /**
+     * onCleared handles persistent storage of graphic design view
+     * model's user modifications/preferences.
+     */
     @Override
     protected void onCleared() {
         // Store logo to firestore.
-        (new FirebaseService()).addLogo(getLogoValue());
+        (new FirebaseService()).addLogo(mLogo.getValue());
+        // Store theme to firestore.
+        (new FirebaseService()).addTheme(mTheme.getValue());
         // Handle the actual view model clear.
         super.onCleared();
     }
@@ -134,5 +144,16 @@ public class GraphicDesignViewModel extends ViewModel {
 
         mShadows.postValue(shadows);
         mLogo.postValue(logo);
+    }
+
+    private void onThemeFetched(Theme theme) {
+        // Create default theme if user does not have one.
+        if (theme == null) {
+            theme = new Theme() {{
+
+            }};
+        }
+
+        mTheme.postValue(theme);
     }
 }
