@@ -3,6 +3,7 @@ package com.example.webmasters.ui.web_store;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.icu.number.Precision;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +18,10 @@ import com.example.webmasters.adapters.ProductAdapter;
 import com.example.webmasters.models.webstore.CartProduct;
 import com.example.webmasters.ui.WebStoreSingleton;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -41,11 +45,13 @@ public class CartActivity extends AppCompatActivity {
 
         TextView textViewTotal = findViewById(R.id.textViewTotal);
 
-        double total = 0.0;
+        float total = 0;
         for (int position=0; position<WebStoreSingleton.getInstance(this).getCart().size(); position++) {
             total = total + WebStoreSingleton.getInstance(this).getCart().get(position).getPrice();
         }
-        textViewTotal.setText(Double.toString(total));
+        BigDecimal totalD = BigDecimal.valueOf(total);
+        totalD = totalD.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        textViewTotal.setText(totalD.toString());
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
