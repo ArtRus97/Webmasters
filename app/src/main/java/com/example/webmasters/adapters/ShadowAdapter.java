@@ -10,7 +10,8 @@ import com.example.webmasters.models.graphic_design.Shadow;
 import java.util.List;
 
 public class ShadowAdapter extends RecyclerView.Adapter<ShadowViewHolder> {
-    private final List<Shadow> mShadows;
+    private List<Shadow> mShadows;
+    private Integer mTextColor = null;
 
     public ShadowAdapter(List<Shadow> shadows) {
         mShadows = shadows;
@@ -27,11 +28,24 @@ public class ShadowAdapter extends RecyclerView.Adapter<ShadowViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ShadowViewHolder holder, int position) {
         holder.setShadow(mShadows.get(position));
+
+        if (mTextColor != null)
+            holder.setTextColor(mTextColor);
     }
 
     @Override
     public int getItemCount() {
         return mShadows.size();
+    }
+
+    public void setShadows(List<Shadow> shadows) {
+        mShadows = shadows;
+        notifyDataSetChanged();
+    }
+
+    public void setTextColor(int color) {
+        mTextColor = color;
+        notifyDataSetChanged();
     }
 }
 
@@ -41,6 +55,14 @@ class ShadowViewHolder extends RecyclerView.ViewHolder {
     public ShadowViewHolder(ListItemShadowBinding binding) {
         super(binding.getRoot());
         mBinding = binding;
+    }
+
+    void setTextColor(int color) {
+        mBinding.labelColor.setTextColor(color);
+        mBinding.labelName.setTextColor(color);
+        mBinding.labelXPosition.setTextColor(color);
+        mBinding.labelYPosition.setTextColor(color);
+        mBinding.executePendingBindings();
     }
 
     void setShadow(Shadow shadow) {

@@ -68,17 +68,13 @@ public class ColorButton extends MaterialButton implements LifecycleOwner {
             setBackgroundColor(color);
             setText(Integer.toHexString(color));
 
-            Color colorTemp = Color.valueOf(color);
-
-            // Counting the perceptive luminance - human eye favors green color...
+            // Update button text color based on the background color.
             float luminance =
                     (
                         (0.299f * Color.red(color)) +
-                        (0.587f * Color.green(color)) +
+                        (0.587f * Color.green(color)) + // Human eye favors green.
                         (0.114f * Color.blue(color))
                     ) / 255f;
-            Log.d("ASD", luminance+"");
-
             setTextColor(luminance > 0.5 ? Color.BLACK : Color.WHITE);
         });
     }

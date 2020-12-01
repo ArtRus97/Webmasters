@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.webmasters.R;
 import com.example.webmasters.databinding.ViewExtendedCardBinding;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textview.MaterialTextView;
 
 /**
  * ExtendedCardView extends MaterialCardView with some additional features.

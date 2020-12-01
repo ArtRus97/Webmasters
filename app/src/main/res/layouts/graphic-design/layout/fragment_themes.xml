@@ -1,27 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="model"
             type="com.example.webmasters.ui.graphic_design.GraphicDesignViewModel" />
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:background="@{model.theme.backgroundColor}"
-    android:layout_height="match_parent"
-    tools:context=".ui.graphic_design.ThemesFragment">
 
-    <com.example.webmasters.ui.shared.ColorButton
-        app:color="@={model.theme.backgroundColor}"
-        android:id="@+id/colorButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutThemes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@{model.theme.backgroundColor}"
+        tools:context=".ui.graphic_design.ThemesFragment">
+
+        <com.example.webmasters.ui.shared.ExtendedCardView
+            android:id="@+id/cardColors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="Colors">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutColors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/labelBackgroundColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Background:"
+                    android:textColor="@{model.theme.textColor}"
+                    app:layout_constraintBottom_toBottomOf="@+id/buttonBackgroundColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/buttonBackgroundColor" />
+
+                <com.example.webmasters.ui.shared.ColorButton
+                    android:id="@+id/buttonBackgroundColor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:color="@={model.theme.backgroundColor}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/labelBackgroundColor"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/labelTextColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Text:"
+                    android:textColor="@{model.theme.textColor}"
+                    app:layout_constraintBottom_toBottomOf="@+id/buttonTextColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/buttonTextColor" />
+
+
+                <com.example.webmasters.ui.shared.ColorButton
+                    android:id="@+id/buttonTextColor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:color="@={model.theme.textColor}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/buttonBackgroundColor"
+                    app:layout_constraintTop_toBottomOf="@id/buttonBackgroundColor" />
+
+                <TextView
+                    android:id="@+id/labelForegroundColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Foreground:"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonTextColor" />
+
+                <com.example.webmasters.ui.shared.ColorButton
+                    android:id="@+id/buttonForegroundColor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/buttonTextColor"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonTextColor" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.example.webmasters.ui.shared.ExtendedCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
