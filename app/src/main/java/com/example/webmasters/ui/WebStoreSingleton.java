@@ -1,12 +1,10 @@
 package com.example.webmasters.ui;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.example.webmasters.models.webstore.CartProduct;
 import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.services.FirebaseService;
-import com.example.webmasters.ui.web_store.CartActivity;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -19,7 +17,6 @@ public class WebStoreSingleton {
     private static WebStoreSingleton mInstance = null;
     public final HashMap<String, Product> mProducts = new HashMap<>();
     public final HashMap<String, CartProduct> mCart = new HashMap<>();
-    public ArrayList<Product> cart = new ArrayList<>();
 
     // private constructor restricted to this class itself
     private WebStoreSingleton(Context context) {
