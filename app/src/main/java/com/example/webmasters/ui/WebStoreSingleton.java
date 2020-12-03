@@ -49,8 +49,18 @@ public class WebStoreSingleton {
         mCart.put(productId, cartProduct);
     }
 
+    public void addToCartD(String productId, int numItems) {
+        HashMap<String, String> cartItem = new HashMap<>();
+        cartItem.put("productId", productId);
+        cartItem.put("amount", Integer.toString(numItems));
+        (new FirebaseService()).addToCart(cartItem);
+    }
+
     public List<CartProduct> getCart() {
         return new ArrayList<>(mCart.values());
+    }
+
+    public void getCartD(Consumer<List<Product>> handler) {
     }
 
     // static method to create instance of Singleton class
