@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.example.webmasters.models.graphic_design.Logo;
 import com.example.webmasters.models.graphic_design.Shape;
 import com.example.webmasters.models.graphic_design.utils.ShapeFactory;
+import com.example.webmasters.models.webstore.CartProduct;
 import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.types.ILogo;
 import com.example.webmasters.types.ShapeType;
@@ -18,6 +19,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -63,5 +65,15 @@ public class FirebaseService {
                 callback.accept(productList);
             }
         });
+    }
+
+    public void addToCart(HashMap cartItem) {
+        mFirestore
+                .collection("cart")
+                .document(getUser())
+                .set(cartItem);
+    }
+
+    public void getCart(Consumer<List<Product>> callback) {
     }
 }

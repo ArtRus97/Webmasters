@@ -47,7 +47,7 @@ public class ProductActivity extends AppCompatActivity {
 
     public void addToCart(View view) {
         int numItems = Integer.parseInt(mBinding.editTextAmount.getText().toString());
-        WebStoreSingleton.getInstance(this).addToCart(mProduct.getId(), numItems);
+        WebStoreSingleton.getInstance(this).addToCartD(mProduct.getId(), numItems);
     }
 
     public void openCart(MenuItem item) {
