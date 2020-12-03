@@ -3,7 +3,6 @@ package com.example.webmasters.ui.web_store;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.number.Precision;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,9 +18,7 @@ import com.example.webmasters.models.webstore.CartProduct;
 import com.example.webmasters.ui.WebStoreSingleton;
 
 import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class CartActivity extends AppCompatActivity {
 
