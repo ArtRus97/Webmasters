@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.example.webmasters.models.graphic_design.Logo;
 import com.example.webmasters.models.graphic_design.Shape;
 import com.example.webmasters.models.graphic_design.utils.ShapeFactory;
+import com.example.webmasters.models.webstore.CartItem;
 import com.example.webmasters.models.webstore.CartProduct;
 import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.types.ILogo;
@@ -14,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -67,13 +69,30 @@ public class FirebaseService {
         });
     }
 
-    public void addToCart(HashMap cartItem) {
+    public void addToCart(CartProduct cartProduct) {
         mFirestore
-                .collection("cart")
-                .document(getUser())
-                .set(cartItem);
+                .collection(getUser())
+                .document(cartProduct.getId())
+                .set(cartProduct);
     }
 
-    public void getCart(Consumer<List<Product>> callback) {
+    public void removeFromCart(String productId) {
+        mFirestore
+                .collection(getUser())
+                .document(productId)
+                .delete();
+    }
+
+    public void getCart(Consumer<List<CartProduct>> callback) {
+        mFirestore.collection(getUser()).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                List<CartProduct> cartList = new ArrayList<>();
+                for (DocumentSnapshot document : task.getResult()) {
+                    CartProduct cartProduct = document.toObject(CartProduct.class);
+                    cartList.add(cartProduct);
+                }
+                callback.accept(cartList);
+            }
+        });
     }
 }
