@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> holder.handleClick()}"
+        android:onClick="@{() -> holder.onSelect()}"
         android:padding="10dp"
         tools:context=".ui.web_store.ProductActivity">
 
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/cardview_dark_background"
-            android:onClick="@{() -> holder.removeClick()}"
+            android:onClick="@{() -> holder.onRemove()}"
             android:text="@string/removeText"
             android:textColor="@android:color/white"
             android:visibility="gone"

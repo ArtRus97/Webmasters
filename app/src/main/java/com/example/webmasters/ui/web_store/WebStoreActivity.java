@@ -30,7 +30,7 @@ public class WebStoreActivity extends AppCompatActivity {
         RecyclerView recyclerViewProducts = findViewById(R.id.recyclerViewProducts);
 
         recyclerViewProducts.setLayoutManager(new LinearLayoutManager(this));
-        WebStoreSingleton.getInstance(this).getProducts(products -> {
+        WebStoreSingleton.getInstance().getProducts(products -> {
             recyclerViewAdapter = new ProductAdapter(this, products);
             recyclerViewProducts.setAdapter(recyclerViewAdapter);
         });

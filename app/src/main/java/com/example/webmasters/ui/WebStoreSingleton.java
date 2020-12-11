@@ -2,6 +2,7 @@ package com.example.webmasters.ui;
 
 import android.content.Context;
 
+import android.util.Log;
 import com.example.webmasters.models.webstore.CartItem;
 import com.example.webmasters.models.webstore.CartProduct;
 import com.example.webmasters.models.webstore.Product;
@@ -12,75 +13,114 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collector;
 
 public class WebStoreSingleton {
-    // static variable single_instance of type Singleton
+    final private String TAG = "WebStoreSingleton";
     private static WebStoreSingleton mInstance = null;
-    public final HashMap<String, Product> mProducts = new HashMap<>();
-    public final HashMap<String, CartProduct> mCart = new HashMap<>();
+    private final List<Product> mProducts = new ArrayList<>();
+    private List<CartProduct> mCart = null;
+    private FirebaseService mFirebase = new FirebaseService();
 
-    // private constructor restricted to this class itself
-    private WebStoreSingleton(Context context) {
+    // Private constructor to restrict instances of this class.
+    private WebStoreSingleton() {
     }
 
-    public void getProducts(Consumer<List<Product>> handler) {
-        // Fetch products from database if they have not been fetched.
+    /**
+     * getProducts reads all available products from the database.
+     *
+     * @param callback being called after products data is available.
+     */
+    public void getProducts(Consumer<List<Product>> callback) {
         if (mProducts.isEmpty()) {
-            (new FirebaseService()).getProducts(products -> {
-                for (Product product : products)
-                    mProducts.put(product.getId(), product);
-                handler.accept(new ArrayList<>(mProducts.values()));
+            // Fetch products from database if they have not been fetched.
+            mFirebase.getProducts(products -> {
+                mProducts.addAll(products);
+                callback.accept(mProducts);
             });
+        } else {
+            // In case products have been already fetched.
+            callback.accept(mProducts);
         }
-        // Otherwise just return products.
-        else
-            handler.accept(new ArrayList<>(mProducts.values()));
-
     }
 
-    public Product getProduct(String id) {
-        return mProducts.get(id);
-    }
 
-    public void addToCart(String productId, int numItems) {
-        Gson gson = new Gson();
-        Product product = mProducts.get(productId);
-        CartProduct cartProduct = gson.fromJson(gson.toJson(product), CartProduct.class);
-        cartProduct.setAmount(numItems);
-        mCart.put(productId, cartProduct);
-    }
-
-    public void addToCartD(String productId, int numItems) {
-        Gson gson = new Gson();
-        Product product = mProducts.get(productId);
-        CartProduct cartProduct = gson.fromJson(gson.toJson(product), CartProduct.class);
-        cartProduct.setAmount(numItems);
-        mCart.put(productId, cartProduct);
-        (new FirebaseService()).addToCart(cartProduct);
-    }
-
-    public void removeFromCart(String productId) {
-        mCart.remove(productId);
-        (new FirebaseService()).removeFromCart(productId);
-    }
-
-    public List<CartProduct> getCart() {
-        return new ArrayList<>(mCart.values());
-    }
-
-    public void getCartD(Consumer<List<CartProduct>> handler) {
-        (new FirebaseService()).getCart(cart -> {
-            for (CartProduct cartProduct : cart)
-                mCart.put(cartProduct.getId(), cartProduct);
-            handler.accept(new ArrayList<>(mCart.values()));
+    public void addToCart(String productId, int numItems, Consumer<CartProduct> callback) {
+        getCartProduct(productId, cartProduct -> {
+            // Create new card product based on the id if one does not exist.
+            if (cartProduct == null) {
+                Log.d(TAG, "Adding a new product into shopping cart...");
+                // Convert product to CartProduct.
+                Gson gson = new Gson();
+                Product product = getProduct(productId);
+                cartProduct = gson.fromJson(gson.toJson(product), CartProduct.class);
+                // Add new product.
+                mCart.add(cartProduct);
+            } else {
+                Log.d(TAG, "Product has been already added into shopping cart!");
+            }
+            // Update the number of items.
+            cartProduct.setAmount(numItems + cartProduct.getAmount());
+            // Store new cart product to database.
+            mFirebase.addToCart(cartProduct, product -> {
+                if (callback != null) callback.accept(product);
+            });
         });
     }
 
+    public void removeFromCart(Product product, Consumer<Integer> callback) {
+        mFirebase.removeFromCart((CartProduct)product, removedProduct -> {
+            int position = mCart.indexOf(product);
+            mCart.remove(removedProduct);
+            if (callback != null) callback.accept(position);
+        });
+    }
+
+    public void clearCart(Consumer<Void> callback) {
+        mCart.forEach(product -> {
+            removeFromCart(product, product1 -> {
+                if (mCart.isEmpty()) callback.accept(null);
+            });
+        });
+    }
+
+    public final void getCart(Consumer<List<CartProduct>> handler) {
+        if (mCart == null) {
+            mCart = new ArrayList<>();
+            mFirebase.getCart(cartProducts -> {
+                mCart.addAll(cartProducts);
+                handler.accept(mCart);
+            });
+        } else {
+            handler.accept(mCart);
+        }
+    }
+
+    public Product getProduct(String productId) {
+        return mProducts
+                .stream()
+                .filter(product -> product.getId().equals(productId))
+                .findFirst()
+                .orElse(null);
+    }
+
+
+    public void getCartProduct(String productId, Consumer<CartProduct> callback) {
+        getCart(cartProducts -> {
+            CartProduct cartProduct = cartProducts.stream()
+                    .filter(product -> product.getId().equals(productId))
+                    .findFirst()
+                    .orElse(null);
+            callback.accept(cartProduct);
+        });
+    }
+
+
     // static method to create instance of Singleton class
-    public static synchronized WebStoreSingleton getInstance(Context context) {
+    public static synchronized WebStoreSingleton getInstance() {
         // To ensure only one instance is created
         if (mInstance == null)
-            mInstance = new WebStoreSingleton(context);
+            mInstance = new WebStoreSingleton();
         return mInstance;
     }
 }

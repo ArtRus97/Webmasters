@@ -3,6 +3,7 @@ package com.example.webmasters.ui.web_store;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,28 +17,28 @@ import com.squareup.picasso.Picasso;
 import java.util.Objects;
 
 public class ProductActivity extends AppCompatActivity {
-    String productId;
-    Product mProduct;
-    ActivityProductBinding mBinding;
+    private Product mProduct;
+    private ActivityProductBinding mBinding;
+    private WebStoreSingleton mWebstoreServices = null;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = ActivityProductBinding.inflate(getLayoutInflater());
-        Intent intent = getIntent();
-        productId = Objects.requireNonNull(intent.getExtras()).getString("productId");
-        mProduct = WebStoreSingleton.getInstance(this).getProduct(productId);
 
-        mBinding.labelTitle.setText(mProduct.getName());
-        mBinding.labelDescription.setText(mProduct.getDescription());
-        mBinding.labelPrice.setText(mProduct.getPrice() + "");
+        mBinding = ActivityProductBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
+
+        Intent intent = getIntent();
+        String productId = Objects.requireNonNull(intent.getExtras()).getString("productId");
+        mWebstoreServices = WebStoreSingleton.getInstance();
+        mProduct = mWebstoreServices.getProduct(productId);
+
 
         // Display product image from URL if one is available.
         if (!mProduct.getImageUrl().isEmpty())
             Picasso.get().load(mProduct.getImageUrl()).into(mBinding.imageViewPic);
 
-        setContentView(mBinding.getRoot());
+        mBinding.setProduct(mProduct);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,9 +46,8 @@ public class ProductActivity extends AppCompatActivity {
         return true;
     }
 
-    public void addToCart(View view) {
-        int numItems = Integer.parseInt(mBinding.editTextAmount.getText().toString());
-        WebStoreSingleton.getInstance(this).addToCartD(mProduct.getId(), numItems);
+    public void onAddToCart(View view) {
+        mWebstoreServices.addToCart(mProduct.getId(), getNumberOfItems(), null);
     }
 
     public void openCart(MenuItem item) {
@@ -58,5 +58,9 @@ public class ProductActivity extends AppCompatActivity {
     public void openHome(MenuItem item) {
         Intent intentStore = new Intent(this, WebStoreActivity.class);
         startActivity(intentStore);
+    }
+
+    private int getNumberOfItems() {
+        return Integer.parseInt(mBinding.editTextAmount.getText().toString());
     }
 }

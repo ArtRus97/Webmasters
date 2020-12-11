@@ -21,5 +21,12 @@
     <string name="homeText">HOME</string>
     <string name="cartText">CART</string>
     <string name="returnText">Return to Webmasters</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="price">Price</string>
+    <string name="product_description">Product Description</string>
+    <string name="product_title">Product Title</string>
+    <string name="image_of_the_selected_product">Image of the selected product.</string>
+    <string name="total_price">Total price:</string>
+    <string name="purchase">Purchase</string>
 </resources>
 
