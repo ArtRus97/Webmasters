@@ -1,62 +1,43 @@
 package com.example.webmasters.ui.web_store;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import com.example.webmasters.R;
 import com.example.webmasters.adapters.ProductAdapter;
+import com.example.webmasters.databinding.ActivityCartBinding;
 import com.example.webmasters.models.webstore.CartProduct;
-import com.example.webmasters.ui.WebStoreSingleton;
+import com.example.webmasters.models.webstore.Product;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
-
-    @SuppressLint("StaticFieldLeak")
-    private static Context context;
+    WebStoreSingleton webstoreServices;
     ProductAdapter recyclerViewAdapter;
+    ActivityCartBinding mBinding = null;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
-        RecyclerView recyclerViewProducts = findViewById(R.id.recyclerViewCart);
 
-        context = this;
+        mBinding = ActivityCartBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
 
-        recyclerViewProducts.setLayoutManager(new LinearLayoutManager(this));
+        webstoreServices = WebStoreSingleton.getInstance();
 
-        /*
-        List<CartProduct> cartProducts = WebStoreSingleton.getInstance(this).getCartD();
-        recyclerViewAdapter = new ProductAdapter(this, cartProducts);
-        recyclerViewProducts.setAdapter(recyclerViewAdapter);
-         */
+        mBinding.recyclerViewCart.setLayoutManager(new LinearLayoutManager(this));
 
-        WebStoreSingleton.getInstance(this).getCartD(cart -> {
+        webstoreServices.getCart(cart -> {
             recyclerViewAdapter = new ProductAdapter(this, cart);
-            recyclerViewProducts.setAdapter(recyclerViewAdapter);
+            recyclerViewAdapter.setRemoveHandler(this::removeProduct);
+            mBinding.recyclerViewCart.setAdapter(recyclerViewAdapter);
+            calculateTotal();
         });
 
-        TextView textViewTotal = findViewById(R.id.textViewTotal);
-
-        float total = 0;
-        for (int position=0; position<WebStoreSingleton.getInstance(this).getCart().size(); position++) {
-            total = total + WebStoreSingleton.getInstance(this).getCart().get(position).getPrice();
-        }
-        BigDecimal totalD = BigDecimal.valueOf(total);
-        totalD = totalD.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-        textViewTotal.setText(totalD.toString());
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,15 +55,30 @@ public class CartActivity extends AppCompatActivity {
         startActivity(intentStore);
     }
 
-    public void refresh() {
-        finish();
-        startActivity(getIntent());
+    public void removeProduct(Product product) {
+        webstoreServices.removeFromCart(product, (Integer position) -> {
+            recyclerViewAdapter.notifyDataSetChanged();
+            calculateTotal();
+        });
     }
 
-    public static void removeProduct(String productId) {
-        Toast toast = Toast.makeText(context, "Removed: " + WebStoreSingleton.getInstance(context).mCart.get(productId).getName(),Toast.LENGTH_SHORT);
-        //WebStoreSingleton.getInstance(context).mCart.remove(productId);
-        WebStoreSingleton.getInstance(context).removeFromCart(productId);
-        toast.show();
+    public void onPurchase(View view) {
+        webstoreServices.clearCart(unused -> {
+            recyclerViewAdapter.notifyDataSetChanged();
+            calculateTotal();
+        });
+    }
+
+    private void calculateTotal() {
+        webstoreServices.getCart(cartProducts -> {
+            double total = cartProducts.stream()
+                    .mapToDouble(CartProduct::getPrice)
+                    .reduce(Double::sum)
+                    .orElse(0);
+
+            BigDecimal totalD = BigDecimal.valueOf(total);
+            totalD = totalD.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+            mBinding.textViewTotal.setText(totalD.toString());
+        });
     }
 }

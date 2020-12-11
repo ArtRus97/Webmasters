@@ -21,5 +21,23 @@
     <string name="homeText">HOME</string>
     <string name="cartText">CART</string>
     <string name="returnText">Return to Webmasters</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="price">Price</string>
+    <string name="product_description">Product Description</string>
+    <string name="product_title">Product Title</string>
+    <string name="image_of_the_selected_product">Image of the selected product.</string>
+    <string name="total_price">Total price:</string>
+    <string name="purchase">Purchase</string>
+    <string name="animation_help_info">Select by clicking, enable by checking:</string>
+    <string name="game">Game</string>
+    <string name="graphic_design">Graphic Design</string>
+    <string name="webstore">Webstore</string>
+    <string name="share">Share</string>
+    <string name="browse">Browse</string>
+    <string name="body_color">Body color</string>
+    <string name="buy">Buy</string>
+    <string name="head_color">Head color</string>
+    <string name="shop">Shop</string>
+    <string name="back">Back</string>
 </resources>
 

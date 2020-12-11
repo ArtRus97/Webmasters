@@ -7,6 +7,8 @@
 
         <import type="android.content.Context" />
 
+        <import type="android.graphics.Color" />
+
         <import type="android.view.View" />
 
         <import type="com.example.webmasters.models.graphic_design.Text" />
@@ -25,6 +27,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@{model.theme.backgroundColor}"
         android:id="@+id/layoutMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -88,6 +91,7 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:textColor="@{model.theme.textColor}"
                                 android:id="@+id/editTextValue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -99,7 +103,8 @@
 
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
+                            android:textColor="@{model.theme.textColor}"
                             android:id="@+id/labelTextSize"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -134,7 +139,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
-                            android:backgroundTint="@color/colorAccent"
                             app:color="@={model.logo.textColor}"
                             app:layout_constraintBottom_toBottomOf="@+id/labelTextColor"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -142,6 +146,7 @@
                             app:layout_constraintTop_toTopOf="@+id/labelTextColor" />
 
                         <com.google.android.material.textview.MaterialTextView
+                            android:textColor="@{model.theme.textColor}"
                             android:id="@+id/labelTextColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -151,7 +156,8 @@
                             app:layout_constraintStart_toStartOf="@+id/layoutTextValue"
                             app:layout_constraintTop_toBottomOf="@+id/layoutTextValue" />
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
+                            android:textColor="@{model.theme.textColor}"
                             android:id="@+id/labelTextX"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -172,9 +178,9 @@
                             app:layout_constraintEnd_toStartOf="@+id/labelTextY"
                             app:layout_constraintStart_toEndOf="@+id/labelTextX" />
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
+                            android:textColor="@{model.theme.textColor}"
                             android:id="@+id/labelTextY"
-
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{LogoConverter.formatY(model.logo.textY)}"
@@ -195,7 +201,8 @@
                             app:layout_constraintStart_toEndOf="@+id/labelTextY"
                             app:layout_constraintTop_toTopOf="@+id/labelTextY" />
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
+                            android:textColor="@{model.theme.textColor}"
                             android:id="@+id/labelTypeface"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -254,7 +261,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
+                            android:textColor="@{model.theme.textColor}"
                             android:id="@+id/labelShapeType"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -277,6 +285,7 @@
                             app:layout_constraintTop_toTopOf="@+id/labelShapeType" />
 
                         <com.google.android.material.textview.MaterialTextView
+                            android:textColor="@{model.theme.textColor}"
                             android:id="@+id/labelShapeScale"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -299,6 +308,7 @@
                             tools:targetApi="o" />
 
                         <com.google.android.material.textview.MaterialTextView
+                            android:textColor="@{model.theme.textColor}"
                             android:id="@+id/labelShapeX"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -320,6 +330,7 @@
                             app:layout_constraintTop_toTopOf="@+id/labelShapeX" />
 
                         <com.google.android.material.textview.MaterialTextView
+                            android:textColor="@{model.theme.textColor}"
                             android:id="@+id/labelShapeY"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -347,14 +358,14 @@
                             android:id="@+id/buttonShapeColor"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            app:backgroundTint="@color/colorAccent"
                             app:color="@={model.logo.shapeColor}"
                             app:layout_constraintBottom_toBottomOf="@+id/labelShapeColor"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/spinnerShapeType"
                             app:layout_constraintTop_toTopOf="@+id/labelShapeColor" />
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
+                            android:textColor="@{model.theme.textColor}"
                             android:id="@+id/labelShapeColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -382,6 +393,7 @@
                     android:layout_height="12dp" />
 
                 <com.example.webmasters.ui.graphic_design.containers.ShadowControlsCard
+                    app:textColor="@{model.theme.textColor}"
                     android:layout_width="match_parent"
                     app:shadows="@{model.shadows}"
                     android:layout_height="wrap_content" />

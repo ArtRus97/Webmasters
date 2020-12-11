@@ -4,11 +4,14 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.view.View;
 
+/**
+ * Utils groups some utility functions with no place elsewhere.
+ */
 public class Utils {
-    static public Number minmax(Number value, Number minimum, Number maximum) {
-        return Math.max(minimum.doubleValue(), Math.min(value.doubleValue(), maximum.doubleValue()));
-    }
 
+    /**
+     * animateView is used to animate view's visibility (Code was provided by some expert in StackOverflow)
+     */
     public static void animateView(final View view, final int toVisibility, float toAlpha, int duration) {
         boolean show = toVisibility == View.VISIBLE;
         if (show) {

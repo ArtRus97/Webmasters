@@ -2,7 +2,6 @@ package com.example.webmasters.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.webmasters.R;
@@ -21,21 +20,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
 
-        // Setup view callbacks.
-        binding.buttonGraphicDesign.setOnClickListener(this::onNavigationClick);
-        binding.buttonWebStore.setOnClickListener((this::onNavigationClick));
-        binding.buttonGame.setOnClickListener(this::onNavigationClick);
-
+        // Use anonymous sign in when using firebase.
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
             mAuth.signInAnonymously();
         }
 
+        // Display logo
         binding.getRoot().post(() -> {
+            // Get the boundaries of logo view.
             int xBoundary = binding.logoView.getWidth();
             int yBoundary = binding.logoView.getHeight();
 
+            // Display custom logo in the logo view.
             binding.setLogo(new Logo() {{
                 setTextValue("Webmasters");
                 setTextX(2 * xBoundary / 3);
@@ -50,24 +48,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
     }
 
-    private void onNavigationClick(View view) {
+    /**
+     * onNavigationClick handles the navigation between different parts of the application.
+     *
+     * @param view (View) navigation button getting clicked.
+     */
+    public void onNavigationClick(View view) {
+        Intent intent;
         switch (view.getId()) {
-            // Navigate to graphic design activity.
             case R.id.buttonGraphicDesign:
-                Intent intentGraph = new Intent(this, GraphicDesignActivity.class);
-                startActivity(intentGraph);
+                intent = new Intent(this, GraphicDesignActivity.class);
                 break;
             case R.id.buttonWebStore:
-                Intent intentStore = new Intent(this, WebStoreActivity.class);
-                startActivity(intentStore);
+                intent = new Intent(this, WebStoreActivity.class);
                 break;
             case R.id.buttonGame:
-                Intent intentGame = new Intent(this, gameMenu.class);
-                startActivity(intentGame);
+                intent = new Intent(this, gameMenu.class);
                 break;
             default:
-                Log.e("MainActivity", "Invalid navigation!");
+                return;
+
         }
+        startActivity(intent);
     }
 
 

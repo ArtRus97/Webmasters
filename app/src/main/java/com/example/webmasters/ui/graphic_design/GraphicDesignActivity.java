@@ -2,6 +2,9 @@ package com.example.webmasters.ui.graphic_design;
 
 import android.os.Bundle;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import androidx.annotation.NonNull;
 import com.example.webmasters.R;
 import com.example.webmasters.ui.shared.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,6 +34,5 @@ public class GraphicDesignActivity extends BaseActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
-    
 
 }

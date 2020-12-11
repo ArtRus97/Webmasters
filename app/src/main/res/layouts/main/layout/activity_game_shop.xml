@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
                 android:fontFamily="casual"
-                android:text="Shop"
+                android:text="@string/shop"
                 android:textAlignment="center"
                 android:textColor="#FFAA00"
                 android:textSize="80sp"
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:background="#73000000"
                 android:fontFamily="casual"
-                android:text="Head color"
+                android:text="@string/head_color"
                 android:textAlignment="center"
                 android:textColor="#FFD400"
                 android:textSize="36sp"
@@ -66,7 +66,7 @@
                 android:layout_marginRight="140dp"
                 android:background="#FFFF00"
                 android:backgroundTint="#FFFF00"
-                android:text="Buy"
+                android:text="@string/buy"
                 android:textStyle="bold" />
 
             <TextView
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:background="#73000000"
                 android:fontFamily="casual"
-                android:text="Body color"
+                android:text="@string/body_color"
                 android:textAlignment="center"
                 android:textColor="#FFD400"
                 android:textSize="36sp"
@@ -99,7 +99,7 @@
                 android:background="#FFFF00"
                 android:backgroundTint="#FFFF00"
                 android:backgroundTintMode="add"
-                android:text="Buy"
+                android:text="@string/buy"
                 android:textStyle="bold" />
 
             <Button
@@ -112,7 +112,7 @@
                 android:background="#FFFF00"
                 android:backgroundTint="#FFFF00"
                 android:backgroundTintMode="add"
-                android:text="Back"
+                android:text="@string/back"
                 android:textStyle="bold" />
 
         </LinearLayout>

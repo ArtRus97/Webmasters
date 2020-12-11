@@ -1,19 +1,16 @@
 package com.example.webmasters.ui.web_store;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.webmasters.R;
 import com.example.webmasters.adapters.ProductAdapter;
 import com.example.webmasters.ui.MainActivity;
-import com.example.webmasters.ui.WebStoreSingleton;
 
 public class WebStoreActivity extends AppCompatActivity {
 
@@ -26,7 +23,7 @@ public class WebStoreActivity extends AppCompatActivity {
         RecyclerView recyclerViewProducts = findViewById(R.id.recyclerViewProducts);
 
         recyclerViewProducts.setLayoutManager(new LinearLayoutManager(this));
-        WebStoreSingleton.getInstance(this).getProducts(products -> {
+        WebStoreSingleton.getInstance().getProducts(products -> {
             recyclerViewAdapter = new ProductAdapter(this, products);
             recyclerViewProducts.setAdapter(recyclerViewAdapter);
         });

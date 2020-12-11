@@ -11,11 +11,13 @@ import com.example.webmasters.databinding.CardShadowControlsBinding;
 import com.example.webmasters.models.graphic_design.Shadow;
 import com.example.webmasters.ui.shared.ExtendedCardView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShadowControlsCard extends ExtendedCardView {
     private final String TITLE = "Shadows";
     private final CardShadowControlsBinding mBinding;
+    private ShadowAdapter mAdapter;
 
     public ShadowControlsCard(Context context) {
         this(context, null);
@@ -33,6 +35,10 @@ public class ShadowControlsCard extends ExtendedCardView {
         recycler().setHasFixedSize(true);
         recycler().setLayoutManager(new LinearLayoutManager(recycler().getContext()));
 
+        // Create adapter.
+        mAdapter = new ShadowAdapter(new ArrayList<>());
+        recycler().setAdapter(mAdapter);
+
         // Set default attributes.
         setTitle(TITLE);
     }
@@ -44,6 +50,10 @@ public class ShadowControlsCard extends ExtendedCardView {
 
     public void setShadows(List<Shadow> shadows) {
         if (shadows == null) return;
-        recycler().setAdapter(new ShadowAdapter(shadows));
+        mAdapter.setShadows(shadows);
+    }
+
+    public void setTextColor(int color) {
+        mAdapter.setTextColor(color);
     }
 }
