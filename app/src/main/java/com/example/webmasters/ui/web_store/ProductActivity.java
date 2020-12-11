@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.webmasters.R;
 import com.example.webmasters.databinding.ActivityProductBinding;
@@ -48,7 +47,7 @@ public class ProductActivity extends AppCompatActivity {
 
     public void addToCart(View view) {
         int numItems = Integer.parseInt(mBinding.editTextAmount.getText().toString());
-        WebStoreSingleton.getInstance(this).addToCart(mProduct.getId(), numItems);
+        WebStoreSingleton.getInstance(this).addToCartD(mProduct.getId(), numItems);
     }
 
     public void openCart(MenuItem item) {

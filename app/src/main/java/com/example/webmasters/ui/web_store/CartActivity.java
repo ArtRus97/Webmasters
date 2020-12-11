@@ -3,7 +3,6 @@ package com.example.webmasters.ui.web_store;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.number.Precision;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,9 +18,7 @@ import com.example.webmasters.models.webstore.CartProduct;
 import com.example.webmasters.ui.WebStoreSingleton;
 
 import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -39,9 +36,17 @@ public class CartActivity extends AppCompatActivity {
         context = this;
 
         recyclerViewProducts.setLayoutManager(new LinearLayoutManager(this));
-        List<CartProduct> cartProducts = WebStoreSingleton.getInstance(this).getCart();
+
+        /*
+        List<CartProduct> cartProducts = WebStoreSingleton.getInstance(this).getCartD();
         recyclerViewAdapter = new ProductAdapter(this, cartProducts);
         recyclerViewProducts.setAdapter(recyclerViewAdapter);
+         */
+
+        WebStoreSingleton.getInstance(this).getCartD(cart -> {
+            recyclerViewAdapter = new ProductAdapter(this, cart);
+            recyclerViewProducts.setAdapter(recyclerViewAdapter);
+        });
 
         TextView textViewTotal = findViewById(R.id.textViewTotal);
 
@@ -76,8 +81,8 @@ public class CartActivity extends AppCompatActivity {
 
     public static void removeProduct(String productId) {
         Toast toast = Toast.makeText(context, "Removed: " + WebStoreSingleton.getInstance(context).mCart.get(productId).getName(),Toast.LENGTH_SHORT);
-        WebStoreSingleton.getInstance(context).mCart.remove(productId);
+        //WebStoreSingleton.getInstance(context).mCart.remove(productId);
+        WebStoreSingleton.getInstance(context).removeFromCart(productId);
         toast.show();
-
     }
 }

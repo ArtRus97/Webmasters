@@ -1,12 +1,11 @@
 package com.example.webmasters.ui;
 
 import android.content.Context;
-import android.content.Intent;
 
+import com.example.webmasters.models.webstore.CartItem;
 import com.example.webmasters.models.webstore.CartProduct;
 import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.services.FirebaseService;
-import com.example.webmasters.ui.web_store.CartActivity;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ public class WebStoreSingleton {
     private static WebStoreSingleton mInstance = null;
     public final HashMap<String, Product> mProducts = new HashMap<>();
     public final HashMap<String, CartProduct> mCart = new HashMap<>();
-    public ArrayList<Product> cart = new ArrayList<>();
 
     // private constructor restricted to this class itself
     private WebStoreSingleton(Context context) {
@@ -52,8 +50,30 @@ public class WebStoreSingleton {
         mCart.put(productId, cartProduct);
     }
 
+    public void addToCartD(String productId, int numItems) {
+        Gson gson = new Gson();
+        Product product = mProducts.get(productId);
+        CartProduct cartProduct = gson.fromJson(gson.toJson(product), CartProduct.class);
+        cartProduct.setAmount(numItems);
+        mCart.put(productId, cartProduct);
+        (new FirebaseService()).addToCart(cartProduct);
+    }
+
+    public void removeFromCart(String productId) {
+        mCart.remove(productId);
+        (new FirebaseService()).removeFromCart(productId);
+    }
+
     public List<CartProduct> getCart() {
         return new ArrayList<>(mCart.values());
+    }
+
+    public void getCartD(Consumer<List<CartProduct>> handler) {
+        (new FirebaseService()).getCart(cart -> {
+            for (CartProduct cartProduct : cart)
+                mCart.put(cartProduct.getId(), cartProduct);
+            handler.accept(new ArrayList<>(mCart.values()));
+        });
     }
 
     // static method to create instance of Singleton class
