@@ -1,6 +1,7 @@
 package com.example.webmasters.adapters;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,14 +9,21 @@ import com.example.webmasters.databinding.ListItemLogoBinding;
 import com.example.webmasters.models.graphic_design.Logo;
 
 import java.util.List;
+import java.util.function.Consumer;
 
-public class LogoAdapter extends RecyclerView.Adapter<LogoViewHolder> {
+public class LogoAdapter extends RecyclerView.Adapter<LogoAdapter.LogoViewHolder> {
     private final List<Logo> mLogos;
     private final List<String> mNames;
+
+    private Consumer<Logo> mImportCallback = null;
 
     public LogoAdapter(List<Logo> logos, List<String> names) {
         mLogos = logos;
         mNames = names;
+    }
+
+    public void setImportCallback(Consumer<Logo> callback) {
+        mImportCallback = callback;
     }
 
     @NonNull
@@ -38,25 +46,32 @@ public class LogoAdapter extends RecyclerView.Adapter<LogoViewHolder> {
     public int getItemCount() {
         return mLogos.size();
     }
+
+
+    class LogoViewHolder extends RecyclerView.ViewHolder {
+        private final ListItemLogoBinding mBinding;
+        private Logo mLogo;
+
+        LogoViewHolder(ListItemLogoBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
+            mBinding.buttonImport.setOnClickListener(this::onImport);
+        }
+
+        void setLogo(Logo logo) {
+            mLogo = logo;
+            mBinding.setLogo(logo);
+            mBinding.executePendingBindings();
+        }
+
+        void setName(String name) {
+            mBinding.setName(name);
+            mBinding.executePendingBindings();
+        }
+
+        private void onImport(View view) {
+            if (mImportCallback != null) mImportCallback.accept(mLogo);
+        }
+    }
 }
 
-class LogoViewHolder extends RecyclerView.ViewHolder {
-    private final ListItemLogoBinding mBinding;
-    private Logo mLogo;
-
-    LogoViewHolder(ListItemLogoBinding binding) {
-        super(binding.getRoot());
-        mBinding = binding;
-    }
-
-    void setLogo(Logo logo) {
-        mLogo = logo;
-        mBinding.setLogo(logo);
-        mBinding.executePendingBindings();
-    }
-
-    void setName(String name) {
-        mBinding.setName(name);
-        mBinding.executePendingBindings();
-    }
-}

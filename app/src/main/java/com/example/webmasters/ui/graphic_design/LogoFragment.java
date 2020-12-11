@@ -92,21 +92,26 @@ public class LogoFragment extends Fragment {
     }
 
     public boolean onBrowse(MenuItem item) {
-        //create dialog
+        // Create default dialog.
         final Dialog dialog = new Dialog(requireActivity());
-        //set layout custom
+        // Setup custom layout for the dialog.
         dialog.setContentView(R.layout.dialog_logos);
-        final RecyclerView rvcaddy = (RecyclerView) dialog.findViewById(R.id.recyclerLogos);
+        final RecyclerView recyclerLogos = dialog.findViewById(R.id.recyclerLogos);
 
         (new FirebaseService()).getSharedLogos((logos, names) -> {
-            Log.d("ASD", logos.size()+"");
             LogoAdapter logoAdapter = new LogoAdapter(logos, names);
-            rvcaddy.setAdapter(logoAdapter);
+            logoAdapter.setImportCallback(logo -> {
+                mModel.setLogo(logo);
+            });
+
+            recyclerLogos.setAdapter(logoAdapter);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(requireContext());
-            rvcaddy.setLayoutManager(mLayoutManager);
+            recyclerLogos.setLayoutManager(mLayoutManager);
         });
 
         dialog.show();
+        Window window = dialog.getWindow();
+        window.setLayout(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         return true;
     }
 
@@ -114,7 +119,8 @@ public class LogoFragment extends Fragment {
         Dialogs.input(requireContext(), "Logo name", (dialog, name) -> {
             mModel.shareLogo(name);
             dialog.dismiss();
-        }, unused -> {});
+        }, unused -> {
+        });
 
         return true;
     }

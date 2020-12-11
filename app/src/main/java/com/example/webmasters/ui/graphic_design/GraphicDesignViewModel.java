@@ -87,6 +87,8 @@ public class GraphicDesignViewModel extends ViewModel {
         return mShapeTypes;
     }
 
+    public void setLogo(Logo logo) { mLogo.postValue(logo); }
+
     public LiveData<Logo> getLogo() {
         return mLogo;
     }
