@@ -2,9 +2,7 @@ package com.example.webmasters.ui.graphic_design;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,4 +28,5 @@ public class ThemesFragment extends Fragment {
 
         return binding.getRoot();
     }
+
 }

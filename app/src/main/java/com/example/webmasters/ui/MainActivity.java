@@ -21,11 +21,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
 
-        // Setup view callbacks.
-        binding.buttonGraphicDesign.setOnClickListener(this::onNavigationClick);
-        binding.buttonWebStore.setOnClickListener((this::onNavigationClick));
-        binding.buttonGame.setOnClickListener(this::onNavigationClick);
-
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
@@ -50,24 +45,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
     }
 
-    private void onNavigationClick(View view) {
+    /**
+     * onNavigationClick handles the navigation between different parts of the application.
+     *
+     * @param view (View) navigation button getting clicked.
+     */
+    public void onNavigationClick(View view) {
+        Intent intent;
         switch (view.getId()) {
-            // Navigate to graphic design activity.
             case R.id.buttonGraphicDesign:
-                Intent intentGraph = new Intent(this, GraphicDesignActivity.class);
-                startActivity(intentGraph);
+                intent = new Intent(this, GraphicDesignActivity.class);
                 break;
             case R.id.buttonWebStore:
-                Intent intentStore = new Intent(this, WebStoreActivity.class);
-                startActivity(intentStore);
+                intent = new Intent(this, WebStoreActivity.class);
                 break;
             case R.id.buttonGame:
-                Intent intentGame = new Intent(this, gameMenu.class);
-                startActivity(intentGame);
+                intent = new Intent(this, gameMenu.class);
                 break;
             default:
-                Log.e("MainActivity", "Invalid navigation!");
+                return;
+
         }
+        startActivity(intent);
     }
 
 

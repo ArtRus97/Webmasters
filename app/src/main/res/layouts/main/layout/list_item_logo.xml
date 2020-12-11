@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="name"
+            type="String" />
+
+        <variable
+            name="logo"
+            type="com.example.webmasters.models.graphic_design.Logo" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/labelLogoName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{name}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logoView2"
+            tools:text="Logo name goes here..." />
+
+        <com.example.webmasters.ui.graphic_design.LogoView
+            android:id="@+id/logoView2"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:maxHeight="60dp"
+            android:minHeight="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shape="@{logo.shape}"
+            app:text="@{logo.text}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

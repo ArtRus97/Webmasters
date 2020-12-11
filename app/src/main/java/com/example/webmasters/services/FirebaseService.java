@@ -19,12 +19,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class FirebaseService {
     final String TAG = "FirebaseService";
     final String PRODUCT_COLLECTION = "Products";
     final String CART_COLLECTION = "carts";
+    final String SHARED_LOGO_COLLECTION = "shared_logos";
     final String LOGO_COLLECTION = "logos";
     final String THEME_COLLECTION = "themes";
 
@@ -41,6 +43,37 @@ public class FirebaseService {
                 .collection(LOGO_COLLECTION)
                 .document(getUser())
                 .set(logo);
+    }
+
+    final public void shareLogo(String name, final ILogo logo) {
+        mFirestore
+                .collection(SHARED_LOGO_COLLECTION)
+                .document(name)
+                .set(logo);
+    }
+
+    final public void getSharedLogos(BiConsumer<List<Logo>, List<String>> callback) {
+        mFirestore
+                .collection(SHARED_LOGO_COLLECTION)
+                .get()
+                .addOnCompleteListener(task -> {
+                    List<Logo> logosList = new ArrayList<>();
+                    List<String> namesList = new ArrayList<>();
+                    for (DocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                        // Convert stored data to Logo.
+                        Logo logo = document.toObject(Logo.class);
+                        if (logo != null) {
+                            // User shape factory to create logo shape based
+                            // on the stored parameters.
+                            ShapeType shapeType = logo.getShape().getType();
+                            Shape shape = ShapeFactory.applyShapeType(logo.getShape(), shapeType);
+                            logo.setShape(shape);
+                            logosList.add(logo);
+                        }
+                        namesList.add(document.getId());
+                    }
+                    callback.accept(logosList, namesList);
+                });
     }
 
     final public void addTheme(Theme theme) {

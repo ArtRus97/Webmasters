@@ -28,5 +28,11 @@
     <string name="image_of_the_selected_product">Image of the selected product.</string>
     <string name="total_price">Total price:</string>
     <string name="purchase">Purchase</string>
+    <string name="animation_help_info">Select by clicking, enable by checking:</string>
+    <string name="game">Game</string>
+    <string name="graphic_design">Graphic Design</string>
+    <string name="webstore">Webstore</string>
+    <string name="share">Share</string>
+    <string name="browse">Browse</string>
 </resources>
 

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,26 +11,90 @@
             type="com.example.webmasters.models.webstore.Product" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20dp"
         tools:context=".ui.web_store.ProductActivity">
 
-        <ImageView
-            android:id="@+id/imageViewPic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelTitle"
-            tools:srcCompat="@mipmap/ic_launcher"
-            android:contentDescription="@string/image_of_the_selected_product" />
 
         <TextView
-            android:id="@+id/labelTitle"
+            android:id="@+id/labelAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="@string/amountText"
+            android:textSize="@dimen/title_font_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextAmount"
+            app:layout_constraintStart_toEndOf="@+id/textPrice"
+            app:layout_constraintTop_toTopOf="@+id/editTextAmount" />
+
+        <TextView
+            android:id="@+id/labelPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/priceText"
+            android:textSize="@dimen/title_font_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/textPrice"
+            app:layout_constraintStart_toStartOf="@+id/buttonCart"
+            app:layout_constraintTop_toTopOf="@+id/textPrice" />
+
+        <TextView
+            android:id="@+id/textPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{String.valueOf(product.price)}"
+            android:textColor="@color/price_font_color"
+            android:textSize="@dimen/title_font_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/labelAmount"
+            app:layout_constraintStart_toEndOf="@+id/labelPrice"
+            app:layout_constraintTop_toTopOf="@+id/labelAmount"
+            tools:text="13.00" />
+
+        <EditText
+            android:id="@+id/editTextAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ems="8"
+            android:inputType="number"
+            android:text="1"
+            app:layout_constraintBottom_toTopOf="@+id/buttonCart"
+            app:layout_constraintEnd_toEndOf="@+id/buttonCart"
+            app:layout_constraintStart_toEndOf="@+id/labelAmount" />
+
+        <Button
+            android:id="@+id/buttonCart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="onAddToCart"
+            android:text="@string/add_to_cart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/scrollDescription"
+            app:layout_constraintStart_toStartOf="@+id/scrollDescription" />
+
+        <ImageView
+            android:id="@+id/imageViewPic"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/image_of_the_selected_product"
+            android:maxHeight="200dp"
+            android:minHeight="200dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintVertical_bias="0.0"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textTitle"
+            tools:srcCompat="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/textTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{product.name}"
@@ -36,72 +102,34 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Here goes product name/title" />
 
-        <TextView
-            android:id="@+id/labelDescription"
+        <ScrollView
+            android:isScrollContainer="false"
+            android:id="@+id/scrollDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{product.description}"
+            android:layout_height="0dp"
+            android:padding="0dp"
+            android:requiresFadingEdge="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/editTextAmount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewPic" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPic"
+            app:layout_constraintVertical_bias="0.0">
 
-        <TextView
-            android:id="@+id/labelPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@{String.valueOf(product.price)}"
-            android:textColor="@color/price_font_color"
-            android:textSize="@dimen/title_font_size"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/textViewPriceLabel"
-            app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
+            <TextView
+                android:id="@+id/textDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
 
-        <Button
-            android:id="@+id/buttonCart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:onClick="onAddToCart"
-            android:text="@string/add_to_cart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
+                android:text="@{product.description}" />
 
-        <EditText
-            android:id="@+id/editTextAmount"
-            android:layout_width="50sp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:inputType="number"
-            android:text="1"
-            app:layout_constraintEnd_toStartOf="@+id/buttonCart"
-            app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
+        </ScrollView>
 
-        <TextView
-            android:id="@+id/textViewPriceLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/priceText"
-            android:textSize="@dimen/title_font_size"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
-
-        <TextView
-            android:id="@+id/textViewAmountLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/amountText"
-            android:textSize="@dimen/title_font_size"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/editTextAmount"
-            app:layout_constraintTop_toBottomOf="@+id/labelDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

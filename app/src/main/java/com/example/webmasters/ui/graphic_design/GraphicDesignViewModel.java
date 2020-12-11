@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
  * @author JIkaheimo (Jaakko Ikäheimo)
  */
 public class GraphicDesignViewModel extends ViewModel {
+    private final FirebaseService mFirebase = new FirebaseService();
+
     private final MutableLiveData<List<Boolean>> mShapeAnimationStates = new MutableLiveData<>();
     private final MutableLiveData<Logo> mLogo = new MutableLiveData<>();
     private final MutableLiveData<Theme> mTheme = new MutableLiveData<>();
@@ -35,9 +37,9 @@ public class GraphicDesignViewModel extends ViewModel {
      */
     public GraphicDesignViewModel() {
         // Try to fetch the user logo from firestore.
-        (new FirebaseService()).getLogo(this::onLogoFetched);
+        mFirebase.getLogo(this::onLogoFetched);
         // Try to fetch the user theme from firestore.
-        (new FirebaseService()).getTheme(this::onThemeFetched);
+        mFirebase.getTheme(this::onThemeFetched);
 
         // Add different shape types.
         mShapeTypes.setValue(Arrays.stream(ShapeType.values()).collect(Collectors.toList()));
@@ -119,9 +121,9 @@ public class GraphicDesignViewModel extends ViewModel {
     @Override
     protected void onCleared() {
         // Store logo to firestore.
-        (new FirebaseService()).addLogo(mLogo.getValue());
+        mFirebase.addLogo(mLogo.getValue());
         // Store theme to firestore.
-        (new FirebaseService()).addTheme(mTheme.getValue());
+        mFirebase.addTheme(mTheme.getValue());
         // Handle the actual view model clear.
         super.onCleared();
     }
@@ -153,7 +155,14 @@ public class GraphicDesignViewModel extends ViewModel {
 
             }};
         }
-
         mTheme.postValue(theme);
+    }
+
+    public void shareLogo(String logoName) {
+        mFirebase.shareLogo(logoName, mLogo.getValue());
+    }
+
+    public void shareTheme() {
+       // mFirebase.
     }
 }
