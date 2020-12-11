@@ -34,5 +34,10 @@
     <string name="webstore">Webstore</string>
     <string name="share">Share</string>
     <string name="browse">Browse</string>
+    <string name="body_color">Body color</string>
+    <string name="buy">Buy</string>
+    <string name="head_color">Head color</string>
+    <string name="shop">Shop</string>
+    <string name="back">Back</string>
 </resources>
 

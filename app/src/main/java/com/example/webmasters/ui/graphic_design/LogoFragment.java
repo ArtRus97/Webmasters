@@ -66,7 +66,6 @@ public class LogoFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         // Setup swipe listener to toggle the visibility of logo controls.
         mBinding.logoView.setSwipeListener(new LogoView.SwipeListener() {
             @Override
@@ -116,10 +115,13 @@ public class LogoFragment extends Fragment {
     }
 
     public boolean onShare(MenuItem item) {
+        // Display input dialog to prompt logo name from the user.
         Dialogs.input(requireContext(), "Logo name", (dialog, name) -> {
+            // Share logo (add it to shared logos in the database).
             mModel.shareLogo(name);
             dialog.dismiss();
         }, unused -> {
+            // Placeholder for any cancel events.
         });
 
         return true;

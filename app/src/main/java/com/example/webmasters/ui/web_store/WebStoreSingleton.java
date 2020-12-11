@@ -1,26 +1,26 @@
-package com.example.webmasters.ui;
-
-import android.content.Context;
+package com.example.webmasters.ui.web_store;
 
 import android.util.Log;
-import com.example.webmasters.models.webstore.CartItem;
 import com.example.webmasters.models.webstore.CartProduct;
 import com.example.webmasters.models.webstore.Product;
 import com.example.webmasters.services.FirebaseService;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.stream.Collector;
 
+/**
+ * WebStoreSingleton groups webstore centric functionality in one place.
+ *
+ * @author Arttu Rusanen, JIkaheimo (Jaakko Ikäheimo)
+ */
 public class WebStoreSingleton {
     final private String TAG = "WebStoreSingleton";
     private static WebStoreSingleton mInstance = null;
     private final List<Product> mProducts = new ArrayList<>();
     private List<CartProduct> mCart = null;
-    private FirebaseService mFirebase = new FirebaseService();
+    private final FirebaseService mFirebase = new FirebaseService();
 
     // Private constructor to restrict instances of this class.
     private WebStoreSingleton() {
@@ -29,11 +29,11 @@ public class WebStoreSingleton {
     /**
      * getProducts reads all available products from the database.
      *
-     * @param callback being called after products data is available.
+     * @param callback getting executed after products data is available.
      */
-    public void getProducts(Consumer<List<Product>> callback) {
+    public final void getProducts(Consumer<List<Product>> callback) {
         if (mProducts.isEmpty()) {
-            // Fetch products from database if they have not been fetched.
+            // Fetch products from database if they have not been fetched yet.
             mFirebase.getProducts(products -> {
                 mProducts.addAll(products);
                 callback.accept(mProducts);
@@ -45,7 +45,7 @@ public class WebStoreSingleton {
     }
 
 
-    public void addToCart(String productId, int numItems, Consumer<CartProduct> callback) {
+    public final void addToCart(String productId, int numItems, Consumer<CartProduct> callback) {
         getCartProduct(productId, cartProduct -> {
             // Create new card product based on the id if one does not exist.
             if (cartProduct == null) {

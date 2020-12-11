@@ -24,7 +24,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="TextView"
         android:textColor="@color/price_font_color"
         android:textSize="@dimen/title_font_size"
         app:layout_constraintBottom_toBottomOf="@+id/buttonPurchase"

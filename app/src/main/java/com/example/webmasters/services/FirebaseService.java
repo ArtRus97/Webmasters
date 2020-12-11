@@ -38,6 +38,10 @@ public class FirebaseService {
         return mAuthCurrentUser.getUid();
     }
 
+    /***************************************
+     * LOGO-SPECIFIC DATABASE OPERATIONS   *
+     ***************************************/
+
     final public void addLogo(final ILogo logo) {
         mFirestore
                 .collection(LOGO_COLLECTION)
@@ -63,7 +67,7 @@ public class FirebaseService {
                         // Convert stored data to Logo.
                         Logo logo = document.toObject(Logo.class);
                         if (logo != null) {
-                            // User shape factory to create logo shape based
+                            // Use shape factory to create logo shape based
                             // on the stored parameters.
                             ShapeType shapeType = logo.getShape().getType();
                             Shape shape = ShapeFactory.applyShapeType(logo.getShape(), shapeType);
@@ -76,12 +80,6 @@ public class FirebaseService {
                 });
     }
 
-    final public void addTheme(Theme theme) {
-        mFirestore
-                .collection(THEME_COLLECTION)
-                .document(getUser())
-                .set(theme);
-    }
 
     /**
      * getLogo fetches logo created by the user from the firestore.
@@ -96,7 +94,7 @@ public class FirebaseService {
                     // Convert stored data to Logo.
                     Logo logo = document.toObject(Logo.class);
                     if (logo != null) {
-                        // User shape factory to create logo shape based
+                        // Use shape factory to create logo shape based
                         // on the stored parameters.
                         ShapeType shapeType = logo.getShape().getType();
                         Shape shape = ShapeFactory.applyShapeType(logo.getShape(), shapeType);
@@ -109,6 +107,10 @@ public class FirebaseService {
                 .addOnFailureListener(e -> callback.accept(null));
     }
 
+    /***************************************
+     *  THEME-SPECIFIC DATABASE OPERATIONS *
+     ***************************************/
+
     public void getTheme(Consumer<Theme> callback) {
         mFirestore.collection(THEME_COLLECTION).document(getUser()).get()
                 .addOnSuccessListener(document -> {
@@ -118,6 +120,13 @@ public class FirebaseService {
                     }
                     callback.accept(theme);
                 });
+    }
+
+    final public void addTheme(Theme theme) {
+        mFirestore
+                .collection(THEME_COLLECTION)
+                .document(getUser())
+                .set(theme);
     }
 
 

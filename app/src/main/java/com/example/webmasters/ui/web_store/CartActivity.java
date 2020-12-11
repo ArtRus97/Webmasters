@@ -12,10 +12,8 @@ import com.example.webmasters.adapters.ProductAdapter;
 import com.example.webmasters.databinding.ActivityCartBinding;
 import com.example.webmasters.models.webstore.CartProduct;
 import com.example.webmasters.models.webstore.Product;
-import com.example.webmasters.ui.WebStoreSingleton;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
     WebStoreSingleton webstoreServices;

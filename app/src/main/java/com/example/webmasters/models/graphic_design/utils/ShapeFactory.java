@@ -51,6 +51,7 @@ public class ShapeFactory {
 
     /**
      * star creates a new star shape with the number of given spike.
+     *
      * @param numSpikes (int) number of star's spikes.
      * @return star shape.
      */
@@ -107,6 +108,7 @@ public class ShapeFactory {
 
     /**
      * flower creates a new flower shape with the number ...
+     *
      * @return flower shape.
      */
     private static Shape flower() {
@@ -135,6 +137,7 @@ public class ShapeFactory {
 
     /**
      * defaultShape returns the default shape of the factory.
+     *
      * @return default shape.
      */
     public static Shape defaultShape() {

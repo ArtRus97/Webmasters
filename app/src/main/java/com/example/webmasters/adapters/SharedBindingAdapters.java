@@ -15,13 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SharedBindingAdapters {
 
+    /**
+     * setAdapter allows easier binding of recycler view adapter's using model binding.
+     *
+     * @param recyclerView (RecyclerView) that uses the adapter.
+     * @param adapter      (RecyclerView.Adapter<?>) used with the recycler view.
+     */
     @BindingAdapter("adapter")
     public static void setAdapter(RecyclerView recyclerView, RecyclerView.Adapter<?> adapter) {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(adapter);
     }
-
 
     @BindingAdapter(value = {"selectedValue", "selectedValueAttrChanged"}, requireAll = false)
     public static void setSelectedValue(AppCompatSpinner spinner, Object newSelectedValue, final InverseBindingListener changeListener) {
@@ -53,7 +58,7 @@ public class SharedBindingAdapters {
 
     @BindingAdapter(value = {"android:max"}, requireAll = false)
     public static void setMax(AppCompatSeekBar view, int max) {
-        int value =  view.getProgress();
+        int value = view.getProgress();
         view.setMax(max);
         view.setProgress(value);
     }
@@ -78,7 +83,6 @@ public class SharedBindingAdapters {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
     }

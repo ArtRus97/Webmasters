@@ -2,7 +2,6 @@ package com.example.webmasters.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.webmasters.R;
@@ -21,16 +20,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
 
+        // Use anonymous sign in when using firebase.
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
             mAuth.signInAnonymously();
         }
 
+        // Display logo
         binding.getRoot().post(() -> {
+            // Get the boundaries of logo view.
             int xBoundary = binding.logoView.getWidth();
             int yBoundary = binding.logoView.getHeight();
 
+            // Display custom logo in the logo view.
             binding.setLogo(new Logo() {{
                 setTextValue("Webmasters");
                 setTextX(2 * xBoundary / 3);

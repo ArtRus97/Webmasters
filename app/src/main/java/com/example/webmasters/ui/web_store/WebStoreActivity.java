@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.webmasters.R;
 import com.example.webmasters.adapters.ProductAdapter;
 import com.example.webmasters.ui.MainActivity;
-import com.example.webmasters.ui.WebStoreSingleton;
 
 public class WebStoreActivity extends AppCompatActivity {
 
